@@ -10,15 +10,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignupScreen(
-    onSignupClick: (email: String, employeeId: String, password: String) -> Unit
+    onSignupClick: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var employeeId by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -58,15 +61,24 @@ fun SignupScreen(
         ComposeButton(
             text = "Sign Up",
             onClick = {
-                if (email.isBlank() || employeeId.isBlank() || password.isBlank()) {
-                    errorMessage = "Please fill all fields"
-                } else {
-                    errorMessage = null
-                    onSignupClick(email, employeeId, password)
+                scope.launch {
+                    try {
+                        val success = ApiService.signup(email, employeeId, password)
+                        errorMessage = if (success) {
+                            onSignupClick()
+                            "Signup successful!"
+                        } else {
+                            "Signup failed. Please try again."
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()  // You can also log this
+                        errorMessage = "An error occurred: ${e.localizedMessage}"
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()
         )
+
 
         errorMessage?.let {
             Spacer(modifier = Modifier.height(12.dp))
