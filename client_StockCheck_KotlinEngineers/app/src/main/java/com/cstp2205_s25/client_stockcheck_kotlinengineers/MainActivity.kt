@@ -26,21 +26,27 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Surface {
-                    //Signup Screen
-                    val showSignup = remember { mutableStateOf(true) }
-
-                    if (showSignup.value) {
-                        SignupScreen {
-                            // on successful signup switch to login
-                            showSignup.value = false
-                        }
-                    } else {
-                        LoginScreen ()
-
+                    val currentScreen = remember { mutableStateOf("signup") } // or "login" or "home"
+                    when (currentScreen.value) {
+                        "signup" -> SignupScreen {
+                                //On successful signup, navigate to login screen
+                                currentScreen.value = "login"
+                            }
+                        "login" -> LoginScreen(
+                                onLoginSuccess = {
+                                    //On successful login, navigate to home or next screen
+                                    currentScreen.value = "home"
+                                },
+                                onNavigateToSignup = {
+                                    //User wants to go back to signup screen
+                                    currentScreen.value = "signup"
+                                }
+                            )
+                        "home" ->
+                            Text(text = "HOme page")
                     }
                 }
             }
         }
     }
 }
-
