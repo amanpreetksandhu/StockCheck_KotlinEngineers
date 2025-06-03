@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.Client_StockCheck_KotlinEngineersTheme
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.StockCheck_KotlinEngineers_AppTheme
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
 
 class MainActivity : ComponentActivity() {
