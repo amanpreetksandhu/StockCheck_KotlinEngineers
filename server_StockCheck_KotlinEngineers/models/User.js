@@ -4,14 +4,14 @@ const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,       // no duplicate emails
+    unique: true,       
     lowercase: true,
     trim: true,
   },
   employeeId: {
     type: String,
     required: true,
-    unique: true,       // no duplicate employee IDs
+    unique: true,       
   },
   password: {
     type: String,
