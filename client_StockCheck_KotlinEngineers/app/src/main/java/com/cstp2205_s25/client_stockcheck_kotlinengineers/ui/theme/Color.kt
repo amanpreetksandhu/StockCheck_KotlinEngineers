@@ -1,6 +1,12 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme
 import androidx.compose.ui.graphics.Color
 
+// SC colors
+// To set custom color (besides themes), NEED prefix 0xFF then the color number representation
+val scGreen = Color(0xFF289182)
+val scBlue =Color(0xFF1A5F8E)
+
+
 val primaryLight = Color(0xFF015EA1)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFF3178BC)
