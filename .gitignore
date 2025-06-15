@@ -1,3 +1,22 @@
-// Files here should not be tracked by Git
+# Files here should not be tracked by Git
 .DS_Store
+
+# Root-level folders you don't want in Git
 .idea/
+*.iml
+
+# Module-specific .idea folders (just in case)
+client_StockCheck_KotlinEngineers/.idea/
+server_StockCheck_KotlinEngineers/.idea/
+
+# Build outputs
+**/build/
+
+# Gradle and Android specific
+.gradle/
+local.properties
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
