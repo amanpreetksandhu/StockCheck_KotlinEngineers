@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme
+package com.example.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
