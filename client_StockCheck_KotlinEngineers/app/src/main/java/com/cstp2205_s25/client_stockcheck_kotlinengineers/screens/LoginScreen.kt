@@ -23,7 +23,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
 import kotlinx.coroutines.launch
 
