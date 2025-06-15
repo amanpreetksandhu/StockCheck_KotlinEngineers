@@ -3,6 +3,9 @@ const LocationSchema = new mongoose.Schema({
   name: String,
   address: String,
   contactName: String,
-  contactInfo: String
+  contactEmail: String,
+  contactPhone: String
 });
-module.exports = mongoose.model('Location', LocationSchema);
+
+const Location = mongoose.model('Location', LocationSchema)
+module.exports = Location;
