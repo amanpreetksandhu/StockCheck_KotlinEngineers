@@ -15,8 +15,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.StockCheck_KotlinEngineers_AppTheme
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
 
 class MainActivity : ComponentActivity() {
@@ -26,6 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Surface {
+                    //LocationScreen()
                     val currentScreen = remember { mutableStateOf("signup") } // or "login" or "home"
                     when (currentScreen.value) {
                         "signup" -> SignupScreen {
@@ -42,8 +44,8 @@ class MainActivity : ComponentActivity() {
                                     currentScreen.value = "signup"
                                 }
                             )
-                        "home" ->
-                            Text(text = "HOme page")
+                        "home" -> LocationCard()
+
                     }
                 }
             }
