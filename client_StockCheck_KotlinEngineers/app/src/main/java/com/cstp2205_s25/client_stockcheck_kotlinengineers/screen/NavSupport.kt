@@ -6,6 +6,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
 
 @Composable
 fun NavSupport(vm: AuthViewModel) {

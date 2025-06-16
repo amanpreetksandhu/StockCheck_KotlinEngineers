@@ -8,7 +8,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object ApiService {
-    private const val BASE_URL = "http://10.0.2.2:5000"  // Android emulator localhost
+    private const val BASE_URL = "http://10.0.2.2:5000"  //Android emulator localhost
 
     suspend fun signup(email: String, employeeId: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {

@@ -32,7 +32,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entitie.InventoryItem
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddOrEditItemDialog
 
 // Define custom colors based on the image -- to be changed
@@ -86,9 +85,7 @@ fun InventoryContent(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = scGreen,
-                focusedLabelColor = scGreen,
-                cursorColor = scGreen
+
             )
         );
 

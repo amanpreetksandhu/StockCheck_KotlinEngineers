@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme
+package com.example.compose
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -13,6 +13,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import com.example.ui.theme.AppTypography
 
 private val lightScheme = lightColorScheme(
     primary = primaryLight,
@@ -255,7 +256,7 @@ val unspecified_scheme = ColorFamily(
 )
 
 @Composable
-fun StockCheck_KotlinEngineers_AppTheme(
+fun AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,

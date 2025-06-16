@@ -40,27 +40,20 @@ android {
 }
 
 dependencies {
-
-    //----------------- Navigation dependencies ----------------------\
-    val nav_version = "2.9.0"
-    implementation ("androidx.navigation:navigation-compose:$nav_version")
-
-
-
-    // ---------------- ViewModel dependencies ------------------\
+//Depenencies from: https://developer.android.com/jetpack/androidx/releases/lifecycle
     val lifecycle_version = "2.9.0"
     val arch_version = "2.2.0"
 
-    // Base
+// ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-    // Utilities for compose
+// ViewModel utilities for Compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-    // Saved state module for viewModel
+// Saved state module for ViewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
-
-
-
+//Navigation
+    val nav_version = "2.9.0"
+    implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

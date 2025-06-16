@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,12 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
-
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entitie.ApiService
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,9 +57,9 @@ fun LoginScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = scGreen,
-                focusedLabelColor = scGreen,
-                cursorColor = scGreen
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
             )
 
 
@@ -75,9 +74,9 @@ fun LoginScreen(
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = scGreen,
-                focusedLabelColor = scGreen,
-                cursorColor = scGreen
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
             )
         )
 
@@ -98,8 +97,8 @@ fun LoginScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = scGreen, // Your custom green
-                contentColor = Color.White // White text
+//                containerColor = scGreen, // Your custom green
+//                contentColor = Color.White // White text
             )
         )
         Spacer(modifier = Modifier.height(50.dp))
