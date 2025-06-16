@@ -1,11 +1,6 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -15,7 +10,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthVie
 @Composable
 fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
-    val authViewModel: AuthViewModel = viewModel()
+    val authViewModel: AuthViewModel = vm
 
 
     NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route){
@@ -24,7 +19,7 @@ fun NavSupport(vm: AuthViewModel) {
         composable(ScreenInventory.LOGIN.route){
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(ScreenInventory.HOME.route){
+                    navController.navigate(ScreenInventory.INVENTORY.route){
                         popUpTo(ScreenInventory.LOGIN.route) {inclusive = true}
                     }
                 },
@@ -38,7 +33,7 @@ fun NavSupport(vm: AuthViewModel) {
         // SIGNUP ROUTES LOGIC ---------------------------------------\
         composable(ScreenInventory.SIGNUP.route){
             SignupScreen(onSignupSuccess = {
-                navController.navigate(ScreenInventory.HOME.route) {
+                navController.navigate(ScreenInventory.INVENTORY.route) {
                     popUpTo(ScreenInventory.SIGNUP.route) { inclusive = true }
                 }
             },
@@ -48,17 +43,13 @@ fun NavSupport(vm: AuthViewModel) {
                 authViewModel = authViewModel
             )
         }
-        composable(ScreenInventory.HOME.route) {
-            // Placeholder for now — we’ll build HomeScreen next
-            Text(
-                text = "Welcome to Home Screen!",
-                modifier = Modifier.fillMaxSize(),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )
+        composable(ScreenInventory.INVENTORY.route) {
+            MainScreen() // This is the missing piece!
         }
 
 
+
+        // ---------------- NavHost Boudary ------------------//
     }
 
 

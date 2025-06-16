@@ -5,22 +5,12 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.StockCheck_KotlinEngineers_AppTheme
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.NavSupport
 
 class MainActivity : ComponentActivity() {
 
