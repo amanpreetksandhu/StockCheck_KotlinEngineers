@@ -16,7 +16,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
