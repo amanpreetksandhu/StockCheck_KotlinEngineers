@@ -3,7 +3,9 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,18 +19,22 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.AuthViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun SignupScreen(
-    onSignupClick: () -> Unit
+    onSignupSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit,
+    authViewModel: AuthViewModel = viewModel()
 ) {
-    var email by remember { mutableStateOf("") }
-    var employeeId by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var email = authViewModel.email
+    var employeeId = authViewModel.employeeId
+    var password = authViewModel.password
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
@@ -48,26 +54,41 @@ fun SignupScreen(
 
         ComposeTextField(
             value = email,
-            onValueChange = { email = it },
+            onValueChange = { authViewModel.email = it },
             label = "Email",
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
+            )
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         ComposeTextField(
             value = employeeId,
-            onValueChange = { employeeId = it },
+            onValueChange = { authViewModel.employeeId = it },
             label = "Employee ID",
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = OutlinedTextFieldDefaults.colors(
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
+            )
         )
         Spacer(modifier = Modifier.height(8.dp))
 
         ComposeTextField(
             value = password,
-            onValueChange = { password = it },
+            onValueChange = { authViewModel.password = it },
             label = "Password",
             modifier = Modifier.fillMaxWidth(),
-            visualTransformation = PasswordVisualTransformation()
+            visualTransformation = PasswordVisualTransformation(),
+            colors = OutlinedTextFieldDefaults.colors(
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
+            )
         )
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -78,7 +99,7 @@ fun SignupScreen(
                     try {
                         val success = ApiService.signup(email, employeeId, password)
                         errorMessage = if (success) {
-                            onSignupClick()
+                            onSignupSuccess()
                             "Signup successful!"
                         } else {
                             "Signup failed. Please try again."
@@ -89,7 +110,11 @@ fun SignupScreen(
                     }
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+//                containerColor = scGreen, // Your custom green
+//                contentColor = Color.White // White text
+            )
         )
         Spacer(modifier = Modifier.height(50.dp))
 
@@ -105,14 +130,14 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
-                color = Color.Blue,
+//                color = scBlue,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier
                     .clickable {
                         // Navigate to LoginScreen
-                        onSignupClick()
+                        onNavigateToLogin()
                     }
             )
         }
