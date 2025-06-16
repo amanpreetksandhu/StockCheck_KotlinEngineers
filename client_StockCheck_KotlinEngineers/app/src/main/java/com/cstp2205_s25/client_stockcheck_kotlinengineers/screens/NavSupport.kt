@@ -10,13 +10,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 @Composable
 fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
-
+    val locationViewModel: LocationViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route){
 
@@ -24,7 +25,7 @@ fun NavSupport(vm: AuthViewModel) {
         composable(ScreenInventory.LOGIN.route){
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(ScreenInventory.HOME.route){
+                    navController.navigate(ScreenInventory.LOCATIONS.route){
                         popUpTo(ScreenInventory.LOGIN.route) {inclusive = true}
                     }
                 },
@@ -38,7 +39,7 @@ fun NavSupport(vm: AuthViewModel) {
         // SIGNUP ROUTES LOGIC ---------------------------------------\
         composable(ScreenInventory.SIGNUP.route){
             SignupScreen(onSignupSuccess = {
-                navController.navigate(ScreenInventory.HOME.route) {
+                navController.navigate(ScreenInventory.LOCATIONS.route) {
                     popUpTo(ScreenInventory.SIGNUP.route) { inclusive = true }
                 }
             },
@@ -48,14 +49,10 @@ fun NavSupport(vm: AuthViewModel) {
                 authViewModel = authViewModel
             )
         }
-        composable(ScreenInventory.HOME.route) {
-            // Placeholder for now — we’ll build HomeScreen next
-            Text(
-                text = "Welcome to Home Screen!",
-                modifier = Modifier.fillMaxSize(),
-                fontSize = 24.sp,
-                textAlign = TextAlign.Center
-            )
+        composable(ScreenInventory.LOCATIONS.route) {
+            LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                locationViewModel = locationViewModel)
+
         }
 
 

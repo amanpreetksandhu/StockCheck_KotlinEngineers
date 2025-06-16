@@ -2,6 +2,7 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
@@ -52,4 +53,38 @@ object ApiService {
             responseCode == 200 // true if login success
         }
     }
+    suspend fun getAllLocations(): List<Location> {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/locations")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "GET"
+
+            val locations = mutableListOf<Location>()
+
+            if (conn.responseCode == 200) {
+                val reader = BufferedReader(InputStreamReader(conn.inputStream))
+                val response = reader.readText()
+                reader.close()
+
+                val jsonArray = JSONArray(response)
+                for (i in 0 until jsonArray.length()) {
+                    val obj = jsonArray.getJSONObject(i)
+                    locations.add(
+                        Location(
+                            obj.getString("name"),
+                            obj.getString("address"),
+                            obj.getString("contactName"),
+                            obj.getString("contactEmail"),
+                            obj.optString("contactPhone", "")
+                        )
+                    )
+                }
+            }
+
+            conn.disconnect()
+            locations
+        }
+    }
+
 }
+
