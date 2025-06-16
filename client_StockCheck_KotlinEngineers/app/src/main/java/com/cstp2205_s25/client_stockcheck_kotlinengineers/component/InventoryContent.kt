@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,8 +21,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -31,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entitie.InventoryItem
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddOrEditItemDialog
 
 // Define custom colors based on the image -- to be changed
 val DarkPrimary = Color(0xFF2C3E50) // Dark blue/grey for top bar
@@ -45,13 +48,15 @@ val TextGrey = Color(0xFFBDC3C7) // Light grey for secondary text
 fun InventoryContent(
     inventoryItems: List<InventoryItem>,
     onDelete: (String) -> Unit,
-    onEdit: (InventoryItem) -> Unit,
     onAdd: (InventoryItem) -> Unit,
-    onAddClick: () -> Unit
-
+    onAddClick: () -> Unit,
+    onEdit: (InventoryItem) -> Unit,
 
 
 ) {
+    var itemToEdit by remember { mutableStateOf<InventoryItem?>(null) }
+
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -85,7 +90,7 @@ fun InventoryContent(
                 focusedLabelColor = scGreen,
                 cursorColor = scGreen
             )
-            );
+        );
 
 
 
@@ -109,6 +114,20 @@ fun InventoryContent(
             Text(text = "Add New Item", color = Color.White, fontSize = 18.sp)
         }
 
+        if (itemToEdit != null) {
+            AddOrEditItemDialog (
+                initialItem = itemToEdit,
+                onConfirm = {
+                    onEdit(it)
+                    itemToEdit = null
+                },
+                onDismiss = { itemToEdit = null }
+            )
+        }
+
+
+
+
         // Inventory Items List (using LazyColumn for scrollability)
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
@@ -121,8 +140,9 @@ fun InventoryContent(
                     qty = item.qty,
                     warehouse = item.warehouse,
                     status = item.status,
+                    id = item.id,
                     onDelete = { onDelete(item.id) },
-                    onEdit = { onEdit(item) }
+                    onEditClick  = { itemToEdit = it }
 
                 )
             }

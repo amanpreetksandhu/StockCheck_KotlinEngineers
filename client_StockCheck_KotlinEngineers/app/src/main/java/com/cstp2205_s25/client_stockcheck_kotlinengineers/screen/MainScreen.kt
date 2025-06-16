@@ -27,7 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddOrEditItemDialog
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryContent
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TabItem
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
@@ -117,8 +117,8 @@ fun MainScreen(
                 ) // Your main inventory screen content
             }
             if (showAddDialog) {
-                AddItemDialog(
-                    onAdd = {
+                AddOrEditItemDialog(
+                    onConfirm = {
                         inventoryViewModel.addItem(it)
                         showAddDialog = false
                     },

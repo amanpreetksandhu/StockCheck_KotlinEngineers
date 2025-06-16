@@ -13,35 +13,36 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.KeyboardType
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entitie.InventoryItem
+import java.util.UUID
 
 @Composable
-fun AddItemDialog(
-    onAdd: (InventoryItem) -> Unit,
+fun AddOrEditItemDialog(
+    initialItem: InventoryItem? = null,
+    onConfirm: (InventoryItem) -> Unit,
     onDismiss: () -> Unit
 ) {
-    var name by remember { mutableStateOf("") }
-    var category by remember { mutableStateOf("") }
-    var qty by remember { mutableStateOf("") }
-    var warehouse by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf(initialItem?.name ?: "") }
+    var category by remember { mutableStateOf(initialItem?.category ?: "") }
+    var qty by remember { mutableStateOf(initialItem?.qty?.toString() ?: "") }
+    var warehouse by remember { mutableStateOf(initialItem?.warehouse ?: "") }
+    var status by remember { mutableStateOf(initialItem?.status ?: "IN STOCK") }
 
     AlertDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(
                 onClick = {
-                    if (name.isNotBlank() && category.isNotBlank() && qty.isNotBlank() && warehouse.isNotBlank()) {
-                        val newItem = InventoryItem(
+                        val updateItem = InventoryItem(
+                            id = initialItem?.id ?: UUID.randomUUID().toString(),
                             name = name,
                             category = category,
                             qty = qty.toIntOrNull() ?: 0,
                             warehouse = warehouse,
-                            status = if ((qty.toIntOrNull() ?: 0) > 0) "IN STOCK" else "OUT OF STOCK"
+                            status = status
                         )
-                        onAdd(newItem)
-                    }
-                }
-            ) {
-                Text("Add")
+                        onConfirm(updateItem)
+                }) {
+                Text(if (initialItem == null)"Add" else "Update")
             }
         },
         dismissButton = {
@@ -49,7 +50,7 @@ fun AddItemDialog(
                 Text("Cancel")
             }
         },
-        title = { Text("Add New Inventory Item") },
+        title = { Text(if (initialItem == null) "Add New Item" else "Edit Item") },
         text = {
             Column {
                 OutlinedTextField(value = name, onValueChange = { name = it }, label = { Text("Item Name") })

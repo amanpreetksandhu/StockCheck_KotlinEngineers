@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entitie.InventoryItem
 
 @Composable
 fun InventoryItemCard(
@@ -34,8 +35,9 @@ fun InventoryItemCard(
     qty: Int,
     warehouse: String,
     status: String,
+    id: String,
     onDelete: () -> Unit,
-    onEdit: () -> Unit
+    onEditClick: (InventoryItem) -> Unit
 ) {
     Card(
         modifier = Modifier.fillMaxWidth(),
@@ -54,7 +56,7 @@ fun InventoryItemCard(
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
-                        text = "INVENTORY ITEM",
+                        text = "INVENTORY ITEM ",
                         color = TextGrey,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
@@ -133,7 +135,17 @@ fun InventoryItemCard(
                     tint = TextGrey,
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { onEdit() }
+                        .clickable { onEditClick(
+                            InventoryItem(
+                                id = id, // you'll need to pass `id` too
+                                name = itemName,
+                                category = category,
+                                qty = qty,
+                                warehouse = warehouse,
+                                status = status
+                            )
+
+                        ) }
                 )
             }
         }
