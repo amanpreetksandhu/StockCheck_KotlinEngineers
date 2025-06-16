@@ -6,16 +6,5 @@ import androidx.navigation.NavController
 @Composable
 fun AuthUIPatternStruct (
     navController: NavController,
-
-
-
     ){
-
-
-
-
-
-
-
-
 }
