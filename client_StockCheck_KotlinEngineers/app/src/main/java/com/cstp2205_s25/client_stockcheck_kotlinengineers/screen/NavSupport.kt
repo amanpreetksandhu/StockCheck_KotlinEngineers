@@ -1,18 +1,14 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
-
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
 @Composable
 fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
@@ -25,7 +21,7 @@ fun NavSupport(vm: AuthViewModel) {
         composable(ScreenInventory.LOGIN.route){
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(ScreenInventory.LOCATIONS.route){
+                    navController.navigate(ScreenInventory.INVENTORIES.route){
                         popUpTo(ScreenInventory.LOGIN.route) {inclusive = true}
                     }
                 },
@@ -49,12 +45,22 @@ fun NavSupport(vm: AuthViewModel) {
                 authViewModel = authViewModel
             )
         }
+        //LOCATIONS SCREEN---------------------------------------------\
         composable(ScreenInventory.LOCATIONS.route) {
             LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
                 locationViewModel = locationViewModel)
 
         }
+        //INVENTORY SCREEN------------------------------------------------\
+        composable (ScreenInventory.INVENTORIES.route){
+            InventoryScreen(onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)})
+        }
 
+        //ADD NEW LOCATION SCREEN
+        composable (ScreenInventory.ADDNEWLOCATION.route){
+            AddNewLocationScreen(onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)})
+        }
 
     }
 

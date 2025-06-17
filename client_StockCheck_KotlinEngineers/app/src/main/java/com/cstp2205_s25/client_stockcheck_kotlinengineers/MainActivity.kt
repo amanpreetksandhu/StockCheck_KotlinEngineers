@@ -16,10 +16,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.ScreenInventory
 
 class MainActivity : ComponentActivity() {
 
@@ -31,8 +33,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
+                    val navController = rememberNavController()
+                    val locationViewModel: LocationViewModel = viewModel()
+
                     val authViewModel: AuthViewModel = viewModel()
-                    NavSupport(authViewModel)
+//                    NavSupport(authViewModel)
+                    LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                        onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
+                        locationViewModel = locationViewModel)
                 }
             }
         }
