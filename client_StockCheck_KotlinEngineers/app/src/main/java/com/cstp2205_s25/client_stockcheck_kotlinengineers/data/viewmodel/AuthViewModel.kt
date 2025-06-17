@@ -1,18 +1,20 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel
-
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 
-class AuthViewModel : ViewModel() {
-    var email by mutableStateOf("")
-    var employeeId by mutableStateOf("")
+
+class AuthViewModel: ViewModel() {
+
+    var email by  mutableStateOf("")
+    var employeeId by  mutableStateOf("")
     var password by mutableStateOf("")
+
 
     // State for loading and error
     var isLoading by mutableStateOf(false)
@@ -29,7 +31,7 @@ class AuthViewModel : ViewModel() {
             if (success){
                 onSuccess()
             } else {
-            errorMessage = "Invalid Credentials"
+                errorMessage = "Invalid Credentials"
             }
             isLoading = false
         }
