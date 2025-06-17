@@ -37,10 +37,10 @@ class MainActivity : ComponentActivity() {
                     val locationViewModel: LocationViewModel = viewModel()
 
                     val authViewModel: AuthViewModel = viewModel()
-//                    NavSupport(authViewModel)
-                    LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
-                        onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
-                        locationViewModel = locationViewModel)
+                    NavSupport(authViewModel)
+//                    LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+//                        onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
+//                        locationViewModel = locationViewModel)
                 }
             }
         }
