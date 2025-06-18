@@ -67,7 +67,7 @@ fun InventoryItemCard(
                         color = LightBlueAccent,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable { /* Handle item click */ }
+
                     )
                     Icon(
                         imageVector = Icons.Default.ArrowForward, // Placeholder for a right arrow icon
@@ -137,7 +137,7 @@ fun InventoryItemCard(
                         .size(24.dp)
                         .clickable { onEditClick(
                             InventoryItem(
-                                id = id, // you'll need to pass `id` too
+                                id = id,
                                 name = itemName,
                                 category = category,
                                 qty = qty,
@@ -146,6 +146,7 @@ fun InventoryItemCard(
                             )
 
                         ) }
+
                 )
             }
         }

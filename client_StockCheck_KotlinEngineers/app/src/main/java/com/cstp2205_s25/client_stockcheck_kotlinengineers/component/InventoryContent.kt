@@ -69,7 +69,7 @@ fun InventoryContent(
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        // Search Bar
+        // Search Bar TODO
         OutlinedTextField(
             value = "", // Replace with actual state
             onValueChange = { /* Handle search input */ },
@@ -87,7 +87,7 @@ fun InventoryContent(
             colors = OutlinedTextFieldDefaults.colors(
 
             )
-        );
+      );
 
 
 
@@ -119,6 +119,7 @@ fun InventoryContent(
                     itemToEdit = null
                 },
                 onDismiss = { itemToEdit = null }
+
             )
         }
 

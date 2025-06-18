@@ -50,7 +50,7 @@ fun MainScreen(
                     .background(Color(0xFF289182)) // Green
                     .padding(vertical = 16.dp)
             ) {
-                // App Logo and Refresh Icon
+                // App Logo/name ---> Use same from login/signup pages
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()

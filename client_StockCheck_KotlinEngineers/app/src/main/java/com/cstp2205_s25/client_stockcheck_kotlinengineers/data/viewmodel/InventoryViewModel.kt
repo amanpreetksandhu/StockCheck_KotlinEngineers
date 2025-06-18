@@ -16,7 +16,7 @@ class InventoryViewModel: ViewModel() {
     )
     val inventoryList = _inventoryList.asStateFlow()
 
-    // You’ll use this function in CREATE later
+
     fun addItem(item: InventoryItem) {
         _inventoryList.value = _inventoryList.value + item
     }
