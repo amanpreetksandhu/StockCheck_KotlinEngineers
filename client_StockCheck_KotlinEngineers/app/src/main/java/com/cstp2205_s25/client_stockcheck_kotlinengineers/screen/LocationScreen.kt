@@ -70,7 +70,7 @@ fun LocationScreen(onNavigateToInventory: () -> Unit,
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(10.dp)
+//                    .padding(10.dp)
                     .offset(y = (-20).dp),
                 shape = RoundedCornerShape(12.dp),
                 color = Color.White,
