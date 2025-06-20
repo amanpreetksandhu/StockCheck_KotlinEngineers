@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
 @Composable
