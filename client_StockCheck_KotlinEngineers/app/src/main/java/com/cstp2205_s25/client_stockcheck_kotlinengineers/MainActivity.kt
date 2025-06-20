@@ -21,7 +21,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthVie
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.ScreenInventory
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 
 class MainActivity : ComponentActivity() {
 
