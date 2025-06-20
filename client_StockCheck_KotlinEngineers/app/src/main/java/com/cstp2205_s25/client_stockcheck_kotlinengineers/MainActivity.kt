@@ -33,6 +33,12 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val authViewModel: AuthViewModel = viewModel()
                     NavSupport(authViewModel)
+<<<<<<< Updated upstream
+=======
+                    //LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                     //   onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
+                      //  locationViewModel = locationViewModel)
+>>>>>>> Stashed changes
                 }
             }
         }

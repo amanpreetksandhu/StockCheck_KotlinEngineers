@@ -58,9 +58,6 @@ fun SignupScreen(
             label = "Email",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -71,9 +68,7 @@ fun SignupScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -85,9 +80,6 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -112,8 +104,6 @@ fun SignupScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-//                containerColor = scGreen, // Your custom green
-//                contentColor = Color.White // White text
             )
         )
         Spacer(modifier = Modifier.height(50.dp))

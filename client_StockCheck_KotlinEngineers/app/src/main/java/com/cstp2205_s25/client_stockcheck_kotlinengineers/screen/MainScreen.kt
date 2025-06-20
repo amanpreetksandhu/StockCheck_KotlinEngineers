@@ -67,7 +67,14 @@ fun MainScreen(
                         )
                     }
                 }
+<<<<<<< Updated upstream:client_StockCheck_KotlinEngineers/app/src/main/java/com/cstp2205_s25/client_stockcheck_kotlinengineers/screen/MainScreen.kt
                 Spacer(modifier = Modifier.height(24.dp)) // Spacing between logo and tabs
+=======
+            )
+        },
+        containerColor = Color(0xFF232940) // Main Blue
+    )
+>>>>>>> Stashed changes:client_StockCheck_KotlinEngineers/app/src/main/java/com/cstp2205_s25/client_stockcheck_kotlinengineers/screen/InventoryScreen.kt
 
                 // Segmented Tabs
                 Row(

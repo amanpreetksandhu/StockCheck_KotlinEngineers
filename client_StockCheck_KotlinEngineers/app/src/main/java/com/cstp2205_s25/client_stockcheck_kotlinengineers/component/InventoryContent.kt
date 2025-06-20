@@ -65,7 +65,7 @@ fun InventoryContent(
             text = "Inventory",
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF289182),
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 24.dp)
         )
 

@@ -105,7 +105,7 @@ fun InventoryItemCard(
                 }
                 Column {
                     Text(
-                        text = "WAREHOUSE",
+                        text = "LOCATION",
                         color = TextGrey,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
