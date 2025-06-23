@@ -60,7 +60,8 @@ fun NavSupport(vm: AuthViewModel) {
 
         //ADD NEW LOCATION SCREEN
         composable (ScreenInventory.ADDNEWLOCATION.route){
-            AddNewLocationScreen(onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)})
+            AddNewLocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)})
         }
 
     }
