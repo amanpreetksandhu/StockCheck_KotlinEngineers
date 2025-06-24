@@ -32,7 +32,7 @@ async function getLocationById(req, res) {
 
 //Create location
 async function createLocation(req, res) {
-  const { name, address, contactName, contactEmail, contactPhone } = req.body;
+  const { name, address, city, country, contactName, contactPosition, contactEmail, contactPhone } = req.body;
 
   if (!isValidEmail(contactEmail)) {
     return res.status(400).json({ message: 'Invalid email format.' });
@@ -41,7 +41,7 @@ async function createLocation(req, res) {
     return res.status(400).json({ message: 'Invalid phone number format.' });
   }
 
-  const location = new Location({ name, address, contactName, contactEmail, contactPhone });
+  const location = new Location({ name, address, city, country, contactName, contactPosition, contactEmail, contactPhone });
   try {
     const newLoc = await location.save();
     res.status(201).json(newLoc);
