@@ -13,7 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
@@ -37,7 +36,7 @@ fun EditLocationScreen(
 ) {
     var selectedTab by remember { mutableStateOf("Locations") }
     val form = locationViewModel.locationState.value
-    var error = ""
+    var errorMsg by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -45,9 +44,7 @@ fun EditLocationScreen(
                 selectedTab = selectedTab,
                 onTabSelected = {
                     selectedTab = it
-                    if (it == "Inventory") {
-                        onNavigateToInventory()
-                    }
+                    if (it == "Inventory") onNavigateToInventory()
                 }
             )
         },
@@ -61,76 +58,59 @@ fun EditLocationScreen(
             Row(modifier = Modifier.padding(top = 10.dp)) {
                 ArrowBackIcon(onNavigateToBackPage = { onNavigateToLocation() })
                 Spacer(modifier = Modifier.width(10.dp))
-                PageHeader(headerText = "Add New Location")
+                PageHeader(headerText = "Edit Location")
             }
-            Divider(modifier = Modifier.padding(vertical = 20.dp))
 
+            Divider(modifier = Modifier.padding(vertical = 20.dp))
             Subheader(text = "Location Details")
 
-            RoundedInputField(
-                label = "Location Name",
-                value = form.name,
-                onValueChange = { locationViewModel.locationState.value = form.copy(name = it) })
-            RoundedInputField(
-                label = "Street Address",
-                value = form.address,
-                onValueChange = { locationViewModel.locationState.value = form.copy(address = it) })
-            RoundedInputField(
-                label = "City",
-                value = form.city,
-                onValueChange = { locationViewModel.locationState.value = form.copy(city = it) })
-            RoundedInputField(
-                label = "Country",
-                value = form.country,
-                onValueChange = { locationViewModel.locationState.value = form.copy(country = it) })
+            RoundedInputField("Location Name", form.name) {
+                locationViewModel.locationState.value = form.copy(name = it)
+            }
+            RoundedInputField("Street Address", form.address) {
+                locationViewModel.locationState.value = form.copy(address = it)
+            }
+            RoundedInputField("City", form.city) {
+                locationViewModel.locationState.value = form.copy(city = it)
+            }
+            RoundedInputField("Country", form.country) {
+                locationViewModel.locationState.value = form.copy(country = it)
+            }
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
-
             Subheader(text = "Contact Details")
 
-            RoundedInputField(
-                label = "Contact Name",
-                value = form.contactName,
-                onValueChange = {
-                    locationViewModel.locationState.value = form.copy(contactName = it)
-                })
-            RoundedInputField(
-                label = "Position",
-                value = form.contactPosition,
-                onValueChange = {
-                    locationViewModel.locationState.value = form.copy(contactPosition = it)
-                })
-            RoundedInputField(
-                label = "Phone Number",
-                value = form.contactPhone,
-                onValueChange = {
-                    locationViewModel.locationState.value = form.copy(contactPhone = it)
-                })
-            RoundedInputField(
-                label = "Email",
-                value = form.contactEmail,
-                onValueChange = {
-                    locationViewModel.locationState.value = form.copy(contactEmail = it)
-                })
+            RoundedInputField("Contact Name", form.contactName) {
+                locationViewModel.locationState.value = form.copy(contactName = it)
+            }
+            RoundedInputField("Position", form.contactPosition) {
+                locationViewModel.locationState.value = form.copy(contactPosition = it)
+            }
+            RoundedInputField("Phone Number", form.contactPhone) {
+                locationViewModel.locationState.value = form.copy(contactPhone = it)
+            }
+            RoundedInputField("Email", form.contactEmail) {
+                locationViewModel.locationState.value = form.copy(contactEmail = it)
+            }
 
             Spacer(modifier = Modifier.height(32.dp))
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToLocation() })
-                PrimaryActionButton(text = "Add Location", eroorMessage = error, onClickAction = {
+                OutlinedCancelButton(text = "Cancel") {
+                    onNavigateToLocation()
+                }
+                PrimaryActionButton(text = "Update Location", eroorMessage = errorMsg) {
                     locationViewModel.editLocation(locationViewModel.locationState.value) { success ->
                         if (success) {
                             onNavigateToLocation()
                         } else {
-                            error = "Add locationError while editing new location"
+                            errorMsg = "Error updating location"
                         }
                     }
-                })
+                }
             }
         }
     }
 }
-
-
