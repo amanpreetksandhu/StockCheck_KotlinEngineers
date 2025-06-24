@@ -1,7 +1,5 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.components
 
-import android.R
-import android.graphics.drawable.Icon
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -20,27 +17,25 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DarkPrimary
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.LightBlueAccent
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TextGrey
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 @Composable
 fun LocationCard(
     location: Location,
     onEditLocation: () -> Unit,
-    onDeleteLocation: () -> Unit
+    onDeleteLocation: () -> Unit,
+    locationViewModel: LocationViewModel
 ) {
     Card(
         modifier = Modifier
@@ -146,7 +141,8 @@ fun LocationCard(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            Row (){
+            // Edit and Delete Icons
+            Row() {
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
@@ -162,7 +158,10 @@ fun LocationCard(
                     tint = Color.Blue,
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { onEditLocation() }
+                        .clickable {
+                            locationViewModel.locationState.value = location
+                            onEditLocation()
+                        }
                 )
 
             }

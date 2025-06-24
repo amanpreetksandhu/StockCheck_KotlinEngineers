@@ -10,20 +10,22 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScreen
+
 @Composable
 fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
     val locationViewModel: LocationViewModel = viewModel()
 
-    NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route){
+    NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route) {
 
         // LOGIN ROUTES LOGIC----------------------------------------------\
-        composable(ScreenInventory.LOGIN.route){
+        composable(ScreenInventory.LOGIN.route) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(ScreenInventory.INVENTORIES.route){
-                        popUpTo(ScreenInventory.LOGIN.route) {inclusive = true}
+                    navController.navigate(ScreenInventory.INVENTORIES.route) {
+                        popUpTo(ScreenInventory.LOGIN.route) { inclusive = true }
                     }
                 },
                 onNavigateToSignup = {
@@ -34,12 +36,13 @@ fun NavSupport(vm: AuthViewModel) {
         }
 
         // SIGNUP ROUTES LOGIC ---------------------------------------\
-        composable(ScreenInventory.SIGNUP.route){
-            SignupScreen(onSignupSuccess = {
-                navController.navigate(ScreenInventory.LOCATIONS.route) {
-                    popUpTo(ScreenInventory.SIGNUP.route) { inclusive = true }
-                }
-            },
+        composable(ScreenInventory.SIGNUP.route) {
+            SignupScreen(
+                onSignupSuccess = {
+                    navController.navigate(ScreenInventory.LOCATIONS.route) {
+                        popUpTo(ScreenInventory.SIGNUP.route) { inclusive = true }
+                    }
+                },
                 onNavigateToLogin = {
                     navController.popBackStack()
                 },
@@ -48,27 +51,38 @@ fun NavSupport(vm: AuthViewModel) {
         }
         //LOCATIONS SCREEN---------------------------------------------\
         composable(ScreenInventory.LOCATIONS.route) {
-            LocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
-                onNavigateToAddLocation = {navController.navigate(ScreenInventory.ADDNEWLOCATION.route)},
-                locationViewModel = locationViewModel)
+            LocationScreen(
+                onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
+                onNavigateToAddLocation = { navController.navigate(ScreenInventory.ADDNEWLOCATION.route) },
+                onNavigateToEditLocation = { navController.navigate(ScreenInventory.EDITLOCATION.route) },
+                locationViewModel = locationViewModel
+            )
 
         }
         //INVENTORY SCREEN------------------------------------------------\
-        composable (ScreenInventory.INVENTORIES.route){
-            InventoryScreen(onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)})
+        composable(ScreenInventory.INVENTORIES.route) {
+            InventoryScreen(onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) })
         }
 
         //ADD NEW LOCATION SCREEN
-        composable (ScreenInventory.ADDNEWLOCATION.route){
-            AddNewLocationScreen(onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
-                onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)},
-                locationViewModel=locationViewModel)
+        composable(ScreenInventory.ADDNEWLOCATION.route) {
+            AddNewLocationScreen(
+                onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
+                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                locationViewModel = locationViewModel
+            )
+        }
+
+        //EDIT LOCATION SCREEN
+        composable(ScreenInventory.EDITLOCATION.route) {
+            EditLocationScreen(
+                onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
+                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                locationViewModel = locationViewModel
+            )
         }
 
     }
-
-
-
 
 
 }
