@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Button
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.component
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -12,9 +12,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PrimaryActionButton(text: String, onClickAction: () ->Unit){
+fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->Unit){
     Button(
-        onClick = { },
+        onClick = { onClickAction() },
         modifier = Modifier
             .height(50.dp)
             .width(180.dp),
@@ -23,4 +23,5 @@ fun PrimaryActionButton(text: String, onClickAction: () ->Unit){
     ) {
         Text(text, color = Color.White)
     }
+    Text(eroorMessage)
 }
