@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Button
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.component
 
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width

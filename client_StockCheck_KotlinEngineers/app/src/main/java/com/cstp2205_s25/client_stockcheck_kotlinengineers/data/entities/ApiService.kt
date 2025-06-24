@@ -14,7 +14,7 @@ object ApiService {
     private const val BASE_URL = "http://10.0.2.2:5000"  //Android emulator localhost
 // Signup user
     suspend fun signup(email: String, employeeId: String, password: String): Boolean {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) { // this makes sure the network call runs in the background and doesn't slow down or freeze the main screen.
             val url = URL("$BASE_URL/signup")
             val postData = JSONObject()
             postData.put("email", email)
@@ -83,7 +83,10 @@ object ApiService {
                             id = obj.getString("_id"),
                             obj.getString("name"),
                             obj.getString("address"),
+                            obj.getString("city"),
+                            obj.getString("country"),
                             obj.getString("contactName"),
+                            obj.getString("contactPosition"),
                             obj.getString("contactEmail"),
                             obj.optString("contactPhone"),
                         )
@@ -102,7 +105,10 @@ object ApiService {
             val postData = JSONObject().apply {
                 put("name", location.name)
                 put("address", location.address)
+                put("city", location.city)
+                put("country", location.country)
                 put("contactName", location.contactName)
+                put("contactPosition", location.contactPosition)
                 put("contactEmail", location.contactEmail)
                 put("contactPhone", location.contactPhone)
             }
@@ -129,7 +135,10 @@ object ApiService {
             val putData = JSONObject().apply {
                 put("name", location.name)
                 put("address", location.address)
+                put("city", location.city)
+                put("country", location.country)
                 put("contactName", location.contactName)
+                put("contactPosition", location.contactPosition)
                 put("contactEmail", location.contactEmail)
                 put("contactPhone", location.contactPhone)
             }

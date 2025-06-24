@@ -97,7 +97,6 @@ fun LocationCard(
                 modifier = Modifier,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
                 // ADDRESS
                 Column(modifier = Modifier.width(160.dp)) {
                     Text(
@@ -107,7 +106,17 @@ fun LocationCard(
                         color = TextGrey
                     )
                     Text(
-                        text = location.address,
+                        text = ("${location.address}, "),
+                        fontSize = 14.sp,
+                        color = DarkPrimary
+                    )
+                    Text(
+                        text = ("${location.city}, "),
+                        fontSize = 14.sp,
+                        color = DarkPrimary
+                    )
+                    Text(
+                        text = location.country,
                         fontSize = 14.sp,
                         color = DarkPrimary
                     )

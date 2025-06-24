@@ -16,12 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RoundedInputField(label: String) {
-    var text by remember { mutableStateOf("") }
+fun RoundedInputField(label: String, value: String, onValueChange: (String) -> Unit) {
 
     OutlinedTextField(
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = { onValueChange(it) },
         label = { Text(label) },
         modifier = Modifier
             .fillMaxWidth()
