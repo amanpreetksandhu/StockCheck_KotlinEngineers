@@ -11,6 +11,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInven
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationDetailsScreen
 
 @Composable
 fun NavSupport(vm: AuthViewModel) {
@@ -55,7 +56,8 @@ fun NavSupport(vm: AuthViewModel) {
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToAddLocation = { navController.navigate(ScreenInventory.ADDNEWLOCATION.route) },
                 onNavigateToEditLocation = { navController.navigate(ScreenInventory.EDITLOCATION.route) },
-                locationViewModel = locationViewModel
+                locationViewModel = locationViewModel,
+                onNavigateToLocationDetailsPage = { navController.navigate(ScreenInventory.LOCATIONDETAILS) }
             )
 
         }
@@ -82,6 +84,12 @@ fun NavSupport(vm: AuthViewModel) {
             )
         }
 
+        composable(ScreenInventory.LOCATIONDETAILS.route) {
+            LocationDetailsScreen(
+                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                locationViewModel = locationViewModel
+            )
+        }
     }
 
 

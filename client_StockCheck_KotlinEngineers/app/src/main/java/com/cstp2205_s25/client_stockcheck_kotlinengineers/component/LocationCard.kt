@@ -1,5 +1,7 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.components
 
+import androidx.compose.foundation.Image
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +24,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.LinkAnnotation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,7 +39,8 @@ fun LocationCard(
     location: Location,
     onEditLocation: () -> Unit,
     onDeleteLocation: () -> Unit,
-    locationViewModel: LocationViewModel
+    locationViewModel: LocationViewModel,
+    onNavigateToLocationDetailsPage: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -60,12 +65,22 @@ fun LocationCard(
                         fontWeight = FontWeight.SemiBold,
                         color = TextGrey
                     )
-                    Text(
-                        text = location.name,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Blue
-                    )
+
+                    Row(
+                        modifier = Modifier
+                            .clickable(onClick = { onNavigateToLocationDetailsPage() })
+                    ) {
+                        Text(
+                            text = location.name,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Blue
+                        )
+                        Image(
+                            painterResource(R.drawable.chevron_right),
+                            contentDescription = "chevron_right"
+                        )
+                    }
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 // CONTACT NAME

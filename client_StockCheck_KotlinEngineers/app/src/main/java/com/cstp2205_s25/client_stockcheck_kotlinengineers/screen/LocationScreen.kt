@@ -33,7 +33,8 @@ fun LocationScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToAddLocation: () -> Unit,
     onNavigateToEditLocation: () -> Unit,
-    locationViewModel: LocationViewModel
+    locationViewModel: LocationViewModel,
+    onNavigateToLocationDetailsPage: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -93,7 +94,10 @@ fun LocationScreen(
                             onDeleteLocation = {
                                 locationViewModel.deleteLocation(location.id)
                             },
-                            locationViewModel = locationViewModel
+                            locationViewModel = locationViewModel,
+                            onNavigateToLocationDetailsPage = {
+                                onNavigateToLocationDetailsPage()
+                            }
                         )
                     }
 
