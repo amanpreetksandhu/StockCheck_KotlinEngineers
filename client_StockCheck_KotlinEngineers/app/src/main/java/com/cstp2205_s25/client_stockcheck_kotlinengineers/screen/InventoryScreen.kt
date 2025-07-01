@@ -21,7 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryContent
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 
 @Composable
 fun InventoryScreen(
@@ -36,7 +36,7 @@ fun InventoryScreen(
     // -------------------------------------------/
     Scaffold(
         topBar = {
-            TopBar(
+            TopSection(
                 selectedTab = selectedTab,
                 onTabSelected = {
                     selectedTab = it

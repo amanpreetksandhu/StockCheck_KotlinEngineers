@@ -1,5 +1,6 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.material3.Surface
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,12 +20,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.LaunchedEffect
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
@@ -44,81 +43,49 @@ fun LocationScreen(
     var selectedTab by remember { mutableStateOf("Locations") }
     var showAddDialog by remember { mutableStateOf(false) }
 
-    Scaffold(
-        topBar = {
-            TopBar(
-                selectedTab = selectedTab,
-                onTabSelected = {
-                    selectedTab = it
-                    if (it == "Inventory") {
-                        onNavigateToInventory()
-                    }
-                }
-            )
-        },
-        containerColor = Color(0xFF289182)
-    ) { paddingValues ->
-        Column(
+    Scaffold() { paddingValues ->
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(paddingValues)
-                .padding(top = 20.dp)
+                .fillMaxSize()
+                .padding(bottom = 16.dp)
         ) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-//                    .padding(10.dp)
-                    .offset(y = (-20).dp),
-                shape = RoundedCornerShape(12.dp),
-                color = Color.White,
-                shadowElevation = 8.dp
-            ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    item {
-                        PageHeaderSection(
-                            headerText = "Locations",
-                            onNavigateToAddLocation = { onNavigateToAddLocation() }
-                        )
-                    }
-
-                    itemsIndexed(locations) { index, location ->
-                        LocationCard(
-                            location = location,
-                            onEditLocation = {
-                                onNavigateToEditLocation()
-                            },
-                            onDeleteLocation = {
-                                locationViewModel.deleteLocation(location.id)
-                            },
-                            locationViewModel = locationViewModel,
-                            onNavigateToLocationDetailsPage = {
-                                onNavigateToLocationDetailsPage()
-                            }
-                        )
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
-                    }
-                }
-            }
-
-
-
-            if (showAddDialog) {
-                AddItemDialog(
-                    onAdd = {
-                        // inventoryViewModel.addItem(it) // if used
-                        showAddDialog = false
-                    },
-                    onDismiss = {
-                        showAddDialog = false
+            item {
+                TopSection(
+                    selectedTab = selectedTab,
+                    onTabSelected = {
+                        selectedTab = it
+                        if (it == "Inventory") {
+                            onNavigateToInventory()
+                        }
                     }
                 )
+                PageHeaderSection(
+                    headerText = "Locations",
+                    onNavigateToAddLocation = { onNavigateToAddLocation() }
+                )
+            }
+
+            itemsIndexed(locations) { index, location ->
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    LocationCard(
+                        location = location,
+                        onEditLocation = {
+                            onNavigateToEditLocation()
+                        },
+                        onDeleteLocation = {
+                            locationViewModel.deleteLocation(location.id)
+                        },
+                        locationViewModel = locationViewModel,
+                        onNavigateToLocationDetailsPage = {
+                            onNavigateToLocationDetailsPage()
+                        }
+                    )
+                }
+
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
             }
         }
     }

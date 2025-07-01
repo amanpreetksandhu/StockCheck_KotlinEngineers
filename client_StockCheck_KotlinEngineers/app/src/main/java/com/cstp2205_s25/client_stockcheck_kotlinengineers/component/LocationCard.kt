@@ -74,7 +74,7 @@ fun LocationCard(
                             text = location.name,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Medium,
-                            color = Color.Blue
+                            color = Color(0xFF2E66E5)
                         )
                         Image(
                             painterResource(R.drawable.chevron_right),
@@ -161,7 +161,7 @@ fun LocationCard(
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
-                    tint = Color.Red,
+                    tint = Color(0xFFC94414),
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onDeleteLocation() }
@@ -170,7 +170,7 @@ fun LocationCard(
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
-                    tint = Color.Blue,
+                    tint = Color(0xFF2E66E5),
                     modifier = Modifier
                         .size(24.dp)
                         .clickable {

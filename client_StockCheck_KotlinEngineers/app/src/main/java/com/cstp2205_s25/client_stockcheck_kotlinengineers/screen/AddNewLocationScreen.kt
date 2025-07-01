@@ -26,7 +26,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActio
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.RoundedInputField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Subheader
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 @Composable
@@ -46,7 +46,7 @@ fun AddNewLocationScreen(
 
     Scaffold(
         topBar = {
-            TopBar(
+            TopSection(
                 selectedTab = selectedTab,
                 onTabSelected = {
                     selectedTab = it

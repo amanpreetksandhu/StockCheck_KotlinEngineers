@@ -36,7 +36,7 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
             text = headerText,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF289182),
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 24.dp)
         )
         // Search Field
@@ -67,7 +67,7 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(bottom = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = LightBlueAccent),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E66E5)),
             shape = RoundedCornerShape(24.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {
