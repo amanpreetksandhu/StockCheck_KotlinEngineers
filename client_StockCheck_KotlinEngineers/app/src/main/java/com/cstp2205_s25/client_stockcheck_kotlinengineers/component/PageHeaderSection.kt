@@ -32,13 +32,8 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
             .padding(24.dp)
     ) {
         // Page Header
-        Text(
-            text = headerText,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color.Black,
-            modifier = Modifier.padding(bottom = 24.dp)
-        )
+        PageHeaderText(headerText = headerText)
+
         // Search Field
         OutlinedTextField(
             value = "",

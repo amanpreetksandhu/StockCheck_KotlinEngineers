@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
@@ -97,6 +98,12 @@ fun NavSupport(vm: AuthViewModel) {
                     locationId = it,
                     onNavigateToLocation = {
                         navController.navigate(ScreenInventory.LOCATIONS.route)
+                    },
+                    onNavigateToInventory = {
+                        navController.navigate(ScreenInventory.INVENTORIES.route)
+                    },
+                    onNavigateToEditLocation={
+                        navController.navigate(ScreenInventory.EDITLOCATION.route)
                     },
                     locationViewModel = locationViewModel
                 )
