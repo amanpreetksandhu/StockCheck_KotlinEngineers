@@ -7,5 +7,7 @@ sealed class ScreenInventory(val route: String) {
     object INVENTORIES : ScreenInventory("inventory")
     object ADDNEWLOCATION : ScreenInventory("add_new_location")
     object EDITLOCATION : ScreenInventory("edit_location")
-    object LOCATIONDETAILS : ScreenInventory("lcoation_details")
+    object LOCATIONDETAILS : ScreenInventory("locationDetails/{locationId}") {
+        fun createRoute(locationId: String) = "locationDetails/$locationId"
+    }
 }

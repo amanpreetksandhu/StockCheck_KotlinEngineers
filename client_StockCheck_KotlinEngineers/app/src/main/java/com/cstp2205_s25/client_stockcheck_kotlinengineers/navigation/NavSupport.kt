@@ -2,9 +2,11 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
@@ -57,7 +59,7 @@ fun NavSupport(vm: AuthViewModel) {
                 onNavigateToAddLocation = { navController.navigate(ScreenInventory.ADDNEWLOCATION.route) },
                 onNavigateToEditLocation = { navController.navigate(ScreenInventory.EDITLOCATION.route) },
                 locationViewModel = locationViewModel,
-                onNavigateToLocationDetailsPage = { navController.navigate(ScreenInventory.LOCATIONDETAILS) }
+                navController = navController
             )
 
         }
@@ -84,13 +86,22 @@ fun NavSupport(vm: AuthViewModel) {
             )
         }
 
-        composable(ScreenInventory.LOCATIONDETAILS.route) {
-            LocationDetailsScreen(
-                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
-                locationViewModel = locationViewModel
-            )
+        // SELECTED LOCATION DETAILS SCREEN
+        composable(
+            route = ScreenInventory.LOCATIONDETAILS.route,
+            arguments = listOf(navArgument("locationId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val locationId = backStackEntry.arguments?.getString("locationId")
+            locationId?.let {
+                LocationDetailsScreen(
+                    locationId = it,
+                    onNavigateToLocation = {
+                        navController.navigate(ScreenInventory.LOCATIONS.route)
+                    },
+                    locationViewModel = locationViewModel
+                )
+            }
         }
+
     }
-
-
 }

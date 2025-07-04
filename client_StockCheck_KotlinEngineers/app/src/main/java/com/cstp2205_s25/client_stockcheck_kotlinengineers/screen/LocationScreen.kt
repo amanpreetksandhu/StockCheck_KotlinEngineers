@@ -22,10 +22,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 
 @Composable
 fun LocationScreen(
@@ -33,15 +36,15 @@ fun LocationScreen(
     onNavigateToAddLocation: () -> Unit,
     onNavigateToEditLocation: () -> Unit,
     locationViewModel: LocationViewModel,
-    onNavigateToLocationDetailsPage: () -> Unit
+    navController: NavController
 ) {
 
     LaunchedEffect(Unit) {
         locationViewModel.loadLocations()
     }
+
     val locations by locationViewModel.locations.collectAsState()
     var selectedTab by remember { mutableStateOf("Locations") }
-    var showAddDialog by remember { mutableStateOf(false) }
 
     Scaffold() { paddingValues ->
         LazyColumn(
@@ -77,7 +80,7 @@ fun LocationScreen(
                         },
                         locationViewModel = locationViewModel,
                         onNavigateToLocationDetailsPage = {
-                            onNavigateToLocationDetailsPage()
+                            navController.navigate(ScreenInventory.LOCATIONDETAILS.createRoute(location.id))
                         }
                     )
                 }

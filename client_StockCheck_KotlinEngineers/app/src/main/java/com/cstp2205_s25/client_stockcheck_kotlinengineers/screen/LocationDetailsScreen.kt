@@ -6,8 +6,9 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 
 @Composable
 fun LocationDetailsScreen(
+    locationId: String,
     onNavigateToLocation: () -> Unit,
     locationViewModel: LocationViewModel
 ) {
-    Text("Location details")
+    Text("Details for location ID: $locationId")
 }
