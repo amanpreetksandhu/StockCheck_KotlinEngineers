@@ -95,27 +95,13 @@ fun SignupScreen(
         ComposeButton(
             text = "Sign Up",
             onClick = {
-                scope.launch {
-                    try {
-                        val success = ApiService.signup(email, employeeId, password)
-                        errorMessage = if (success) {
-                            onSignupSuccess()
-                            "Signup successful!"
-                        } else {
-                            "Signup failed. Please try again."
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()  // You can also log this
-                        errorMessage = "An error occurred: ${e.localizedMessage}"
-                    }
+                authViewModel.signup {
+                    onSignupSuccess()
                 }
             },
             modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-//                containerColor = scGreen, // Your custom green
-//                contentColor = Color.White // White text
-            )
         )
+
         Spacer(modifier = Modifier.height(50.dp))
 
         Row(
@@ -130,7 +116,6 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
-//                color = scBlue,
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,
@@ -142,7 +127,7 @@ fun SignupScreen(
             )
         }
 
-        errorMessage?.let {
+        authViewModel.errorMessage?.let {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }

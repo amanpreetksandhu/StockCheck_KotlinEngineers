@@ -57,9 +57,6 @@ fun LoginScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
             )
 
 
@@ -73,11 +70,6 @@ fun LoginScreen(
             label = "Password",
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
-            colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
-            )
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -85,22 +77,18 @@ fun LoginScreen(
         ComposeButton(
             text = "Login",
             onClick = {
-                scope.launch {
-                    val success = ApiService.login(employeeId, password)
-                    message = if (success) {
-                        onLoginSuccess()
-                        "Login successful!"
-                    } else {
-                        "Invalid credentials"
-                    }
+                authViewModel.login {
+                    onLoginSuccess()
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(
-//                containerColor = scGreen, // Your custom green
-//                contentColor = Color.White // White text
-            )
+            modifier = Modifier.fillMaxWidth()
         )
+
+        authViewModel.errorMessage?.let {
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(text = it, color = MaterialTheme.colorScheme.error)
+        }
+
         Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "I am a new user",
@@ -111,7 +99,7 @@ fun LoginScreen(
                     onNavigateToSignup()
                 }
         )
-        message?.let {
+        authViewModel.errorMessage?.let {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }

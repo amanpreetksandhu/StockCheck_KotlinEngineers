@@ -45,13 +45,14 @@ class AuthViewModel: ViewModel() {
         viewModelScope.launch {
             delay(1000)
             // Validate and call backend API
-            if (employeeId.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()) {
+            if (employeeId.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 errorMessage = "Please fill all fields"
                 isLoading = false
-                return@launch // What does this do??
+                return@launch // What does this do?? // to exit the launch block only not the whole signup fun.
+
             }
 
-            val success = ApiService.signup(employeeId,password,email)
+            val success = ApiService.signup(email, employeeId, password)
             if (success) {
                 onSuccess()
             } else {
