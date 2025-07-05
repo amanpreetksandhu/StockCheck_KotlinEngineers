@@ -26,7 +26,13 @@ import androidx.compose.ui.unit.sp
 
 // This component contains PAGE HEADER, SEARCH BAR AND ADD BUTTON on the page of locations and inventory
 @Composable
-fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
+fun PageHeaderSection(
+    headerText: String,
+    onNavigateToAddLocation: () -> Unit,
+    onNavigateToAddNewInventoryItem: () -> Unit){
+
+
+
     Column(
         modifier = Modifier
             .padding(24.dp)
@@ -36,7 +42,7 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
             text = headerText,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF289182),
+            color = Color.Black,
             modifier = Modifier.padding(bottom = 24.dp)
         )
         // Search Field
@@ -62,12 +68,18 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
         Spacer(modifier = Modifier.padding(10.dp))
         // Add Button
         Button (
-            onClick = { onNavigateToAddLocation() },
+            onClick = { if (headerText == "Locations"){
+                    onNavigateToAddLocation()
+                } else if (headerText == "Inventory"){
+                    onNavigateToAddNewInventoryItem()
+            }
+
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(bottom = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = LightBlueAccent),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
             shape = RoundedCornerShape(24.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {
@@ -77,7 +89,13 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
                 tint = Color.White
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Add New $headerText", color = Color.White, fontSize = 18.sp)
+            if (headerText == "Locations") {
+                Text(text = "Add New Location", color = Color.White, fontSize = 18.sp)
+            } else if (headerText == "Inventory") {
+                Text(text = "Add New Item", color = Color.White, fontSize = 18.sp)
+            }
+
+
         }
 
     }

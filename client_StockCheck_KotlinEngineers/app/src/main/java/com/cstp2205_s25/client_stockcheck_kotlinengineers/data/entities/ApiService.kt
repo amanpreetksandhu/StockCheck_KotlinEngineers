@@ -12,6 +12,7 @@ import java.net.URL
 
 object ApiService {
     private const val BASE_URL = "http://10.0.2.2:5000"  //Android emulator localhost
+
 // Signup user
     suspend fun signup(email: String, employeeId: String, password: String): Boolean {
         return withContext(Dispatchers.IO) { // this makes sure the network call runs in the background and doesn't slow down or freeze the main screen.
@@ -37,6 +38,7 @@ object ApiService {
             responseCode == 201 // return true if user created successfully
         }
     }
+
 // Login user
     suspend fun login(employeeId: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
@@ -61,6 +63,7 @@ object ApiService {
             responseCode == 200 // true if login success
         }
     }
+
     // Get all locations
     suspend fun getAllLocations(): List<Location> {
         return withContext(Dispatchers.IO) {
@@ -98,6 +101,7 @@ object ApiService {
             locations
         }
     }
+
     // Create new location
     suspend fun createLocation(location: Location): Boolean {
         return withContext(Dispatchers.IO) {
@@ -157,7 +161,8 @@ object ApiService {
             responseCode == 200 // true if update successful
         }
     }
-// Delete a location
+
+    // Delete a location
     suspend fun deleteLocation(id: String): Boolean {
         return withContext(Dispatchers.IO) {
             val url = URL("$BASE_URL/locations/$id")
@@ -169,5 +174,128 @@ object ApiService {
             responseCode == 200 // true if deletion was successful
         }
     }
+    //==========================================END OF LOCATION METHODS============================/
+
+    // ======================================= INVENTORY METHODS ==================================/
+
+    //Get all items
+    suspend fun getAllInventoryItems(): List<InventoryItem> {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/inventory")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "GET"
+
+            val items = mutableListOf<InventoryItem>()
+
+            if (conn.responseCode == 200) {
+                val reader = BufferedReader(InputStreamReader(conn.inputStream))
+                val response = reader.readText()
+                reader.close()
+
+                val jsonArray = JSONArray(response)
+                for (i in 0 until jsonArray.length()) {
+                    val obj = jsonArray.getJSONObject(i)
+                    items.add(
+                        InventoryItem(
+                            id = obj.getString("_id"),
+                            name = obj.getString("name"),
+                            description = obj.optString("description", ""),
+                            category = obj.optString("category", ""),
+                            qty = obj.getInt("quantity"),
+                            price = obj.optDouble("price", 0.0),
+                            imageUrl = obj.optString("imageUrl", null),
+                            locationId = obj.getString("locationId"),
+                            status = obj.optString("status", null)
+                        )
+                    )
+                }
+            }
+
+            conn.disconnect()
+            items
+        }
+    }
+
+
+    // Add new item
+    suspend fun addInventoryItem(item: InventoryItem): Boolean {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/inventory")
+            val postData = JSONObject().apply {
+                put("name", item.name)
+                put("description", item.description)
+                put("category", item.category)
+                put("qty", item.qty)
+                put("price", item.price)
+                put("imageUrl", item.imageUrl)
+                put("locationId", item.locationId)
+                put("status", item.status)
+            }
+
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "POST"
+            conn.setRequestProperty("Content-Type", "application/json")
+            conn.doOutput = true
+
+            BufferedOutputStream(conn.outputStream).use {
+                it.write(postData.toString().toByteArray())
+            }
+
+            val responseCode = conn.responseCode
+            conn.disconnect()
+            responseCode == 201
+        }
+    }
+
+
+    // Edit item
+
+    suspend fun editInventoryItem(item: InventoryItem): Boolean {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/inventory/${item.id}")
+            val putData = JSONObject().apply {
+                put("name", item.name)
+                put("description", item.description)
+                put("category", item.category)
+                put("qty", item.qty)
+                put("price", item.price)
+                put("imageUrl", item.imageUrl)
+                put("locationId", item.locationId)
+                put("status", item.status)
+            }
+
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "PUT"
+            conn.setRequestProperty("Content-Type", "application/json")
+            conn.doOutput = true
+
+            BufferedOutputStream(conn.outputStream).use {
+                it.write(putData.toString().toByteArray())
+            }
+
+            val responseCode = conn.responseCode
+            conn.disconnect()
+            responseCode == 200
+        }
+    }
+
+
+
+    // Delete item
+    suspend fun deleteInventoryItem(id: String): Boolean {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/inventory/$id")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "DELETE"
+
+            val responseCode = conn.responseCode
+            conn.disconnect()
+            responseCode == 200
+        }
+    }
+
+
+
+
 
 }

@@ -28,7 +28,7 @@ fun TabItem(
             .width(150.dp) // Fixed width for tab items
             .height(50.dp),
         shape = RoundedCornerShape(12.dp),
-        color = if (isSelected) Color(0xFFA6CEFB) else Color(0xFF289182),
+        color = if (isSelected) Color(0xFF13182C) else Color(0xFF232940),
         tonalElevation = if (isSelected) 4.dp else 0.dp,
         shadowElevation = if (isSelected) 4.dp else 0.dp,
         border = if (!isSelected) null else null // Remove border for now as it's not in the image
@@ -39,7 +39,7 @@ fun TabItem(
         ) {
             Text(
                 text = text,
-                color = if (isSelected) Color.White else Color.Black,
+                color = if (isSelected) Color(0xFFFFFFFF) else Color(0xFFBDC5D5),
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp
             )

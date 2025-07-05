@@ -22,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.LaunchedEffect
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
@@ -55,7 +54,7 @@ fun LocationScreen(
                 }
             )
         },
-        containerColor = Color(0xFF289182)
+        containerColor = Color(0xFF232940)
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -66,9 +65,9 @@ fun LocationScreen(
             Surface(
                 modifier = Modifier
                     .fillMaxSize()
-//                    .padding(10.dp)
+                //  .padding(10.dp)
                     .offset(y = (-20).dp),
-                shape = RoundedCornerShape(12.dp),
+                shape = RoundedCornerShape(16.dp),
                 color = Color.White,
                 shadowElevation = 8.dp
             ) {
@@ -80,7 +79,8 @@ fun LocationScreen(
                     item {
                         PageHeaderSection(
                             headerText = "Locations",
-                            onNavigateToAddLocation = { onNavigateToAddLocation() }
+                            onNavigateToAddLocation = { onNavigateToAddLocation() },
+                            onNavigateToAddNewInventoryItem = {} // DONT REMOVE IT!!!
                         )
                     }
 
@@ -103,19 +103,7 @@ fun LocationScreen(
                 }
             }
 
-
-
-            if (showAddDialog) {
-                AddItemDialog(
-                    onAdd = {
-                        // inventoryViewModel.addItem(it) // if used
-                        showAddDialog = false
-                    },
-                    onDismiss = {
-                        showAddDialog = false
-                    }
-                )
             }
         }
     }
-}
+

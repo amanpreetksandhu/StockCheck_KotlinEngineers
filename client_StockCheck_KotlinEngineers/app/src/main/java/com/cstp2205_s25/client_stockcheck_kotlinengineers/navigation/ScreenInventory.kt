@@ -7,4 +7,7 @@ sealed class ScreenInventory (val route: String) {
     object INVENTORIES: ScreenInventory("inventory")
     object ADDNEWLOCATION: ScreenInventory("add_new_location")
     object EDITLOCATION: ScreenInventory("edit_location")
+    object ADDNEWINVENTORYITEM: ScreenInventory("add_new_inventory")
+    object EDITINVENTORYITEM: ScreenInventory("edit_inventory")
+
 }

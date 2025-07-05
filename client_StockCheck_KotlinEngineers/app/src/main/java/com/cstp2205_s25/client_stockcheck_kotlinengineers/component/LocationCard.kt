@@ -25,8 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DarkPrimary
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TextGrey
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
@@ -58,7 +56,7 @@ fun LocationCard(
                         text = "LOCATION NAME",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+                        color = Color.Gray
                     )
                     Text(
                         text = location.name,
@@ -74,12 +72,12 @@ fun LocationCard(
                         text = "CONTACT NAME",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+                        color = Color.Gray
                     )
                     Text(
                         text = location.contactName,
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                 }
 
@@ -98,22 +96,22 @@ fun LocationCard(
                         text = "ADDRESS",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+                        color = Color.Gray
                     )
                     Text(
                         text = ("${location.address}, "),
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                     Text(
                         text = ("${location.city}, "),
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                     Text(
                         text = location.country,
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                 }
                 Spacer(modifier = Modifier.width(20.dp))
@@ -124,17 +122,17 @@ fun LocationCard(
                         text = "CONTACT INFO",
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+                        color = Color.Gray
                     )
                     Text(
                         text = location.contactEmail,
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                     Text(
                         text = location.contactPhone,
                         fontSize = 14.sp,
-                        color = DarkPrimary
+                        color = Color.Blue
                     )
                 }
             }

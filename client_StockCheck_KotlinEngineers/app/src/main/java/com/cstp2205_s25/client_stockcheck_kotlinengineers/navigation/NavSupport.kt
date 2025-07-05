@@ -6,10 +6,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewInventoryItemScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditInventoryItem
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScreen
 
 @Composable
@@ -17,6 +20,7 @@ fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
     val locationViewModel: LocationViewModel = viewModel()
+    val InventoryViewModel: InventoryViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route) {
 
@@ -59,10 +63,6 @@ fun NavSupport(vm: AuthViewModel) {
             )
 
         }
-        //INVENTORY SCREEN------------------------------------------------\
-        composable(ScreenInventory.INVENTORIES.route) {
-            InventoryScreen(onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) })
-        }
 
         //ADD NEW LOCATION SCREEN
         composable(ScreenInventory.ADDNEWLOCATION.route) {
@@ -81,6 +81,37 @@ fun NavSupport(vm: AuthViewModel) {
                 locationViewModel = locationViewModel
             )
         }
+
+        //INVENTORY SCREEN------------------------------------------------\
+        composable(ScreenInventory.INVENTORIES.route) {
+            InventoryScreen(onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                onNavigateToAddNewInventoryItem = { navController.navigate(ScreenInventory.ADDNEWINVENTORYITEM.route) },
+                onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },)
+        }
+
+        composable(ScreenInventory.ADDNEWINVENTORYITEM.route) {
+            AddNewInventoryItemScreen(
+                onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
+                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                InventoryViewModel = InventoryViewModel,
+                LocationViewModel = locationViewModel
+            )
+        }
+
+        composable(ScreenInventory.EDITINVENTORYITEM.route) {
+            EditInventoryItem(
+                onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
+                onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
+                InventoryViewModel = InventoryViewModel,
+                LocationViewModel = locationViewModel
+            )
+        }
+
+
+
+
+
+
 
     }
 
