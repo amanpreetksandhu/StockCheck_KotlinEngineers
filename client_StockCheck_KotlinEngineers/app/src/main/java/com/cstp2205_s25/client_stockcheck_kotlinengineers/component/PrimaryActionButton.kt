@@ -19,7 +19,7 @@ fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->
             .height(50.dp)
             .width(180.dp),
         shape = RoundedCornerShape(25.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E66E5))
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D5C88))
     ) {
         Text(text, color = Color.White)
     }

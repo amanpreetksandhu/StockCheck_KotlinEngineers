@@ -8,7 +8,7 @@ data class InventoryItem (
     val description: String="",
     val category: String="",
     val qty: Int=0,
-    val price: Double=0.0,
+    val price: Double= 0.0,
     val imageUrl: String="",
     val locationId: String="",
     val status: String? =null,

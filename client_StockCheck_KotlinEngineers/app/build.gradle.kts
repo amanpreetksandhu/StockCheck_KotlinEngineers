@@ -57,14 +57,15 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
 
 
+    // ------------------------ Image dependencies --------------------------\
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 
 
 
 
 
-    
-
+    // ------------------ Default Compose dependencies ----------------------\
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.0")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)

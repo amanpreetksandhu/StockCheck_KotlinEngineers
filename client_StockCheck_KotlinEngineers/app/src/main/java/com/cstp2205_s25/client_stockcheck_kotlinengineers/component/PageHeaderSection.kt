@@ -61,7 +61,7 @@ fun PageHeaderSection(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.LightGray,
+                focusedBorderColor = Color(0xFF1D5C88),
                 focusedLabelColor = Color.LightGray,
             )
         );
@@ -79,7 +79,7 @@ fun PageHeaderSection(
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(bottom = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D5C88)),
             shape = RoundedCornerShape(24.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {

@@ -1,14 +1,25 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
@@ -28,7 +39,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
@@ -62,6 +81,22 @@ fun AddNewInventoryItemScreen(
     // List of locations need to be fetched here to match inventory items with their current location
     val locationsList by LocationViewModel.locations.collectAsState()
 
+    // Image Handler Block ========================================================\
+    val context = LocalContext.current
+    val imageUri = remember { mutableStateOf<Uri?>(null) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri.value = uri
+        if (uri != null) {
+            InventoryViewModel.inventoryState.value =
+                InventoryViewModel.inventoryState.value.copy(imageUrl = uri.toString())
+        }
+    }
+
+    // =========================================================================/
+
     Scaffold ( // Keep navigation between tabs active always
         topBar = {
             TopBar(
@@ -90,6 +125,38 @@ fun AddNewInventoryItemScreen(
 
             Subheader(text = "Item Details")
 
+            Text(
+                text = "",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.LightGray)
+                    .clickable { launcher.launch("image/*") },
+                contentAlignment = Alignment.Center
+            ) {
+                if (imageUri.value != null) {
+                    Image(
+                        painter = rememberAsyncImagePainter(imageUri.value),
+                        contentDescription = "Selected Image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Text("Tap to select image", color = Color.DarkGray)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
+
+
+
+
             RoundedInputField(
                 label = "Item Name",
                 value = form.name,
@@ -97,6 +164,7 @@ fun AddNewInventoryItemScreen(
                     InventoryViewModel.inventoryState.value = form.copy(name = it)
                 }
             )
+
             // Description is a multiline box input field
             RoundedInputField( // to be alter or change to match purpose
                 label = "Description",
@@ -184,6 +252,20 @@ fun AddNewInventoryItemScreen(
                 }
             )
 
+            RoundedInputField(
+                label = "Price ($ CAD)",
+                value = form.price.toString(),
+                onValueChange = {
+                    val price = it.toDoubleOrNull()  // Handle non-Double input
+                    if (price != null){
+                        InventoryViewModel.inventoryState.value =
+                            InventoryViewModel.inventoryState.value.copy(price = price)
+                    }
+
+                },
+
+            )
+
             //Warehouse / Locations =========\
             // Drop down field -> List of the warehouses/locations available in DB
             var locExpanded by remember { mutableStateOf(false) }
@@ -234,7 +316,8 @@ fun AddNewInventoryItemScreen(
 
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToInventory() })
 
-                PrimaryActionButton(text = "Add Inventory Item",eroorMessage = errorL, onClickAction = {
+                PrimaryActionButton(text = "Add Item",eroorMessage = errorL, onClickAction = {
+                    Log.d("ButtonClick", "Add Inventory Item clicked")
                     InventoryViewModel.addItem(InventoryViewModel.inventoryState.value) { success ->
                         if (success) {
                             onNavigateToInventory()
