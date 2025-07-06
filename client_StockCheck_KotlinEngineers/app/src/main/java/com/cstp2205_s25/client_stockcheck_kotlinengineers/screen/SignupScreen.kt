@@ -95,6 +95,7 @@ fun SignupScreen(
         ComposeButton(
             text = "Sign Up",
             onClick = {
+<<<<<<< HEAD
                 authViewModel.signup {
                     onSignupSuccess()
                 }
@@ -102,6 +103,29 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
         )
 
+=======
+                scope.launch {
+                    try {
+                        val success = ApiService.signup(email, employeeId, password)
+                        errorMessage = if (success) {
+                            onSignupSuccess()
+                            "Signup successful!"
+                        } else {
+                            "Signup failed. Please try again."
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()  // You can also log this
+                        errorMessage = "An error occurred: ${e.localizedMessage}"
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+//                containerColor = scGreen, // Your custom green
+//                contentColor = Color.White // White text
+            )
+        )
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
         Spacer(modifier = Modifier.height(50.dp))
 
         Row(
@@ -116,6 +140,10 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
+<<<<<<< HEAD
+=======
+//                color = scBlue,
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,
@@ -127,7 +155,11 @@ fun SignupScreen(
             )
         }
 
+<<<<<<< HEAD
         authViewModel.errorMessage?.let {
+=======
+        errorMessage?.let {
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }

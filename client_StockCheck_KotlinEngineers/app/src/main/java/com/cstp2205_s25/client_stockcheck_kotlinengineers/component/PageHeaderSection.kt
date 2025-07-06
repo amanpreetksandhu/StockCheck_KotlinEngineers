@@ -32,8 +32,18 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
             .padding(24.dp)
     ) {
         // Page Header
+<<<<<<< HEAD
         PageHeaderText(headerText = headerText)
 
+=======
+        Text(
+            text = headerText,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.Bold,
+            color = Color(0xFF289182),
+            modifier = Modifier.padding(bottom = 24.dp)
+        )
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
         // Search Field
         OutlinedTextField(
             value = "",
@@ -62,7 +72,11 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(bottom = 8.dp),
+<<<<<<< HEAD
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E66E5)),
+=======
+            colors = ButtonDefaults.buttonColors(containerColor = LightBlueAccent),
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
             shape = RoundedCornerShape(24.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {

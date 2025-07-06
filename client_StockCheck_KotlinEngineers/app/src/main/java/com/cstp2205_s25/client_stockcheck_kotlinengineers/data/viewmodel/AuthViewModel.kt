@@ -44,7 +44,7 @@ class AuthViewModel: ViewModel() {
 
         viewModelScope.launch {
             delay(1000)
-            // Validate and call backend API
+
             if (employeeId.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 errorMessage = "Please fill all fields"
                 isLoading = false
@@ -53,6 +53,7 @@ class AuthViewModel: ViewModel() {
             }
 
             val success = ApiService.signup(email, employeeId, password)
+
             if (success) {
                 onSuccess()
             } else {

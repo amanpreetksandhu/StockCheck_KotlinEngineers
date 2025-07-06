@@ -28,11 +28,14 @@ class LocationViewModel : ViewModel() {
         }
     }
 
+<<<<<<< HEAD
     //Get a location by id
     fun getLocationById(id: String): Location? {
         return locations.value.find { it.id == id }
     }
 
+=======
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
     // Create a new location
     fun createLocation(location: Location, onResult: (Boolean) -> Unit = {}) {
         viewModelScope.launch {
@@ -78,7 +81,11 @@ class LocationViewModel : ViewModel() {
     }
 
     // Edit a location
+<<<<<<< HEAD
     fun editLocation(location: Location, onResult: (Boolean) -> Unit = {}) {
+=======
+    fun editLocation(location: Location, onResult: (Boolean) -> Unit={}) {
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
         viewModelScope.launch {
             try {
                 val success = ApiService.editLocation(location)

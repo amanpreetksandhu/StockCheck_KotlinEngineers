@@ -57,6 +57,12 @@ fun LoginScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
+<<<<<<< HEAD
+=======
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
             )
 
 
@@ -70,6 +76,14 @@ fun LoginScreen(
             label = "Password",
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
+<<<<<<< HEAD
+=======
+            colors = OutlinedTextFieldDefaults.colors(
+//                focusedBorderColor = scGreen,
+//                focusedLabelColor = scGreen,
+//                cursorColor = scGreen
+            )
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -77,6 +91,7 @@ fun LoginScreen(
         ComposeButton(
             text = "Login",
             onClick = {
+<<<<<<< HEAD
                 authViewModel.login {
                     onLoginSuccess()
                 }
@@ -89,6 +104,24 @@ fun LoginScreen(
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }
 
+=======
+                scope.launch {
+                    val success = ApiService.login(employeeId, password)
+                    message = if (success) {
+                        onLoginSuccess()
+                        "Login successful!"
+                    } else {
+                        "Invalid credentials"
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+//                containerColor = scGreen, // Your custom green
+//                contentColor = Color.White // White text
+            )
+        )
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
         Spacer(modifier = Modifier.height(50.dp))
         Text(
             text = "I am a new user",
@@ -99,7 +132,11 @@ fun LoginScreen(
                     onNavigateToSignup()
                 }
         )
+<<<<<<< HEAD
         authViewModel.errorMessage?.let {
+=======
+        message?.let {
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }

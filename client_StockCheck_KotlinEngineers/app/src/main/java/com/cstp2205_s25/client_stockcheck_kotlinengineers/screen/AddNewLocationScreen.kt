@@ -26,7 +26,11 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActio
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.RoundedInputField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Subheader
+<<<<<<< HEAD
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
+=======
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 @Composable
@@ -46,7 +50,11 @@ fun AddNewLocationScreen(
 
     Scaffold(
         topBar = {
+<<<<<<< HEAD
             TopSection(
+=======
+            TopBar(
+>>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
                 selectedTab = selectedTab,
                 onTabSelected = {
                     selectedTab = it
