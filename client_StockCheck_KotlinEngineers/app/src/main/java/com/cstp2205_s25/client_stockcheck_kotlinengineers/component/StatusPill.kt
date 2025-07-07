@@ -17,7 +17,7 @@ fun StatusPill(status: String) {
     val statusColor = when (status) {
         "IN STOCK" -> Color.Green
         "OUT OF STOCK" -> Color.Yellow
-        else -> Color(0xFFCAD0CE)
+        else -> Color.Gray
     }
     Surface(
         shape = RoundedCornerShape(8.dp),

@@ -9,5 +9,5 @@ sealed class ScreenInventory (val route: String) {
     object EDITLOCATION: ScreenInventory("edit_location")
     object ADDNEWINVENTORYITEM: ScreenInventory("add_new_inventory")
     object EDITINVENTORYITEM: ScreenInventory("edit_inventory")
-
+    object ITEMDETAILSCREEN: ScreenInventory("item_detail")
 }

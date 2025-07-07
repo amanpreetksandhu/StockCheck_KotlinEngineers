@@ -14,6 +14,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditInventoryItem
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.ItemDetailScreen
 
 @Composable
 fun NavSupport(vm: AuthViewModel) {
@@ -53,7 +54,8 @@ fun NavSupport(vm: AuthViewModel) {
                 authViewModel = authViewModel
             )
         }
-        //LOCATIONS SCREEN---------------------------------------------\
+
+        //LOCATIONS NAVIGATION BLOCK---------------------------------------------\
         composable(ScreenInventory.LOCATIONS.route) {
             LocationScreen(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
@@ -82,15 +84,18 @@ fun NavSupport(vm: AuthViewModel) {
             )
         }
 
-        //INVENTORY SCREEN------------------------------------------------\
+
+        //INVENTORY NAVIGATION BLOCK------------------------------------------------\
         composable(ScreenInventory.INVENTORIES.route) {
             InventoryScreen(onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
                 onNavigateToAddNewInventoryItem = { navController.navigate(ScreenInventory.ADDNEWINVENTORYITEM.route) },
                 onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
+                onNavigateToItemDetail = { navController.navigate(ScreenInventory.ITEMDETAILSCREEN.route) },
                 inventoryViewModel = InventoryViewModel
             )
         }
 
+        // ADD
         composable(ScreenInventory.ADDNEWINVENTORYITEM.route) {
             AddNewInventoryItemScreen(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
@@ -100,6 +105,7 @@ fun NavSupport(vm: AuthViewModel) {
             )
         }
 
+        // UPDATE/EDIT
         composable(ScreenInventory.EDITINVENTORYITEM.route) {
             EditInventoryItem(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
@@ -108,6 +114,17 @@ fun NavSupport(vm: AuthViewModel) {
                 LocationViewModel = locationViewModel
             )
         }
+
+        composable(ScreenInventory.ITEMDETAILSCREEN.route) {
+            ItemDetailScreen(
+                onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
+                LocationViewModel = locationViewModel,
+                onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)},
+                InventoryViewModel = InventoryViewModel
+            )
+        }
+
+
 
 
 

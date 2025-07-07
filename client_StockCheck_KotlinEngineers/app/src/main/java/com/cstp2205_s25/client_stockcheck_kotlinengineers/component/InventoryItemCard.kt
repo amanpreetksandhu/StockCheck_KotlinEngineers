@@ -27,9 +27,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 
 @Composable
 fun InventoryItemCard(
+    onNavigateToItemDetail: () -> Unit,
     item: InventoryItem,
     onDelete: () -> Unit,
     onEdit: () -> Unit
@@ -50,26 +52,25 @@ fun InventoryItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "INVENTORY ITEM",
-                        color = Color.Gray,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = item.name,
-                        color = Color.Black,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable { /* Handle item click */ }
-                    )
+
+                    Column {
+                        Text(
+                            text = "INVENTORY ITEM",
+                            color = Color.Gray,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+                        Text(text = item.name, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+
+                    }
+
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = "View Details",
                         tint = Color.Blue,
-                        modifier = Modifier.size(16.dp)
+                        modifier = Modifier.size(25.dp).clickable { onNavigateToItemDetail() }
                     )
                 }
                 StatusPill(status = item.status ?: "Unknown")

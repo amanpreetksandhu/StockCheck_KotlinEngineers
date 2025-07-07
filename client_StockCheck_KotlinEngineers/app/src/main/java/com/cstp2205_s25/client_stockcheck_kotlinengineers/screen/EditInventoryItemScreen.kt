@@ -90,8 +90,6 @@ fun EditInventoryItem(
     LaunchedEffect(Unit) {
         LocationViewModel.loadLocations()
         InventoryViewModel.loadInventory()
-        Log.d("DEBUG", "Editing item: ${form.name}")
-
 
     }
 

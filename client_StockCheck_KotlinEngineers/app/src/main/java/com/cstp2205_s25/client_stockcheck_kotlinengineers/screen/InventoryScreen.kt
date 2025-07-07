@@ -26,6 +26,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryIte
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 
 
 @Composable
@@ -33,6 +34,7 @@ fun InventoryScreen(
     onNavigateToLocation: () -> Unit,
     onNavigateToAddNewInventoryItem: () -> Unit,
     onNavigateToEditInventoryItem: () -> Unit,
+    onNavigateToItemDetail: () -> Unit,
     inventoryViewModel: InventoryViewModel
 
 ) {
@@ -103,6 +105,13 @@ fun InventoryScreen(
                                 onNavigateToEditInventoryItem() },
                             onDelete = {
                                 item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
+                            },
+                            onNavigateToItemDetail = {
+                                inventoryViewModel.updateFormField(item)
+                                onNavigateToItemDetail()
+
+
+
                             }
                         )
                     }
