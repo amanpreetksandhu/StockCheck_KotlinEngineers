@@ -86,7 +86,9 @@ fun NavSupport(vm: AuthViewModel) {
         composable(ScreenInventory.INVENTORIES.route) {
             InventoryScreen(onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
                 onNavigateToAddNewInventoryItem = { navController.navigate(ScreenInventory.ADDNEWINVENTORYITEM.route) },
-                onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },)
+                onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
+                inventoryViewModel = InventoryViewModel
+            )
         }
 
         composable(ScreenInventory.ADDNEWINVENTORYITEM.route) {

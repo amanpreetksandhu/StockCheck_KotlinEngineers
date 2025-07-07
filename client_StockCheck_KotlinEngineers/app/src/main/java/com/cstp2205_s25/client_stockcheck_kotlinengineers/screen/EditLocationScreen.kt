@@ -32,6 +32,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 fun EditLocationScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
+
     locationViewModel: LocationViewModel
 ) {
     var selectedTab by remember { mutableStateOf("Locations") }

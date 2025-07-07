@@ -1,5 +1,6 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -49,14 +50,20 @@ fun EditInventoryItem(
 
 ){
     var selectedTab by remember { mutableStateOf("Inventory") }
-    val form = InventoryViewModel.inventoryState.value
+    val form by InventoryViewModel.inventoryState
     var errorMsg by remember { mutableStateOf("") }
 
     val locations by LocationViewModel.locations.collectAsState()
     val locationNames = locations.map { it.name }
 
+
+
     LaunchedEffect(Unit) {
         LocationViewModel.loadLocations()
+        InventoryViewModel.loadInventory()
+        Log.d("DEBUG", "Editing item: ${form.name}")
+
+
     }
 
 
@@ -94,7 +101,7 @@ fun EditInventoryItem(
                 }
             )
 
-            // Description is a multiline box input field
+            // Description
             RoundedInputField(
                 label = "Description",
                 value = form.description,

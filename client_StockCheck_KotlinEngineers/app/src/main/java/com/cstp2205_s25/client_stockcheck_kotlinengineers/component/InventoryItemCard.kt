@@ -66,7 +66,7 @@ fun InventoryItemCard(
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Icon(
-                        imageVector = Icons.Default.ArrowForward, // Placeholder for a right arrow icon
+                        imageVector = Icons.Default.ArrowForward,
                         contentDescription = "View Details",
                         tint = Color.Blue,
                         modifier = Modifier.size(16.dp)

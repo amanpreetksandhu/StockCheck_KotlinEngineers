@@ -26,14 +26,14 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryIte
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
+
 
 @Composable
 fun InventoryScreen(
     onNavigateToLocation: () -> Unit,
     onNavigateToAddNewInventoryItem: () -> Unit,
     onNavigateToEditInventoryItem: () -> Unit,
-    inventoryViewModel: InventoryViewModel = viewModel()
+    inventoryViewModel: InventoryViewModel
 
 ) {
     // INVENTORY management logic-----------------------\
@@ -68,7 +68,7 @@ fun InventoryScreen(
                 .fillMaxWidth()
                 .padding(paddingValues)
                 .padding(top = 20.dp) // No extra top padding
-//                .background(Color(0xFF289182)) // Ensure the background extends to the top
+
         ) {
             // White content card
             Surface(
@@ -98,7 +98,9 @@ fun InventoryScreen(
                     items(inventoryItems) { item ->
                         InventoryItemCard(
                             item = item,
-                            onEdit = { onNavigateToEditInventoryItem() },
+                            onEdit = {
+                                inventoryViewModel.updateFormField(item)
+                                onNavigateToEditInventoryItem() },
                             onDelete = {
                                 item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
                             }
