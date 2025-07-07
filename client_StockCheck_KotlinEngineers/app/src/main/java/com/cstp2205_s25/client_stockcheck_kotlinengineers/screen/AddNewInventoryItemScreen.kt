@@ -124,13 +124,6 @@ fun AddNewInventoryItemScreen(
 
             Subheader(text = "Item Details")
 
-            Text(
-                text = "",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(bottom = 8.dp)
-            )
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -152,9 +145,6 @@ fun AddNewInventoryItemScreen(
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-
-
-
 
             RoundedInputField(
                 label = "Item Name",

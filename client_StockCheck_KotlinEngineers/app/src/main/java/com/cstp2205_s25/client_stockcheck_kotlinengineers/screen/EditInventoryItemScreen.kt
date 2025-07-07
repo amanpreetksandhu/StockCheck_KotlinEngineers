@@ -1,15 +1,24 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenuItem
@@ -29,7 +38,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
@@ -55,6 +69,21 @@ fun EditInventoryItem(
 
     val locations by LocationViewModel.locations.collectAsState()
     val locationNames = locations.map { it.name }
+
+    // Image Handler Block ========================================================\
+    val context = LocalContext.current // this is for the image picker
+    val imageUri = remember { mutableStateOf<Uri?>(null) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        imageUri.value = uri
+        if (uri != null) {
+            InventoryViewModel.updateFormField(form.copy(imageUrl = uri.toString()))
+        }
+    }
+
+    // =========================================================================/
 
 
 
@@ -89,9 +118,32 @@ fun EditInventoryItem(
                 Spacer(modifier = Modifier.width(10.dp))
                 PageHeader(headerText = "Edit Inventory Item")
             }
+
             Divider(modifier = Modifier.padding(vertical = 20.dp))
 
             Subheader(text = "Item Details")
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(180.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color.LightGray)
+                    .clickable { launcher.launch("image/*") },
+                contentAlignment = Alignment.Center
+            ) {
+                if (imageUri.value != null) {
+                    Image(
+                        painter = rememberAsyncImagePainter(imageUri.value),
+                        contentDescription = "Selected Image",
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Text("Tap to select image", color = Color.DarkGray)
+                }
+            }
+            Spacer(modifier = Modifier.height(16.dp))
 
             RoundedInputField(
                 label = "Item Name",
