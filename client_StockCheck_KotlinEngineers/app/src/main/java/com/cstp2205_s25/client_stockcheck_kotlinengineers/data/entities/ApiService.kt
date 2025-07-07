@@ -201,10 +201,10 @@ object ApiService {
                             name = obj.getString("name"),
                             description = obj.optString("description", ""),
                             category = obj.optString("category", ""),
-                            qty = obj.getInt("quantity"),
+                            qty = if (obj.has("qty")) obj.optInt("qty") else 0,
                             price = obj.optDouble("price", 0.0),
                             imageUrl = obj.optString("imageUrl", null),
-                            locationId = obj.getString("locationId"),
+                            locationId = if (obj.has("locationId")) obj.getString("locationId") else null,
                             status = obj.optString("status", null)
                         )
                     )

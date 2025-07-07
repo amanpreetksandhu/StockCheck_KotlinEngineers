@@ -75,14 +75,14 @@ fun AddNewInventoryItemScreen(
     }
 
     var selectedTab by remember { mutableStateOf("Inventory") }
-    var form = InventoryViewModel.inventoryState.value
-    var errorL = ""
+    val form by InventoryViewModel.inventoryState
+    var errorMsg = ""
 
     // List of locations need to be fetched here to match inventory items with their current location
     val locationsList by LocationViewModel.locations.collectAsState()
 
     // Image Handler Block ========================================================\
-    val context = LocalContext.current
+    val context = LocalContext.current // this is for the image picker
     val imageUri = remember { mutableStateOf<Uri?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
@@ -90,8 +90,7 @@ fun AddNewInventoryItemScreen(
     ) { uri: Uri? ->
         imageUri.value = uri
         if (uri != null) {
-            InventoryViewModel.inventoryState.value =
-                InventoryViewModel.inventoryState.value.copy(imageUrl = uri.toString())
+            InventoryViewModel.updateFormField(form.copy(imageUrl = uri.toString()))
         }
     }
 
@@ -161,7 +160,8 @@ fun AddNewInventoryItemScreen(
                 label = "Item Name",
                 value = form.name,
                 onValueChange = {
-                    InventoryViewModel.inventoryState.value = form.copy(name = it)
+                    InventoryViewModel.updateFormField(form.copy(name = it))
+
                 }
             )
 
@@ -170,7 +170,7 @@ fun AddNewInventoryItemScreen(
                 label = "Description",
                 value = form.description,
                 onValueChange = {
-                    InventoryViewModel.inventoryState.value = form.copy(description = it)
+                    InventoryViewModel.updateFormField(form.copy(description = it))
                 }
             )
 
@@ -204,7 +204,7 @@ fun AddNewInventoryItemScreen(
                         DropdownMenuItem(
                             text = { Text(category) },
                             onClick = {
-                                InventoryViewModel.inventoryState.value = form.copy(category = category)
+                                InventoryViewModel.updateFormField(form.copy(category = category))
                                 catExpanded = false
                             }
                         )
@@ -232,7 +232,7 @@ fun AddNewInventoryItemScreen(
                         RadioButton(
                             selected = form.status == option,
                             onClick = {
-                                InventoryViewModel.inventoryState.value = form.copy(status = option)
+                                InventoryViewModel.updateFormField(form.copy(status = option))
                             }
                         )
                         Text(text = option)
@@ -247,26 +247,26 @@ fun AddNewInventoryItemScreen(
                 value = form.qty.toString(),
                 onValueChange = {
                     val qtyInt = it.toIntOrNull() ?: 0 // Handle non-integer input
-                    InventoryViewModel.inventoryState.value = form.copy(qty = qtyInt)
+                    InventoryViewModel.updateFormField(form.copy(qty = qtyInt))
 
                 }
             )
 
+            // price
             RoundedInputField(
                 label = "Price ($ CAD)",
                 value = form.price.toString(),
                 onValueChange = {
                     val price = it.toDoubleOrNull()  // Handle non-Double input
                     if (price != null){
-                        InventoryViewModel.inventoryState.value =
-                            InventoryViewModel.inventoryState.value.copy(price = price)
+                        InventoryViewModel.updateFormField(form.copy(price = price))
                     }
 
                 },
 
             )
 
-            //Warehouse / Locations =========\
+            //Warehouse / Locations ==================================\
             // Drop down field -> List of the warehouses/locations available in DB
             var locExpanded by remember { mutableStateOf(false) }
 
@@ -295,7 +295,7 @@ fun AddNewInventoryItemScreen(
                         DropdownMenuItem(
                             text = { Text(location.name) },
                             onClick = {
-                                InventoryViewModel.inventoryState.value = form.copy(locationId = location.id)
+                                InventoryViewModel.updateFormField(form.copy(locationId = location.id))
                                 locExpanded = false
                             }
                         )
@@ -305,7 +305,7 @@ fun AddNewInventoryItemScreen(
 
 
 
-            //===================/
+            //=========================================================/
 
             Spacer(modifier = Modifier.height(32.dp))
 
@@ -316,13 +316,17 @@ fun AddNewInventoryItemScreen(
 
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToInventory() })
 
-                PrimaryActionButton(text = "Add Item",eroorMessage = errorL, onClickAction = {
+                PrimaryActionButton(text = "Add Item", errorMsg = errorMsg, onClickAction = {
                     Log.d("ButtonClick", "Add Inventory Item clicked")
-                    InventoryViewModel.addItem(InventoryViewModel.inventoryState.value) { success ->
+                    Log.d("FormData", InventoryViewModel.inventoryState.value.toString())
+
+                    InventoryViewModel.addInventoryItem(InventoryViewModel.inventoryState.value) { success ->
                         if (success) {
+                            Log.d("DEBUG", "Item successfully created!")
                             onNavigateToInventory()
                         } else {
-                            errorL = "Error adding inventory item"
+                            Log.d("DEBUG", "Failed to create item.")
+                            errorMsg = "Error adding inventory item"
                         }
                     }
 

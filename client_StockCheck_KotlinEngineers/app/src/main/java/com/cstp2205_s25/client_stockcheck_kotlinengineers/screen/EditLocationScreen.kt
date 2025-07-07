@@ -101,7 +101,7 @@ fun EditLocationScreen(
                 OutlinedCancelButton(text = "Cancel") {
                     onNavigateToLocation()
                 }
-                PrimaryActionButton(text = "Update Location", eroorMessage = errorMsg) {
+                PrimaryActionButton(text = "Update Location", errorMsg = errorMsg) {
                     locationViewModel.editLocation(locationViewModel.locationState.value) { success ->
                         if (success) {
                             onNavigateToLocation()

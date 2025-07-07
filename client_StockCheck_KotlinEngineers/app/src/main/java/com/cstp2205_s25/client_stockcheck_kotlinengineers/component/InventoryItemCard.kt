@@ -64,6 +64,7 @@ fun InventoryItemCard(
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier.clickable { /* Handle item click */ }
                     )
+                    Spacer(modifier = Modifier.width(4.dp))
                     Icon(
                         imageVector = Icons.Default.ArrowForward, // Placeholder for a right arrow icon
                         contentDescription = "View Details",
@@ -105,7 +106,7 @@ fun InventoryItemCard(
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(text = "location name", color = Color.Black, fontSize = 16.sp)
+                    Text(text = item.locationId ?: "Unknown", color = Color.Black, fontSize = 16.sp)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

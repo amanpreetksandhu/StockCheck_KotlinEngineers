@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,7 +39,12 @@ fun InventoryScreen(
     // INVENTORY management logic-----------------------\
     var selectedTab by remember { mutableStateOf("Inventory") }
     val inventoryItems by inventoryViewModel.inventoryList.collectAsState()
-    var showAddDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        inventoryViewModel.loadInventory()
+    }
+
+
     // -------------------------------------------/
     Scaffold(
         topBar = {
@@ -93,7 +99,9 @@ fun InventoryScreen(
                         InventoryItemCard(
                             item = item,
                             onEdit = { onNavigateToEditInventoryItem() },
-                            onDelete = { inventoryViewModel.deleteItem(item.id) }
+                            onDelete = {
+                                item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
+                            }
                         )
                     }
                 }

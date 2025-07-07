@@ -7,7 +7,7 @@ const inventoryItemSchema = new mongoose.Schema({
   qty: { type: Number, required: true },
   price: { type: Number, default: 0.0 },
   imageUrl: { type: String, default: "" },
-  locationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Location' },
+  locationId: { type: mongoose.Schema.Types.ObjectId, ref: 'Location', required: false },
   status: { type: String, enum: ['In Stock', 'Out of Stock'], default: 'In Stock' }
 }, { timestamps: true });
 

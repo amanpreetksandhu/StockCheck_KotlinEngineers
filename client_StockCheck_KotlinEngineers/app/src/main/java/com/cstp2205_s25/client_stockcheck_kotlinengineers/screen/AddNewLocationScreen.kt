@@ -42,7 +42,7 @@ fun AddNewLocationScreen(
 
     var selectedTab by remember { mutableStateOf("Locations") }
     val form = locationViewModel.locationState.value
-    var errorL = ""
+    var errorMsg = ""
 
     Scaffold(
         topBar = {
@@ -124,12 +124,12 @@ fun AddNewLocationScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToLocation() })
-                PrimaryActionButton(text = "Add Location", eroorMessage = errorL, onClickAction = {
+                PrimaryActionButton(text = "Add Location", errorMsg = errorMsg, onClickAction = {
                     locationViewModel.createLocation(locationViewModel.locationState.value) { success ->
                         if (success) {
                             onNavigateToLocation()
                         } else {
-                            errorL = "Add locationError while posting new location"
+                            errorMsg = "Add locationError while posting new location"
                         }
                     }
                 })

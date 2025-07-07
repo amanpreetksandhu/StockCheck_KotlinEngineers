@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->Unit){
+fun PrimaryActionButton(text: String, errorMsg: String, onClickAction: () ->Unit){
     Button(
         onClick = { onClickAction() },
         modifier = Modifier
@@ -23,5 +23,5 @@ fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->
     ) {
         Text(text, color = Color.White)
     }
-    Text(eroorMessage)
+    Text(errorMsg)
 }
