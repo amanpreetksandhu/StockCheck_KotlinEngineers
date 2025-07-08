@@ -6,6 +6,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedOutputStream
 import java.io.BufferedReader
+import java.io.DataOutputStream
+import java.io.File
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
@@ -280,7 +282,6 @@ object ApiService {
     }
 
 
-
     // Delete item
     suspend fun deleteInventoryItem(id: String): Boolean {
         return withContext(Dispatchers.IO) {
@@ -293,6 +294,62 @@ object ApiService {
             responseCode == 200
         }
     }
+
+    // Image logic
+
+    suspend fun uploadImage(imageFile: File): String? {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/api/upload")
+            val boundary = "Boundary-" + System.currentTimeMillis()
+            val lineEnd = "\r\n"
+            val twoHyphens = "--"
+
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "POST"
+            conn.setRequestProperty("Connection", "Keep-Alive")
+            conn.setRequestProperty("Cache-Control", "no-cache")
+            conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=$boundary")
+            conn.doOutput = true
+            conn.doInput = true
+
+            val outputStream = DataOutputStream(conn.outputStream)
+
+            outputStream.writeBytes(twoHyphens + boundary + lineEnd)
+            outputStream.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"${imageFile.name}\"$lineEnd")
+            outputStream.writeBytes("Content-Type: image/jpeg$lineEnd")
+            outputStream.writeBytes(lineEnd)
+
+            val fileBytes = imageFile.readBytes()
+            outputStream.write(fileBytes)
+
+            outputStream.writeBytes(lineEnd)
+            outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd)
+            outputStream.flush()
+            outputStream.close()
+
+            val responseCode = conn.responseCode
+
+            if (responseCode == 200) {
+                val reader = BufferedReader(InputStreamReader(conn.inputStream))
+                val response = reader.readText()
+                reader.close()
+
+                // FIXED: Get "imageUrl" instead of "url"
+                val json = JSONObject(response)
+                json.optString("imageUrl", null)
+            } else {
+                null
+            }.also {
+                conn.disconnect()
+            }
+        }
+    }
+
+
+
+
+
+
 
 
 

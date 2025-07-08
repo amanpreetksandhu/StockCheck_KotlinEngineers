@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.File
 
 class InventoryViewModel : ViewModel() {
 
@@ -82,4 +83,28 @@ class InventoryViewModel : ViewModel() {
             }
         }
     }
+
+    fun uploadImageAndUpdateItem(imageFile: File, onResult: (Boolean) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                val uploadedUrl = ApiService.uploadImage(imageFile)
+                if (uploadedUrl != null) {
+                    // Update the current item with new image URL
+                    val updatedItem = _inventoryState.value.copy(imageUrl = uploadedUrl)
+                    _inventoryState.value = updatedItem
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onResult(false)
+            }
+        }
+    }
+
+
+
+
+
 }

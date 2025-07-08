@@ -66,7 +66,8 @@ fun ItemDetailScreen(
     onNavigateToInventory: () -> Unit,
     InventoryViewModel: InventoryViewModel,
     onNavigateToLocation: () -> Unit,
-    LocationViewModel: LocationViewModel
+    LocationViewModel: LocationViewModel,
+    onNavigateToEditInventoryItem: () -> Unit,
 
 ) {
     var selectedTab by remember { mutableStateOf("Inventory") }
@@ -99,7 +100,7 @@ fun ItemDetailScreen(
                 Spacer(modifier = Modifier.width(10.dp))
                 PageHeader(headerText = form.name)
                 Spacer(modifier = Modifier.width(30.dp))
-                IconButton(onClick = { /* Add edit nav here later */ }) {
+                IconButton(onClick = {  onNavigateToEditInventoryItem() }) {
                     Icon(Icons.Default.Edit, contentDescription = "Edit Item", tint = Color.Blue,
                         modifier = Modifier.background(Color.LightGray, CircleShape).size(50.dp))
                 }

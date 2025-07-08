@@ -1,7 +1,9 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -57,6 +59,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Subheader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
+import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,13 +87,45 @@ fun AddNewInventoryItemScreen(
     // Image Handler Block ========================================================\
     val context = LocalContext.current // this is for the image picker
     val imageUri = remember { mutableStateOf<Uri?>(null) }
+    val isUploading = remember { mutableStateOf(false) }
+
+    // Not sure where to put this....
+    fun uriToFile(uri: Uri, context: Context): File? {
+        val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+        val tempFile = File.createTempFile("upload", ".jpg", context.cacheDir)
+        tempFile.outputStream().use { output ->
+            inputStream.copyTo(output)
+        }
+        return tempFile
+    }
+
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
         imageUri.value = uri
         if (uri != null) {
-            InventoryViewModel.updateFormField(form.copy(imageUrl = uri.toString()))
+            val file = uriToFile(uri, context)
+            if (file != null) {
+                isUploading.value = true
+                InventoryViewModel.uploadImageAndUpdateItem(file) { success ->
+                    isUploading.value = false
+                    if (success) {
+                        // Save the item after image is uploaded and URL is set
+                        InventoryViewModel.addInventoryItem(
+                            InventoryViewModel.inventoryState.value
+                        ) { itemSuccess ->
+                            if (!itemSuccess) {
+                                Toast.makeText(context, "Item save failed", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(context, "Image upload failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            } else {
+                Toast.makeText(context, "Failed to convert image", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -118,7 +153,7 @@ fun AddNewInventoryItemScreen(
             Row (modifier = Modifier.padding(top = 10.dp)){
                 ArrowBackIcon(onNavigateToBackPage = { onNavigateToInventory() })
                 Spacer(modifier = Modifier.width(10.dp))
-                PageHeader(headerText = "Add New Inventory Item")
+                PageHeader(headerText = "Add New Item")
             }
             Divider(modifier = Modifier.padding(vertical = 20.dp))
 

@@ -21,6 +21,57 @@ exports.getItemById = async (req, res) => {
   }
 };
 
+exports.createItem = async (req, res) => {
+  try {
+    const newItem = new InventoryItem(req.body);
+    await newItem.save();
+
+    const io = req.app.get('io');
+    io.emit('item_added', newItem);
+
+    res.status(201).json(newItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateItem = async (req, res) => {
+  try {
+    const updatedItem = await InventoryItem.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    const io = req.app.get('io');
+    io.emit('item_updated', updatedItem);
+
+    res.status(200).json(updatedItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.deleteItem = async (req, res) => {
+  try {
+    const deletedItem = await InventoryItem.findByIdAndDelete(req.params.id);
+
+    const io = req.app.get('io');
+    io.emit('item_deleted', deletedItem);
+
+    res.status(200).json(deletedItem);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+/*
+Backup
+
+
 // Create new item
 exports.createItem = async (req, res) => {
   try {
@@ -53,3 +104,4 @@ exports.deleteItem = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete item' });
   }
 };
+*/

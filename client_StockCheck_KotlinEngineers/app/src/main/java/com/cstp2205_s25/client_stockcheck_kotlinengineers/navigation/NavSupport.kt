@@ -120,6 +120,7 @@ fun NavSupport(vm: AuthViewModel) {
                 onNavigateToInventory = {navController.navigate(ScreenInventory.INVENTORIES.route)},
                 LocationViewModel = locationViewModel,
                 onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)},
+                onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
                 InventoryViewModel = InventoryViewModel
             )
         }
