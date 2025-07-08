@@ -1,24 +1,35 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlackText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Divider
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.GrayText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderText
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TextGrey
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
@@ -61,15 +72,38 @@ fun LocationDetailsScreen(
                     Row {
                         ArrowBackIcon(onNavigateToBackPage = { onNavigateToLocation() })
                         Spacer(modifier = Modifier.width(16.dp))
-                        PageHeaderText(headerText = selectedLocation?.name ?: "Warehouse name")
+                        PageHeaderText(headerText = selectedLocation?.name ?: "location name")
                     }
 
                 }
                 Divider()
-//                PageHeaderSection(
-//                    headerText = "Locations",
-//                    onNavigateToAddLocation = { onNavigateToAddLocation() }
-//                )
+                Box (modifier = Modifier.fillMaxWidth()
+                    .background(Color.White)
+                    .padding(16.dp)
+                    .padding(horizontal = 16.dp)
+
+
+                    ){
+                    Column {
+                        GrayText(text = "WAREHOUSE ADDRESS")
+                        BlackText(text = "${selectedLocation?.address}, ${selectedLocation?.city}, ${selectedLocation?.country}")
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Row {
+                            Column {
+                                GrayText(text = "CONTACT NAME")
+                                BlackText(text = selectedLocation?.contactName ?: "contact name")
+                                BlackText(text = selectedLocation?.contactPosition ?:"contact position")
+                            }
+                            Spacer(modifier = Modifier.width(50.dp))
+                            Column {
+                                GrayText(text = "CONTACT INFORMATION")
+                                BlackText(text = selectedLocation?.contactPhone ?: "phone number")
+                                BlackText(text = selectedLocation?.contactEmail ?: "email")
+                            }
+                        }
+                    }
+                }
+                Divider()
             }
 
 //            itemsIndexed(locations) { index, location ->

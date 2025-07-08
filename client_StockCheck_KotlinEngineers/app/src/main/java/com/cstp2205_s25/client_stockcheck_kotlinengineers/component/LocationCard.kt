@@ -1,7 +1,6 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.components
 
 import androidx.compose.foundation.Image
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,18 +18,16 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.LinkAnnotation
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DarkPrimary
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TextGrey
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlackText
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlueText
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.GrayText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
@@ -59,22 +56,14 @@ fun LocationCard(
             ) {
                 //LOCATION NAME
                 Column(modifier = Modifier.width(160.dp)) {
-                    Text(
-                        text = "LOCATION NAME",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
-                    )
+                    GrayText(text = "LOCATION NAME")
 
                     Row(
                         modifier = Modifier
                             .clickable(onClick = { onNavigateToLocationDetailsPage() })
                     ) {
-                        Text(
-                            text = location.name,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium,
-                            color = Color(0xFF2E66E5)
+                        BlueText(
+                            text = location.name
                         )
                         Image(
                             painterResource(R.drawable.chevron_right),
@@ -85,16 +74,12 @@ fun LocationCard(
                 Spacer(modifier = Modifier.width(16.dp))
                 // CONTACT NAME
                 Column {
-                    Text(
+                    GrayText(
                         text = "CONTACT NAME",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
-                    )
-                    Text(
+
+                        )
+                    BlackText(
                         text = location.contactName,
-                        fontSize = 14.sp,
-                        color = DarkPrimary
                     )
                 }
 
@@ -109,47 +94,37 @@ fun LocationCard(
             ) {
                 // ADDRESS
                 Column(modifier = Modifier.width(160.dp)) {
-                    Text(
+                    GrayText(
                         text = "ADDRESS",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+
+                        )
+                    BlackText(
+                        text = ("${location.address}, ")
                     )
-                    Text(
-                        text = ("${location.address}, "),
-                        fontSize = 14.sp,
-                        color = DarkPrimary
+                    BlackText(
+                        text = ("${location.city}, ")
+
                     )
-                    Text(
-                        text = ("${location.city}, "),
-                        fontSize = 14.sp,
-                        color = DarkPrimary
-                    )
-                    Text(
-                        text = location.country,
-                        fontSize = 14.sp,
-                        color = DarkPrimary
+                    BlackText(
+                        text = location.country
                     )
                 }
                 Spacer(modifier = Modifier.width(20.dp))
 
                 Column {
                     // CONTACT INFO
-                    Text(
+                    GrayText(
                         text = "CONTACT INFO",
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = TextGrey
+
+                        )
+                    BlackText(
+                        text = location.contactEmail
+
                     )
-                    Text(
-                        text = location.contactEmail,
-                        fontSize = 14.sp,
-                        color = DarkPrimary
-                    )
-                    Text(
-                        text = location.contactPhone,
-                        fontSize = 14.sp,
-                        color = DarkPrimary
+
+                    BlackText(
+                        text = location.contactPhone
+
                     )
                 }
             }
