@@ -30,9 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
-//import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
-
-// Define custom colors based on the image -- to be changed
 val DarkPrimary = Color(0xFF2C3E50) // Dark blue/grey for top bar
 val LightBlueAccent = Color(0xFF3498DB) // Blue for active tabs, buttons
 val GreenStatus = Color(0xFF2ECC71) // Green for 'IN STOCK'

@@ -85,9 +85,7 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -95,7 +93,7 @@ fun SignupScreen(
         ComposeButton(
             text = "Sign Up",
             onClick = {
-<<<<<<< HEAD
+
                 authViewModel.signup {
                     onSignupSuccess()
                 }
@@ -103,7 +101,12 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
         )
 
-=======
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        ComposeButton(
+            text = "Sign Up",
+            onClick = {
                 scope.launch {
                     try {
                         val success = ApiService.signup(email, employeeId, password)
@@ -121,11 +124,10 @@ fun SignupScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-//                containerColor = scGreen, // Your custom green
-//                contentColor = Color.White // White text
+
             )
         )
->>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
+
         Spacer(modifier = Modifier.height(50.dp))
 
         Row(
@@ -140,10 +142,7 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
-<<<<<<< HEAD
-=======
-//                color = scBlue,
->>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
+
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,
@@ -155,11 +154,8 @@ fun SignupScreen(
             )
         }
 
-<<<<<<< HEAD
+
         authViewModel.errorMessage?.let {
-=======
-        errorMessage?.let {
->>>>>>> 6edd97746b3aa0d959a4bc93b2a516744a715b93
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }
