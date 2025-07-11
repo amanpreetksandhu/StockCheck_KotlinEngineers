@@ -26,14 +26,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 
 @Composable
 fun InventoryItemCard(
-    itemName: String,
-    category: String,
-    qty: Int,
-    warehouse: String,
-    status: String,
+    onNavigateToItemDetail: () -> Unit,
+    item: InventoryItem,
     onDelete: () -> Unit,
     onEdit: () -> Unit
 ) {
@@ -53,28 +52,28 @@ fun InventoryItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = "INVENTORY ITEM",
-                        color = TextGrey,
-                        fontSize = 12.sp,
-                        fontWeight = FontWeight.SemiBold
-                    )
+
+                    Column {
+                        Text(
+                            text = "INVENTORY ITEM",
+                            color = Color.Gray,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.SemiBold
+                        )
+
+                        Text(text = item.name, color = Color.Black, fontSize = 16.sp, fontWeight = FontWeight.Medium)
+
+                    }
+
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = itemName,
-                        color = LightBlueAccent,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Medium,
-                        modifier = Modifier.clickable { /* Handle item click */ }
-                    )
                     Icon(
-                        imageVector = Icons.Default.ArrowForward, // Placeholder for a right arrow icon
+                        imageVector = Icons.Default.ArrowForward,
                         contentDescription = "View Details",
-                        tint = LightBlueAccent,
-                        modifier = Modifier.size(16.dp)
+                        tint = Color.Blue,
+                        modifier = Modifier.size(25.dp).clickable { onNavigateToItemDetail() }
                     )
                 }
-                StatusPill(status = status)
+                StatusPill(status = item.status ?: "Unknown")
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -86,29 +85,29 @@ fun InventoryItemCard(
                 Column {
                     Text(
                         text = "CATEGORY",
-                        color = TextGrey,
+                        color = Color.Gray,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(text = category, color = DarkPrimary, fontSize = 16.sp)
+                    Text(text = item.category, color = Color.Black, fontSize = 16.sp)
                 }
                 Column {
                     Text(
                         text = "QTY",
-                        color = TextGrey,
+                        color = Color.Gray,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(text = qty.toString(), color = DarkPrimary, fontSize = 16.sp)
+                    Text(text = item.qty.toString(), color = Color.Black, fontSize = 16.sp)
                 }
                 Column {
                     Text(
                         text = "WAREHOUSE",
-                        color = TextGrey,
+                        color = Color.Gray,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Text(text = warehouse, color = DarkPrimary, fontSize = 16.sp)
+                    Text(text = item.locationId ?: "Unknown", color = Color.Black, fontSize = 16.sp)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -121,7 +120,7 @@ fun InventoryItemCard(
                 Icon(
                     imageVector = Icons.Default.Delete,
                     contentDescription = "Delete",
-                    tint = TextGrey,
+                    tint = Color.Red,
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onDelete() }
@@ -130,7 +129,7 @@ fun InventoryItemCard(
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
-                    tint = TextGrey,
+                    tint = Color.Blue,
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onEdit() }

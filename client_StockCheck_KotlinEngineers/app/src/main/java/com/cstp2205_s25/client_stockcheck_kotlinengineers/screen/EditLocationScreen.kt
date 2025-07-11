@@ -32,6 +32,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 fun EditLocationScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
+
     locationViewModel: LocationViewModel
 ) {
     var selectedTab by remember { mutableStateOf("Locations") }
@@ -102,7 +103,7 @@ fun EditLocationScreen(
                 OutlinedCancelButton(text = "Cancel") {
                     onNavigateToLocation()
                 }
-                PrimaryActionButton(text = "Update Location", eroorMessage = errorMsg) {
+                PrimaryActionButton(text = "Update Location", errorMsg = errorMsg) {
                     locationViewModel.editLocation(locationViewModel.locationState.value) { success ->
                         if (success) {
                             onNavigateToLocation()

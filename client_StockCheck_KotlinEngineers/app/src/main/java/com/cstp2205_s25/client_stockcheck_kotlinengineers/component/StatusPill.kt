@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun StatusPill(status: String) {
     val statusColor = when (status) {
-        "IN STOCK" -> GreenStatus
-        "OUT OF STOCK" -> OrangeStatus
-        else -> Color(0xFFCAD0CE)
+        "IN STOCK" -> Color.Green
+        "OUT OF STOCK" -> Color.Yellow
+        else -> Color.Gray
     }
     Surface(
         shape = RoundedCornerShape(8.dp),

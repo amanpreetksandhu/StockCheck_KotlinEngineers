@@ -1,6 +1,7 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ButtonDefaults
@@ -41,6 +42,7 @@ fun SignupScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -58,9 +60,9 @@ fun SignupScreen(
             label = "Email",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+                 focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+               cursorColor = Color(0xFF1D5C88)
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -71,9 +73,9 @@ fun SignupScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+                cursorColor = Color(0xFF1D5C88)
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -85,6 +87,9 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+                cursorColor = Color(0xFF1D5C88)
 
             )
         )
@@ -124,6 +129,8 @@ fun SignupScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
+               containerColor = Color(0xFF1D5C88)
+
 
             )
         )
@@ -142,7 +149,7 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
-
+                color = Color(0xFF1D5C88),
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,

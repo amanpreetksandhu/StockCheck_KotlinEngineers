@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.runtime.LaunchedEffect
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
@@ -44,12 +45,14 @@ fun LocationScreen(
     val locations by locationViewModel.locations.collectAsState()
     var selectedTab by remember { mutableStateOf("Locations") }
 
+
     Scaffold() { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(bottom = 16.dp)
         ) {
+
             item {
                 TopSection(
                     selectedTab = selectedTab,
@@ -62,7 +65,8 @@ fun LocationScreen(
                 )
                 PageHeaderSection(
                     headerText = "Locations",
-                    onNavigateToAddLocation = { onNavigateToAddLocation() }
+                    onNavigateToAddLocation = { onNavigateToAddLocation(),
+                    onNavigateToAddNewInventoryItem = {} // DONT REMOVE IT!!! }
                 )
             }
 
@@ -87,11 +91,11 @@ fun LocationScreen(
                     )
                 }
 
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
+                    item {
+                        Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
+                    }
+                }
             }
         }
     }
-}
+

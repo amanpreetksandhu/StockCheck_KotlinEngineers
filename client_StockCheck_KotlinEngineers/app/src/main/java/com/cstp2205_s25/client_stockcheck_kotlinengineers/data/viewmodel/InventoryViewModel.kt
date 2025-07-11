@@ -1,35 +1,110 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel
 
+import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import kotlinx.coroutines.flow.asStateFlow
+import java.io.File
 
-class InventoryViewModel: ViewModel() {
+class InventoryViewModel : ViewModel() {
 
-    // To be altered to pull from DB
-    private val _inventoryList = MutableStateFlow(
-        listOf(
-            InventoryItem("1", "Television", "Electronics", 5, "Manhattan", "IN STOCK"),
-            InventoryItem("2", "Gym Bag", "Accessories", 0, "Los Angeles", "OUT OF STOCK")
-        )
-    )
-    val inventoryList = _inventoryList.asStateFlow()
+    private val _inventoryList = MutableStateFlow<List<InventoryItem>>(emptyList())
+    val inventoryList: StateFlow<List<InventoryItem>> = _inventoryList.asStateFlow()
 
-    // You’ll use this function in CREATE later
-    fun addItem(item: InventoryItem) {
-        _inventoryList.value = _inventoryList.value + item
+    private val _inventoryState = mutableStateOf(InventoryItem())
+    val inventoryState: State<InventoryItem> = _inventoryState
+
+    fun updateFormField(update: InventoryItem) {
+        _inventoryState.value = update
     }
 
-    fun deleteItem(itemId: String) {
-        _inventoryList.value = _inventoryList.value.filterNot { it.id == itemId }
+    fun clearFormFields() {
+        _inventoryState.value = InventoryItem()
     }
 
-    fun updateItem(updatedItem: InventoryItem) {
-        _inventoryList.value = _inventoryList.value.map {
-            if (it.id == updatedItem.id) updatedItem else it
+    fun loadInventory() {
+        viewModelScope.launch {
+            try {
+                val items = ApiService.getAllInventoryItems()
+                Log.d("LOAD_INVENTORY", "Loaded ${items.size} items: $items")
+                _inventoryList.value = items
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("LOAD_INVENTORY", "Error loading inventory: ${e.message}")
+            }
         }
     }
+
+    fun addInventoryItem(item: InventoryItem, onResult: (Boolean) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                Log.d("DEBUG", "Calling API to add item: $item")
+                val success = ApiService.addInventoryItem(item)
+                Log.d("DEBUG", "API call result: $success")
+                if (success) loadInventory()
+                onResult(success)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.d("DEBUG", "Exception during API call: ${e.message}")
+                onResult(false)
+            }
+        }
+    }
+
+    fun deleteInventoryItem(itemId: String, onResult: (Boolean) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                val success = ApiService.deleteInventoryItem(itemId)
+                if (success) loadInventory()
+                onResult(success)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onResult(false)
+            }
+        }
+    }
+
+    fun updateInventoryItem(updatedItem: InventoryItem, onResult: (Boolean) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                val success = ApiService.editInventoryItem(updatedItem)
+                if (success) loadInventory()
+                onResult(success)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onResult(false)
+            }
+        }
+    }
+
+    fun uploadImageAndUpdateItem(imageFile: File, onResult: (Boolean) -> Unit = {}) {
+        viewModelScope.launch {
+            try {
+                val uploadedUrl = ApiService.uploadImage(imageFile)
+                if (uploadedUrl != null) {
+                    // Update the current item with new image URL
+                    val updatedItem = _inventoryState.value.copy(imageUrl = uploadedUrl)
+                    _inventoryState.value = updatedItem
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                onResult(false)
+            }
+        }
+    }
+
+
+
 
 
 }

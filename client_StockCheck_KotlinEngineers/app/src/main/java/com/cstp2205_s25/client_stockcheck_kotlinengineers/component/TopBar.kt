@@ -30,19 +30,19 @@ fun TopBar(
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color(0xFF289182))
+            .background(Color(0xFF232940))
             .padding(vertical = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Row(
+        Row( // Image control Style =========================================\
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 15.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Image(
+            Image( // Image control  =========================================\
                 painter = painterResource(id = R.drawable.stockcheck_logo),
                 contentDescription = "App Logo",
                 modifier = Modifier.size(50.dp),
