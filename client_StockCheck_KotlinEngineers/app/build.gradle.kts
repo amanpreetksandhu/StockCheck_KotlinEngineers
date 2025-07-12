@@ -40,8 +40,7 @@ android {
 }
 
 dependencies {
-    // Coil for Jetpack Compose
-    implementation("io.coil-kt:coil-compose:2.4.0")
+
     //----------------- Navigation dependencies ----------------------\
     val nav_version = "2.9.0"
     implementation ("androidx.navigation:navigation-compose:$nav_version")
