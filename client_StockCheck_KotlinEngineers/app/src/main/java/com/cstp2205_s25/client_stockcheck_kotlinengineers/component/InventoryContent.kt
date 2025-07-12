@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -78,9 +76,7 @@ fun InventoryContent(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+
             )
             );
 
@@ -113,13 +109,11 @@ fun InventoryContent(
         ) {
             items(inventoryItems) { item ->
                 InventoryItemCard(
-                    itemName = item.name,
-                    category = item.category,
-                    qty = item.qty,
-                    warehouse = item.warehouse,
-                    status = item.status,
-                    onDelete = { onDelete(item.id) },
-                    onEdit = { onEdit(item) }
+                    item = item,
+                    onDelete = { onDelete(item.id ?: "") },
+                    onEdit = { onEdit(item) },
+                    onNavigateToItemDetail = { /* Handle navigation to item detail */ },
+
 
                 )
             }

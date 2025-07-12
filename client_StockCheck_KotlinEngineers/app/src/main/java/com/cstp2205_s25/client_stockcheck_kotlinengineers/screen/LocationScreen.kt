@@ -50,6 +50,7 @@ fun LocationScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(paddingValues)
                 .padding(bottom = 16.dp)
         ) {
 
@@ -65,8 +66,10 @@ fun LocationScreen(
                 )
                 PageHeaderSection(
                     headerText = "Locations",
-                    onNavigateToAddLocation = { onNavigateToAddLocation(),
-                    onNavigateToAddNewInventoryItem = {} // DONT REMOVE IT!!! }
+                    onNavigateToAddLocation = {
+                        onNavigateToAddLocation()
+                    },
+                    onNavigateToAddNewInventoryItem = {}
                 )
             }
 
@@ -90,12 +93,8 @@ fun LocationScreen(
                         }
                     )
                 }
-
-                    item {
-                        Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
-                    }
-                }
             }
         }
     }
+}
 

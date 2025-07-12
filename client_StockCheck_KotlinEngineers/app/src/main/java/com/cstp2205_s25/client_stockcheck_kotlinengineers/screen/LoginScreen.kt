@@ -90,24 +90,6 @@ fun LoginScreen(
         ComposeButton(
             text = "Login",
             onClick = {
-
-                authViewModel.login {
-                    onLoginSuccess()
-                }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        authViewModel.errorMessage?.let {
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = it, color = MaterialTheme.colorScheme.error)
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ComposeButton(
-            text = "Login",
-            onClick = {
                 scope.launch {
                     val success = ApiService.login(employeeId, password)
                     message = if (success) {

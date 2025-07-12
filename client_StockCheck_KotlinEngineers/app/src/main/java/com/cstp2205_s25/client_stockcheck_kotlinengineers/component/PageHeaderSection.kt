@@ -29,7 +29,8 @@ import androidx.compose.ui.unit.sp
 fun PageHeaderSection(
     headerText: String,
     onNavigateToAddLocation: () -> Unit,
-    onNavigateToAddNewInventoryItem: () -> Unit){
+    onNavigateToAddNewInventoryItem: () -> Unit,
+    ){
 
 
 
