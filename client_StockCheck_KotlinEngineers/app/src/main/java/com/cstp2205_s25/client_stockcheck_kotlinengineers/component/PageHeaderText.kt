@@ -13,9 +13,10 @@ import androidx.compose.ui.unit.sp
 fun PageHeaderText(headerText: String){
     Text(
         text = headerText,
-        fontSize = 28.sp,
+        fontSize = 32.sp,
         fontWeight = FontWeight.Bold,
         color = Color.Black,
-        modifier = Modifier.padding(bottom = 24.dp)
+        modifier = Modifier.padding(bottom = 24.dp),
+        lineHeight = 40.sp
     )
 }

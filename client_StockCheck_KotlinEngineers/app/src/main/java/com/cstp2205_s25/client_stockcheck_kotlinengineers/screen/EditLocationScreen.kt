@@ -1,5 +1,6 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
+import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
@@ -101,7 +103,10 @@ fun EditLocationScreen(
                 OutlinedCancelButton(text = "Cancel") {
                     onNavigateToLocation()
                 }
-                PrimaryActionButton(text = "Update Location", eroorMessage = errorMsg) {
+                PrimaryActionButton(
+                    text = "Update Location",
+                    eroorMessage = errorMsg,
+                    onClickAction = {
                     locationViewModel.editLocation(locationViewModel.locationState.value) { success ->
                         if (success) {
                             onNavigateToLocation()
@@ -109,7 +114,9 @@ fun EditLocationScreen(
                             errorMsg = "Error updating location"
                         }
                     }
-                }
+                },
+                    color =  Color(0xFF2E66E5)
+                )
             }
         }
     }

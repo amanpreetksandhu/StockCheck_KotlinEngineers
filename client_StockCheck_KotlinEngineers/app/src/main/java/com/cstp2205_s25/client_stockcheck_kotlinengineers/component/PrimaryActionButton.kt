@@ -12,14 +12,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->Unit){
+fun PrimaryActionButton(text: String, eroorMessage: String, onClickAction: () ->Unit, color: Color){
     Button(
         onClick = { onClickAction() },
         modifier = Modifier
             .height(50.dp)
             .width(180.dp),
         shape = RoundedCornerShape(25.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E66E5))
+        colors = ButtonDefaults.buttonColors(containerColor = color)
     ) {
         Text(text, color = Color.White)
     }

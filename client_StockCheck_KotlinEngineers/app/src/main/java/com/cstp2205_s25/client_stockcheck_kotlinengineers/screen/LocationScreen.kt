@@ -44,7 +44,7 @@ fun LocationScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 16.dp)
+//                .padding(bottom = 16.dp)
         ) {
             item {
                 TopSection(

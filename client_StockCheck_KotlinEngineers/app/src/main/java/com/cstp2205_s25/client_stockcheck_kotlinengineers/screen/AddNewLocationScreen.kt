@@ -14,16 +14,17 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActionButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActionButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.RoundedInputField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Subheader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
@@ -124,15 +125,20 @@ fun AddNewLocationScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToLocation() })
-                PrimaryActionButton(text = "Add Location", eroorMessage = errorL, onClickAction = {
-                    locationViewModel.createLocation(locationViewModel.locationState.value) { success ->
-                        if (success) {
-                            onNavigateToLocation()
-                        } else {
-                            errorL = "Add locationError while posting new location"
+                PrimaryActionButton(
+                    text = "Add Location",
+                    eroorMessage = errorL,
+                    onClickAction = {
+                        locationViewModel.createLocation(locationViewModel.locationState.value) { success ->
+                            if (success) {
+                                onNavigateToLocation()
+                            } else {
+                                errorL = "Add locationError while posting new location"
+                            }
                         }
-                    }
-                })
+                    },
+                    color = Color(0xFF2E66E5)
+                )
             }
         }
     }
