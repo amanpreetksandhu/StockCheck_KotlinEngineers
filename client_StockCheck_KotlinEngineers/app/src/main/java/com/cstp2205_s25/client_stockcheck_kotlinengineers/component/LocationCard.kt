@@ -19,14 +19,19 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlackText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlueText
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DeleteDialogBox
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.GrayText
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
@@ -40,6 +45,23 @@ fun LocationCard(
     locationViewModel: LocationViewModel,
     onNavigateToLocationDetailsPage: () -> Unit
 ) {
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        DeleteDialogBox(
+            locationName = location.name,
+            onConfirm = {
+                onDeleteLocation()
+                showDeleteDialog = false
+            },
+            onDismiss = {
+                showDeleteDialog = false
+            }
+
+        )
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -142,7 +164,7 @@ fun LocationCard(
                     tint = Color(0xFFC94414),
                     modifier = Modifier
                         .size(24.dp)
-                        .clickable { onDeleteLocation() }
+                        .clickable { showDeleteDialog = true }
                 )
                 Spacer(modifier = Modifier.width(270.dp))
                 Icon(

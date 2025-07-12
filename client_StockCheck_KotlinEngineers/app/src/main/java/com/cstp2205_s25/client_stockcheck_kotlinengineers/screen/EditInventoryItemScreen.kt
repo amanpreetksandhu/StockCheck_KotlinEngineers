@@ -328,7 +328,8 @@ fun EditInventoryItem(
                                 errorMsg = "Error updating inventory item"
                             }
                         }
-                    }
+                    },
+                    color = Color(0xFF2E66E5)
                 )
             }
         }

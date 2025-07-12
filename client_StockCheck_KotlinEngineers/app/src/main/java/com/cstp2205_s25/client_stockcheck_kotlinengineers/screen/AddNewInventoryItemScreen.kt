@@ -3,6 +3,7 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import coil.compose.rememberAsyncImagePainter
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -341,7 +343,8 @@ fun AddNewInventoryItemScreen(
 
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToInventory() })
 
-                PrimaryActionButton(text = "Add Item", errorMsg = errorMsg, onClickAction = {
+                PrimaryActionButton(text = "Add Item", errorMsg = errorMsg,
+                    onClickAction = {
                     Log.d("ButtonClick", "Add Inventory Item clicked")
                     Log.d("FormData", InventoryViewModel.inventoryState.value.toString())
 
@@ -355,7 +358,9 @@ fun AddNewInventoryItemScreen(
                         }
                     }
 
-                })
+                },
+                    color = Color(0xFF2E66E5)
+                )
             }
         }
     }
