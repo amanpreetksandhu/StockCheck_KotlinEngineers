@@ -54,6 +54,9 @@ dependencies {
 //Navigation
     val nav_version = "2.9.0"
 
+    //Accompanist Dependency
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.33.0-alpha")
+
     implementation("androidx.compose.ui:ui-text-google-fonts:1.6.0")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)

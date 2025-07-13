@@ -22,6 +22,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialo
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryContent
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun InventoryScreen(
@@ -33,6 +34,7 @@ fun InventoryScreen(
     var selectedTab by remember { mutableStateOf("Inventory") }
     val inventoryItems by inventoryViewModel.inventoryList.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
+
     // -------------------------------------------/
     Scaffold(
         topBar = {

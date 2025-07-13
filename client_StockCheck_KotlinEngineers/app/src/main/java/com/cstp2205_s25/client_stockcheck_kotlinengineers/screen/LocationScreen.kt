@@ -18,6 +18,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.compose.ui.graphics.Color
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCard
@@ -33,8 +35,15 @@ fun LocationScreen(
     navController: NavController
 ) {
 
+    val systemUiController = rememberSystemUiController()
+    val topSectionColor = Color(0xFF222840)
+
     LaunchedEffect(Unit) {
         locationViewModel.loadLocations()
+        systemUiController.setStatusBarColor(
+            color = topSectionColor,
+            darkIcons = false
+        )
     }
 
     val locations by locationViewModel.locations.collectAsState()
