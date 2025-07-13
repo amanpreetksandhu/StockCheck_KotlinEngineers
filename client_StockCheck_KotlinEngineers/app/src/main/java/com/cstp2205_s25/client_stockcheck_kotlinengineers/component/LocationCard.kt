@@ -50,7 +50,7 @@ fun LocationCard(
 
     if (showDeleteDialog) {
         DeleteDialogBox(
-            locationName = location.name,
+            name = location.name,
             onConfirm = {
                 onDeleteLocation()
                 showDeleteDialog = false
