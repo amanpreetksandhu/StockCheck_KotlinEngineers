@@ -8,7 +8,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun GrayText(text: String) {
     Text(
-        text = "LOCATION NAME",
+        text = text,
         fontSize = 12.sp,
         fontWeight = FontWeight.SemiBold,
         color = TextGrey
