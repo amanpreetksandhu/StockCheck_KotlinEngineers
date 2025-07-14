@@ -48,7 +48,7 @@ class AuthViewModel: ViewModel() {
             if (employeeId.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 errorMessage = "Please fill all fields"
                 isLoading = false
-                return@launch // What does this do?? // to exit the launch block only not the whole signup fun.
+                return@launch // to exit the launch block only not the whole signup fun.
 
             }
 

@@ -22,7 +22,7 @@ object SocketManager {
 
             val notificationHelper = NotificationHelper(context)
 
-            // Example: Inventory item added
+            // Notify when an item is added
             socket.on("itemAdded") { args ->
                 if (args.isNotEmpty()) {
                     val data = args[0] as JSONObject
@@ -30,6 +30,31 @@ object SocketManager {
                     notificationHelper.showNotification("Item Added", "$itemName was added to inventory.")
                 }
             }
+
+            // Notify when an item is edited
+            socket.on("itemUpdated") { args ->
+                if (args.isNotEmpty()) {
+                    val data = args[0] as JSONObject
+                    val itemName = data.optString("name", "An item")
+                    notificationHelper.showNotification("Item Updated", "$itemName was updated in inventory.")
+                }
+            }
+
+
+            // Notify when an item is deleted
+            socket.on("itemDeleted") { args ->
+                if (args.isNotEmpty()) {
+                    val data = args[0] as JSONObject
+                    val itemName = data.optString("name", "An item")
+                    notificationHelper.showNotification("Item Deleted", "$itemName was removed from inventory.")
+                }
+            }
+
+
+
+            // Low stock
+
+
 
             // More events can be added here (e.g., itemEdited, itemDeleted)
         } catch (e: Exception) {
