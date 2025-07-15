@@ -122,7 +122,7 @@ fun LocationDetailsScreen(
                     item = item,
                     onNavigateToItemDetail = { onNavigateToItemDetail() },
                     onDelete = {
-
+                        item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
                     },
                     onEdit = {
                         onNavigateToEditInventory()
