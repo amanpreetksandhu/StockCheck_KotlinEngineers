@@ -66,6 +66,17 @@ exports.deleteItem = async (req, res) => {
 };
 
 
+//Get inventoryList using location id
+exports.getInventoryByLocationId = async (req, res) => {
+    try {
+        const locationId  = req.params.locationId;
+        const inventoryItems = await InventoryItem.find({ locationId: locationId  });
+        res.status(200).json(inventoryItems);
+    } catch (error) {
+        console.error('Error fetching inventory by location:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+};
 
 
 /*

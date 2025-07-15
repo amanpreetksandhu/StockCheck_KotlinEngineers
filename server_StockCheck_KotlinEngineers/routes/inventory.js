@@ -8,6 +8,8 @@ router.get('/:id', inventoryController.getItemById);
 router.post('/', (req, res) => inventoryController.createItem(req, res));
 router.put('/:id', (req, res) => inventoryController.updateItem(req, res));
 router.delete('/:id', (req, res) => inventoryController.deleteItem(req, res));
+router.get('/location/:locationId', inventoryController.getInventoryByLocationId);
+
 
 
 //Backup
