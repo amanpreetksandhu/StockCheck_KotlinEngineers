@@ -33,6 +33,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlackText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlueText
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DeleteDialogBox
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.GrayText
+import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
@@ -49,7 +50,7 @@ fun LocationCard(
 
     if (showDeleteDialog) {
         DeleteDialogBox(
-            locationName = location.name,
+            name = location.name,
             onConfirm = {
                 onDeleteLocation()
                 showDeleteDialog = false
@@ -78,8 +79,8 @@ fun LocationCard(
             ) {
                 //LOCATION NAME
                 Column(modifier = Modifier.width(160.dp)) {
-                    GrayText(text = "LOCATION NAME")
 
+                    GrayText(text = "LOCATION NAME")
                     Row(
                         modifier = Modifier
                             .clickable(onClick = { onNavigateToLocationDetailsPage() })
@@ -92,16 +93,17 @@ fun LocationCard(
                             contentDescription = "chevron_right"
                         )
                     }
+
                 }
                 Spacer(modifier = Modifier.width(16.dp))
                 // CONTACT NAME
                 Column {
                     GrayText(
                         text = "CONTACT NAME",
-
                         )
                     BlackText(
                         text = location.contactName,
+
                     )
                 }
 
@@ -118,6 +120,7 @@ fun LocationCard(
                 Column(modifier = Modifier.width(160.dp)) {
                     GrayText(
                         text = "ADDRESS",
+
 
                         )
                     BlackText(
@@ -138,6 +141,7 @@ fun LocationCard(
                     GrayText(
                         text = "CONTACT INFO",
 
+
                         )
                     BlackText(
                         text = location.contactEmail
@@ -146,7 +150,6 @@ fun LocationCard(
 
                     BlackText(
                         text = location.contactPhone
-
                     )
                 }
             }

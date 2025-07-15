@@ -26,14 +26,20 @@ import androidx.compose.ui.unit.sp
 
 // This component contains PAGE HEADER, SEARCH BAR AND ADD BUTTON on the page of locations and inventory
 @Composable
-fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
+fun PageHeaderSection(
+    headerText: String,
+    onNavigateToAddLocation: () -> Unit,
+    onNavigateToAddNewInventoryItem: () -> Unit,
+    ){
+
+
+
     Column(
         modifier = Modifier
             .padding(24.dp)
     ) {
         // Page Header
         PageHeaderText(headerText = headerText)
-
         // Search Field
         OutlinedTextField(
             value = "",
@@ -50,19 +56,25 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color.LightGray,
+                focusedBorderColor = Color(0xFF1D5C88),
                 focusedLabelColor = Color.LightGray,
             )
         );
         Spacer(modifier = Modifier.padding(10.dp))
         // Add Button
         Button (
-            onClick = { onNavigateToAddLocation() },
+            onClick = { if (headerText == "Locations"){
+                    onNavigateToAddLocation()
+                } else if (headerText == "Inventory"){
+                    onNavigateToAddNewInventoryItem()
+            }
+
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(bottom = 8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E66E5)),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF1D5C88)),
             shape = RoundedCornerShape(24.dp),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 4.dp)
         ) {
@@ -72,7 +84,13 @@ fun PageHeaderSection(headerText: String, onNavigateToAddLocation: () -> Unit){
                 tint = Color.White
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = "Add New $headerText", color = Color.White, fontSize = 18.sp)
+            if (headerText == "Locations") {
+                Text(text = "Add New Location", color = Color.White, fontSize = 18.sp)
+            } else if (headerText == "Inventory") {
+                Text(text = "Add New Item", color = Color.White, fontSize = 18.sp)
+            }
+
+
         }
 
     }

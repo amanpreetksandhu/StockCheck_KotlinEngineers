@@ -28,6 +28,7 @@ class LocationViewModel : ViewModel() {
         }
     }
 
+
     //Get a location by id
     fun getLocationById(id: String): Location? {
         return locations.value.find { it.id == id }
@@ -78,7 +79,9 @@ class LocationViewModel : ViewModel() {
     }
 
     // Edit a location
+
     fun editLocation(location: Location, onResult: (Boolean) -> Unit = {}) {
+
         viewModelScope.launch {
             try {
                 val success = ApiService.editLocation(location)

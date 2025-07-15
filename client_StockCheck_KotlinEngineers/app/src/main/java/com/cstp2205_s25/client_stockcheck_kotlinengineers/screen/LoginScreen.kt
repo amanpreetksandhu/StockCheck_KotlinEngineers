@@ -1,6 +1,7 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,11 +41,12 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(100.dp))
-        Image(
+        Image( // WE DONT HAVE TO TOUCH THIS
             painter = painterResource(id = R.drawable.stockcheck_wordmark),
             contentDescription = "StockCheck WorkMark",
             modifier = Modifier
@@ -57,6 +59,10 @@ fun LoginScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+               cursorColor = Color(0xFF1D5C88)
+
             )
 
 
@@ -70,6 +76,13 @@ fun LoginScreen(
             label = "Password",
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+                cursorColor = Color(0xFF1D5C88)
+
+            )
+
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -77,17 +90,23 @@ fun LoginScreen(
         ComposeButton(
             text = "Login",
             onClick = {
-                authViewModel.login {
-                    onLoginSuccess()
+                scope.launch {
+                    val success = ApiService.login(employeeId, password)
+                    message = if (success) {
+                        onLoginSuccess()
+                        "Login successful!"
+                    } else {
+                        "Invalid credentials"
+                    }
                 }
             },
-            modifier = Modifier.fillMaxWidth()
-        )
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color(0xFF1D5C88)
 
-        authViewModel.errorMessage?.let {
-            Spacer(modifier = Modifier.height(12.dp))
-            Text(text = it, color = MaterialTheme.colorScheme.error)
-        }
+
+            )
+        )
 
         Spacer(modifier = Modifier.height(50.dp))
         Text(
@@ -99,6 +118,7 @@ fun LoginScreen(
                     onNavigateToSignup()
                 }
         )
+
         authViewModel.errorMessage?.let {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)

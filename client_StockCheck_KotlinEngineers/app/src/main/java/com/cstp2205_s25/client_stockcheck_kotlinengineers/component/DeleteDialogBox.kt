@@ -22,7 +22,7 @@ import androidx.compose.ui.window.DialogProperties
 
 @Composable
 fun DeleteDialogBox(
-    locationName: String,
+    name: String,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -58,10 +58,11 @@ fun DeleteDialogBox(
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
-                    PageHeaderText(headerText = "Delete $locationName location?")
+                    PageHeaderText(headerText = "Delete $name location?")
+
                     Spacer(modifier = Modifier.height(16.dp))
                     BlackText(
-                        text = "Please confirm that you would like to delete the $locationName from the list of locations. You would not be able to undo this action."
+                        text = "Please confirm that you would like to delete the $name. You would not be able to undo this action."
                     )
 
                 }
@@ -70,7 +71,7 @@ fun DeleteDialogBox(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     OutlinedCancelButton (text="Cancel", onClickAction = onDismiss)
-                    PrimaryActionButton(text="Delete", eroorMessage="", onClickAction = onConfirm, color=Color(0xFFC94414))
+                    PrimaryActionButton(text="Delete", errorMsg="", onClickAction = onConfirm, color=Color(0xFFC94414))
                 }
             }
         }

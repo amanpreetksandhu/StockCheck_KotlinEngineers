@@ -1,6 +1,5 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
-import android.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,6 +33,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 fun EditLocationScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
+
     locationViewModel: LocationViewModel
 ) {
     var selectedTab by remember { mutableStateOf("Locations") }
@@ -42,6 +42,7 @@ fun EditLocationScreen(
 
     Scaffold(
         topBar = {
+
             TopSection (
                 selectedTab = selectedTab,
                 onTabSelected = {
@@ -103,9 +104,10 @@ fun EditLocationScreen(
                 OutlinedCancelButton(text = "Cancel") {
                     onNavigateToLocation()
                 }
+
                 PrimaryActionButton(
                     text = "Update Location",
-                    eroorMessage = errorMsg,
+                    errorMsg = errorMsg,
                     onClickAction = {
                     locationViewModel.editLocation(locationViewModel.locationState.value) { success ->
                         if (success) {

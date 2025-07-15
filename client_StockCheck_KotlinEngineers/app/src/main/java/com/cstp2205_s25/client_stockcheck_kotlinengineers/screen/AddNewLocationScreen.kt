@@ -28,6 +28,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActio
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.RoundedInputField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.Subheader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 @Composable
@@ -43,11 +44,13 @@ fun AddNewLocationScreen(
 
     var selectedTab by remember { mutableStateOf("Locations") }
     val form = locationViewModel.locationState.value
-    var errorL = ""
+    var errorMsg = ""
 
     Scaffold(
         topBar = {
+
             TopSection(
+
                 selectedTab = selectedTab,
                 onTabSelected = {
                     selectedTab = it
@@ -125,15 +128,16 @@ fun AddNewLocationScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 OutlinedCancelButton(text = "Cancel", onClickAction = { onNavigateToLocation() })
+
                 PrimaryActionButton(
                     text = "Add Location",
-                    eroorMessage = errorL,
+                    errorMsg = errorMsg,
                     onClickAction = {
                         locationViewModel.createLocation(locationViewModel.locationState.value) { success ->
                             if (success) {
                                 onNavigateToLocation()
                             } else {
-                                errorL = "Add locationError while posting new location"
+                                errorMsg = "Add locationError while posting new location"
                             }
                         }
                     },

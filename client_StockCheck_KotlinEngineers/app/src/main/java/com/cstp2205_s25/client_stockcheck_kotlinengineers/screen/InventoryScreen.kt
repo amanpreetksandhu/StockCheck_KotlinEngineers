@@ -5,10 +5,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,76 +22,79 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryContent
+
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryItemCard
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
+
 
 @Composable
 fun InventoryScreen(
     onNavigateToLocation: () -> Unit,
-    inventoryViewModel: InventoryViewModel = viewModel()
+    onNavigateToAddNewInventoryItem: () -> Unit,
+    onNavigateToEditInventoryItem: () -> Unit,
+    onNavigateToItemDetail: () -> Unit,
+    inventoryViewModel: InventoryViewModel
 
-){
+) {
     // INVENTORY management logic-----------------------\
     var selectedTab by remember { mutableStateOf("Inventory") }
     val inventoryItems by inventoryViewModel.inventoryList.collectAsState()
-    var showAddDialog by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        inventoryViewModel.loadInventory()
+    }
+
 
     // -------------------------------------------/
-    Scaffold(
-        topBar = {
-            TopSection(
-                selectedTab = selectedTab,
-                onTabSelected = {
-                    selectedTab = it
-                    if (it == "Locations") {
-                        onNavigateToLocation()
-                    }
-                }
-            )
-        },
-        containerColor = Color(0xFF289182)
-    )
-
-      { paddingValues ->
-        // Main content area
-        Column(
+    Scaffold { paddingValues ->
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(paddingValues)
-                .padding(top = 20.dp) // No extra top padding
-//                .background(Color(0xFF289182)) // Ensure the background extends to the top
+                .padding(bottom = 16.dp)
         ) {
-            // White content card
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .offset(y = (-20).dp), // Adjust position to overlap with top bar slightly
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                color = Color.White,
-                shadowElevation = 8.dp
-            ) {
-                InventoryContent(
-                    inventoryItems = inventoryItems,
-                    onDelete = {inventoryViewModel.deleteItem(it)},
-                    onEdit = {inventoryViewModel.updateItem(it)},
-                    onAdd = {inventoryViewModel.addItem(it)},
-                    onAddClick = { showAddDialog = true }
-                ) // Your main inventory screen content
-            }
-            if (showAddDialog) {
-                AddItemDialog(
-                    onAdd = {
-                        inventoryViewModel.addItem(it)
-                        showAddDialog = false
-                    },
-                    onDismiss = {
-                        showAddDialog = false
+            item {
+                TopSection(
+                    selectedTab = selectedTab,
+                    onTabSelected = {
+                        selectedTab = it
+                        if (it == "Locations") {
+                            onNavigateToLocation()
+                        }
                     }
                 )
+                PageHeaderSection(
+                    headerText = "Inventory",
+                    onNavigateToAddLocation = {},
+                    onNavigateToAddNewInventoryItem = {
+                        onNavigateToAddNewInventoryItem()
+                    }
+                )
+            }
+
+            itemsIndexed(inventoryItems) { index, item ->
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    InventoryItemCard(
+                        item = item,
+                        onEdit = {
+                            inventoryViewModel.updateFormField(item)
+                            onNavigateToEditInventoryItem()
+                        },
+                        onDelete = {
+                            item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
+                        },
+                        onNavigateToItemDetail = {
+                            inventoryViewModel.updateFormField(item)
+                            onNavigateToItemDetail()
+                        }
+                    )
+                }
             }
         }
     }
 }
+

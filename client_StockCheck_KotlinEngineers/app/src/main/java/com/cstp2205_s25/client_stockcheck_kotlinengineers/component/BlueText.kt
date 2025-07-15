@@ -9,8 +9,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun BlueText(text: String){
     Text(
-
-                text = text,
+        text = text,
         fontSize = 18.sp,
         fontWeight = FontWeight.Medium,
         color = Color(0xFF2E66E5)

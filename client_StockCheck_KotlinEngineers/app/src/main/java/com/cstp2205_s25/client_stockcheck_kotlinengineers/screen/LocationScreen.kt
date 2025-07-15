@@ -1,5 +1,6 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +27,8 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.LocationCar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
 
+
+
 @Composable
 fun LocationScreen(
     onNavigateToInventory: () -> Unit,
@@ -46,15 +49,19 @@ fun LocationScreen(
         )
     }
 
+
     val locations by locationViewModel.locations.collectAsState()
     var selectedTab by remember { mutableStateOf("Locations") }
+
 
     Scaffold() { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-//                .padding(bottom = 16.dp)
+                .padding(paddingValues)
+                .padding(bottom = 16.dp)
         ) {
+
             item {
                 TopSection(
                     selectedTab = selectedTab,
@@ -67,7 +74,10 @@ fun LocationScreen(
                 )
                 PageHeaderSection(
                     headerText = "Locations",
-                    onNavigateToAddLocation = { onNavigateToAddLocation() }
+                    onNavigateToAddLocation = {
+                        onNavigateToAddLocation()
+                    },
+                    onNavigateToAddNewInventoryItem = {}
                 )
             }
 
@@ -83,15 +93,14 @@ fun LocationScreen(
                         },
                         locationViewModel = locationViewModel,
                         onNavigateToLocationDetailsPage = {
-                            navController.navigate(ScreenInventory.LOCATIONDETAILS.createRoute(location.id))
+                            navController.navigate(
+                                ScreenInventory.LOCATIONDETAILS.createRoute(
+                                    location.id
+                                )
+                            )
                         }
                     )
                 }
-
-            }
-
-            item {
-                Spacer(modifier = Modifier.height(32.dp)) // Add bottom space if needed
             }
         }
     }
