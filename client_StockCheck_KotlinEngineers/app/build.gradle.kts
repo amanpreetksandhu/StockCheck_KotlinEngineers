@@ -57,7 +57,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
     // Saved state module for viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
-
+    //  Accompanist System UI Controller
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
 
     // ------------------------ Image dependencies --------------------------\
     implementation("io.coil-kt:coil-compose:2.4.0")

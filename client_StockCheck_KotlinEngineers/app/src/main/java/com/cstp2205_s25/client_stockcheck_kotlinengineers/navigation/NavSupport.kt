@@ -30,7 +30,7 @@ fun NavSupport(vm: AuthViewModel) {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
     val locationViewModel: LocationViewModel = viewModel()
-    val InventoryViewModel: InventoryViewModel = viewModel()
+    val inventoryViewModel: InventoryViewModel = viewModel()
 
     NavHost(navController = navController, startDestination = ScreenInventory.LOGIN.route) {
 
@@ -111,14 +111,15 @@ fun NavSupport(vm: AuthViewModel) {
                     onNavigateToInventory = {
                         navController.navigate(ScreenInventory.INVENTORIES.route)
                     },
-                    onNavigateToEditLocation = {
-                        navController.navigate(ScreenInventory.EDITLOCATION.route)
+                    onNavigateToEditInventory = {
+                        navController.navigate(ScreenInventory.EDITINVENTORYITEM.route)
                     },
-                    locationViewModel = locationViewModel
+                    onNavigateToItemDetail = { navController.navigate(ScreenInventory.ITEMDETAILSCREEN.route) },
+                    locationViewModel = locationViewModel,
+                    inventoryViewModel = inventoryViewModel
                 )
             }
         }
-
 
 
         //INVENTORY NAVIGATION BLOCK------------------------------------------------\
@@ -127,7 +128,7 @@ fun NavSupport(vm: AuthViewModel) {
                 onNavigateToAddNewInventoryItem = { navController.navigate(ScreenInventory.ADDNEWINVENTORYITEM.route) },
                 onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
                 onNavigateToItemDetail = { navController.navigate(ScreenInventory.ITEMDETAILSCREEN.route) },
-                inventoryViewModel = InventoryViewModel
+                inventoryViewModel = inventoryViewModel
             )
         }
 
@@ -136,7 +137,7 @@ fun NavSupport(vm: AuthViewModel) {
             AddNewInventoryItemScreen(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
-                InventoryViewModel = InventoryViewModel,
+                InventoryViewModel = inventoryViewModel,
                 LocationViewModel = locationViewModel
             )
         }
@@ -146,7 +147,7 @@ fun NavSupport(vm: AuthViewModel) {
             EditInventoryItem(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
-                InventoryViewModel = InventoryViewModel,
+                InventoryViewModel = inventoryViewModel,
                 LocationViewModel = locationViewModel
             )
         }
@@ -157,7 +158,7 @@ fun NavSupport(vm: AuthViewModel) {
                 LocationViewModel = locationViewModel,
                 onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)},
                 onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
-                InventoryViewModel = InventoryViewModel
+                InventoryViewModel = inventoryViewModel
             )
         }
     }

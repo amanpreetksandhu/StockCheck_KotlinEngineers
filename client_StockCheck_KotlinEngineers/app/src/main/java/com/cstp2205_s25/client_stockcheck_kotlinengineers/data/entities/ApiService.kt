@@ -218,6 +218,43 @@ object ApiService {
         }
     }
 
+// Get inventories list by location id
+    suspend fun getInventoriesByLocation(locationId: String): List<InventoryItem> {
+        return withContext(Dispatchers.IO) {
+            val url = URL("$BASE_URL/inventory/location/$locationId")
+            val conn = url.openConnection() as HttpURLConnection
+            conn.requestMethod = "GET"
+
+            val inventoryList = mutableListOf<InventoryItem>()
+
+            if (conn.responseCode == 200) {
+                val reader = BufferedReader(InputStreamReader(conn.inputStream))
+                val response = reader.readText()
+                reader.close()
+
+                val jsonArray = JSONArray(response)
+                for (i in 0 until jsonArray.length()) {
+                    val obj = jsonArray.getJSONObject(i)
+                    inventoryList.add(
+                        InventoryItem(
+                            id = obj.optString("_id"),
+                            name = obj.getString("name"),
+                            description = obj.optString("description"),
+                            category = obj.optString("category"),
+                            qty = obj.optInt("qty"),
+                            price = obj.optDouble("price"),
+                            imageUrl = obj.optString("imageUrl"),
+                            locationId = obj.optString("locationId"),
+                            status = obj.optString("status")
+                        )
+                    )
+                }
+            }
+
+            conn.disconnect()
+            inventoryList
+        }
+    }
 
     // Add new item
     suspend fun addInventoryItem(item: InventoryItem): Boolean {
@@ -344,15 +381,6 @@ object ApiService {
             }
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 }

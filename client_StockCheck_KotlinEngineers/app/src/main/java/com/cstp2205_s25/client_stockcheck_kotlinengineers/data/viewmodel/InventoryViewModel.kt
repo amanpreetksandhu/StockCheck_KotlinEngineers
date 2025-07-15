@@ -15,6 +15,11 @@ import java.io.File
 
 class InventoryViewModel : ViewModel() {
 
+    // privite
+    private val _inventoryItems = MutableStateFlow<List<InventoryItem>>(emptyList())
+    // exposed to use
+    val inventoryItems: StateFlow<List<InventoryItem>> = _inventoryItems
+
     private val _inventoryList = MutableStateFlow<List<InventoryItem>>(emptyList())
     val inventoryList: StateFlow<List<InventoryItem>> = _inventoryList.asStateFlow()
 
@@ -80,6 +85,16 @@ class InventoryViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 onResult(false)
+            }
+        }
+    }
+
+    fun loadInventoryByLocation(locationId: String) {
+        viewModelScope.launch {
+            try {
+                _inventoryItems.value = ApiService.getInventoriesByLocation(locationId)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }
