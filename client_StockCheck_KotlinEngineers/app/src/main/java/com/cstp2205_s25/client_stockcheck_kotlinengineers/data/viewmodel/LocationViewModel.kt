@@ -14,6 +14,7 @@ class LocationViewModel : ViewModel() {
 
     private val _locations = MutableStateFlow<List<Location>>(emptyList())
 
+    //exposed
     val locations: StateFlow<List<Location>> = _locations
     val locationState = mutableStateOf(Location())
 

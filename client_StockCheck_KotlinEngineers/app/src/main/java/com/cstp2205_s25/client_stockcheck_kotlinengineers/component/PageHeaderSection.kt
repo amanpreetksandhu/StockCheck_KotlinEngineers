@@ -19,9 +19,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 
 
 // This component contains PAGE HEADER, SEARCH BAR AND ADD BUTTON on the page of locations and inventory
@@ -30,8 +30,9 @@ fun PageHeaderSection(
     headerText: String,
     onNavigateToAddLocation: () -> Unit,
     onNavigateToAddNewInventoryItem: () -> Unit,
-    ){
-
+    searchQuery: String,
+    onSearchQueryChange: (String) -> Unit
+) {
 
 
     Column(
@@ -42,8 +43,8 @@ fun PageHeaderSection(
         PageHeaderText(headerText = headerText)
         // Search Field
         OutlinedTextField(
-            value = "",
-            onValueChange = { },
+            value = searchQuery,
+            onValueChange = { onSearchQueryChange(it) },
             modifier = Modifier
                 .fillMaxWidth(),
             shape = RoundedCornerShape(24.dp),
@@ -62,12 +63,13 @@ fun PageHeaderSection(
         );
         Spacer(modifier = Modifier.padding(10.dp))
         // Add Button
-        Button (
-            onClick = { if (headerText == "Locations"){
+        Button(
+            onClick = {
+                if (headerText == "Locations") {
                     onNavigateToAddLocation()
-                } else if (headerText == "Inventory"){
+                } else if (headerText == "Inventory") {
                     onNavigateToAddNewInventoryItem()
-            }
+                }
 
             },
             modifier = Modifier

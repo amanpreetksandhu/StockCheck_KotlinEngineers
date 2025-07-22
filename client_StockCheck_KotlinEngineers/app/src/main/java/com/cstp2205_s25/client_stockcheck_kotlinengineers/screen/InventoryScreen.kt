@@ -72,7 +72,9 @@ fun InventoryScreen(
                     onNavigateToAddLocation = {},
                     onNavigateToAddNewInventoryItem = {
                         onNavigateToAddNewInventoryItem()
-                    }
+                    },
+                    searchQuery = "",
+                    onSearchQueryChange = {}
                 )
             }
 
