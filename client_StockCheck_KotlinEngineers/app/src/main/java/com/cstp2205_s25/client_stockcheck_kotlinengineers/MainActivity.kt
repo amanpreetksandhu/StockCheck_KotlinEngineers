@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.services.SocketManager
 

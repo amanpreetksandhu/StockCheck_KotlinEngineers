@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.compose.ui.graphics.Color
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
@@ -40,6 +41,15 @@ fun LocationScreen(
 
     val systemUiController = rememberSystemUiController()
     val topSectionColor = Color(0xFF222840)
+
+    var searchQuery by remember { mutableStateOf("") }
+    val locationsList = locationViewModel.locations.collectAsState().value
+    val filteredLocationList = locationsList.filter {
+        it.name.contains(searchQuery, ignoreCase = true) ||
+                it.address.contains(searchQuery, ignoreCase = true) ||
+                it.city.contains(searchQuery, ignoreCase = true)
+    }
+
 
     LaunchedEffect(Unit) {
         locationViewModel.loadLocations()
@@ -62,7 +72,7 @@ fun LocationScreen(
                 .padding(bottom = 16.dp)
         ) {
 
-            item {
+            item() {
                 TopSection(
                     selectedTab = selectedTab,
                     onTabSelected = {
@@ -77,11 +87,13 @@ fun LocationScreen(
                     onNavigateToAddLocation = {
                         onNavigateToAddLocation()
                     },
-                    onNavigateToAddNewInventoryItem = {}
-                )
+                    onNavigateToAddNewInventoryItem = {},
+                    searchQuery = searchQuery,
+                    onSearchQueryChange = { searchQuery = it}
+                        )
             }
 
-            itemsIndexed(locations) { index, location ->
+            itemsIndexed(filteredLocationList) { index, location ->
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     LocationCard(
                         location = location,
