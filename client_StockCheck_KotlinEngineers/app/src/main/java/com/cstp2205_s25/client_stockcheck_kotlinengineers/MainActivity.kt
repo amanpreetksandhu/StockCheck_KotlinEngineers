@@ -8,13 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.rememberNavController
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LocationScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.NavSupport
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.NavSupport
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.services.SocketManager
 
 
@@ -30,13 +24,11 @@ class MainActivity : ComponentActivity( ) {
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    val navController = rememberNavController()
-                    val inventoryViewModel: InventoryViewModel = viewModel()
-                    val locationViewModel: LocationViewModel = viewModel()
-                    val authViewModel: AuthViewModel = viewModel()
-
-
-                   NavSupport(authViewModel)
+//                    val navController = rememberNavController()
+//                    val inventoryViewModel: InventoryViewModel = viewModel()
+//                    val locationViewModel: LocationViewModel = viewModel()
+//                    val authViewModel: AuthViewModel = viewModel()
+                    NavSupport()
 
                 }
             }

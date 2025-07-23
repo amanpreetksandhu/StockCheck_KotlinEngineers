@@ -2,15 +2,10 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -21,14 +16,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.FloatingButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryItemCard
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 @Composable
@@ -40,17 +33,34 @@ fun InventoryScreen(
     inventoryViewModel: InventoryViewModel
 
 ) {
-    // INVENTORY management logic-----------------------\
-    var selectedTab by remember { mutableStateOf("Inventory") }
-    val inventoryItems by inventoryViewModel.inventoryList.collectAsState()
 
-    LaunchedEffect(true) {
+    val systemUiController = rememberSystemUiController() // this is to make the top status bar on the phone to make
+    // the same color as the top section of the app
+    val topSectionColor = Color(0xFF222840)
+    var selectedTab by remember { mutableStateOf("Inventory") } // the default selected top bar on the screen
+    var searchQuery by remember { mutableStateOf("") }
+    val inventoryList = inventoryViewModel.inventoryList.collectAsState().value
+    //this is filtered list based on user search
+    val filteredInventoryList = inventoryList.filter {
+        it.name.contains(searchQuery, ignoreCase = true) ||
+                it.category.contains(searchQuery, ignoreCase = true)
+    }
+
+    LaunchedEffect(Unit) {
         inventoryViewModel.loadInventory()
+        systemUiController.setStatusBarColor(
+            color = topSectionColor,
+            darkIcons = false
+        )
     }
 
 
-    // -------------------------------------------/
-    Scaffold { paddingValues ->
+    // --------------Scaffold-------------------/
+    Scaffold (
+        floatingActionButton  = {
+            FloatingButton()
+        }
+    ) { paddingValues ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -73,12 +83,12 @@ fun InventoryScreen(
                     onNavigateToAddNewInventoryItem = {
                         onNavigateToAddNewInventoryItem()
                     },
-                    searchQuery = "",
-                    onSearchQueryChange = {}
+                    searchQuery = searchQuery,
+                    onSearchQueryChange = {searchQuery = it}
                 )
             }
 
-            itemsIndexed(inventoryItems) { index, item ->
+            itemsIndexed(filteredInventoryList) { index, item ->
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     InventoryItemCard(
                         item = item,
@@ -87,7 +97,7 @@ fun InventoryScreen(
                             onNavigateToEditInventoryItem()
                         },
                         onDelete = {
-                            item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
+                            item.id?.let { id -> inventoryViewModel.deleteInventoryItem(item.id) }
                         },
                         onNavigateToItemDetail = {
                             inventoryViewModel.updateFormField(item)

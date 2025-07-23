@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,23 +10,20 @@ import androidx.navigation.navArgument
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.ScreenInventory
-
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewInventoryItemScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
-
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.AddNewLocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditInventoryItem
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScreen
-
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.InventoryScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationDetailsScreen
-
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.ItemDetailScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
 
 
 @Composable
-fun NavSupport(vm: AuthViewModel) {
+fun NavSupport() {
     val navController = rememberNavController()
     val authViewModel: AuthViewModel = viewModel()
     val locationViewModel: LocationViewModel = viewModel()
