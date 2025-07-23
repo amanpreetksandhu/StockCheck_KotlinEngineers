@@ -27,7 +27,7 @@ exports.createItem = async (req, res) => {
     await newItem.save();
 
     const io = req.app.get('io');
-    io.emit('item_added', newItem);
+    io.emit('itemAdded', newItem);
 
     res.status(201).json(newItem);
   } catch (error) {
@@ -44,7 +44,7 @@ exports.updateItem = async (req, res) => {
     );
 
     const io = req.app.get('io');
-    io.emit('item_updated', updatedItem);
+    io.emit('itemUpdated', updatedItem);
 
     res.status(200).json(updatedItem);
   } catch (error) {
@@ -57,7 +57,7 @@ exports.deleteItem = async (req, res) => {
     const deletedItem = await InventoryItem.findByIdAndDelete(req.params.id);
 
     const io = req.app.get('io');
-    io.emit('item_deleted', deletedItem);
+    io.emit('itemDeleted', deletedItem);
 
     res.status(200).json(deletedItem);
   } catch (error) {
