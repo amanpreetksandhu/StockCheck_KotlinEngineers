@@ -67,6 +67,16 @@ exports.deleteItem = async (req, res) => {
 
 
 
+// Get inventory items by locationId
+exports.getInventoryByLocationId = async (req, res) => {
+  try {
+    const locationId = req.params.locationId;
+    const items = await InventoryItem.find({ locationId: locationId });
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch items for location' });
+  }
+};
 
 /*
 Backup
