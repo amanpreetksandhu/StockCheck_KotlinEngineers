@@ -18,6 +18,7 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.EditLocationScr
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationDetailsScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.ItemDetailScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.UserProfileScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
 
@@ -68,7 +69,8 @@ fun NavSupport() {
                 onNavigateToAddLocation = { navController.navigate(ScreenInventory.ADDNEWLOCATION.route) },
                 onNavigateToEditLocation = { navController.navigate(ScreenInventory.EDITLOCATION.route) },
                 locationViewModel = locationViewModel,
-                navController = navController
+                navController = navController,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
 
             )
 
@@ -79,7 +81,9 @@ fun NavSupport() {
             AddNewLocationScreen(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
-                locationViewModel = locationViewModel
+                locationViewModel = locationViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
 
@@ -88,7 +92,9 @@ fun NavSupport() {
             EditLocationScreen(
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
-                locationViewModel = locationViewModel
+                locationViewModel = locationViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
 
@@ -113,7 +119,9 @@ fun NavSupport() {
                     },
                     onNavigateToItemDetail = { navController.navigate(ScreenInventory.ITEMDETAILSCREEN.route) },
                     locationViewModel = locationViewModel,
-                    inventoryViewModel = inventoryViewModel
+                    inventoryViewModel = inventoryViewModel,
+                    onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
                 )
             }
         }
@@ -125,7 +133,9 @@ fun NavSupport() {
                 onNavigateToAddNewInventoryItem = { navController.navigate(ScreenInventory.ADDNEWINVENTORYITEM.route) },
                 onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
                 onNavigateToItemDetail = { navController.navigate(ScreenInventory.ITEMDETAILSCREEN.route) },
-                inventoryViewModel = inventoryViewModel
+                inventoryViewModel = inventoryViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
 
@@ -135,7 +145,9 @@ fun NavSupport() {
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
                 InventoryViewModel = inventoryViewModel,
-                LocationViewModel = locationViewModel
+                LocationViewModel = locationViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
 
@@ -145,7 +157,9 @@ fun NavSupport() {
                 onNavigateToInventory = { navController.navigate(ScreenInventory.INVENTORIES.route) },
                 onNavigateToLocation = { navController.navigate(ScreenInventory.LOCATIONS.route) },
                 InventoryViewModel = inventoryViewModel,
-                LocationViewModel = locationViewModel
+                LocationViewModel = locationViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
 
@@ -155,8 +169,15 @@ fun NavSupport() {
                 LocationViewModel = locationViewModel,
                 onNavigateToLocation = {navController.navigate(ScreenInventory.LOCATIONS.route)},
                 onNavigateToEditInventoryItem = { navController.navigate(ScreenInventory.EDITINVENTORYITEM.route) },
-                InventoryViewModel = inventoryViewModel
+                InventoryViewModel = inventoryViewModel,
+                onNavigateToUserProfile ={navController.navigate(ScreenInventory.USERPROFILESCREEN.route)}
+
             )
         }
+        composable(ScreenInventory.USERPROFILESCREEN.route) {
+            UserProfileScreen(authViewModel = authViewModel,
+                onNavigateToLoginPage = {navController.navigate(ScreenInventory.LOGIN.route)})
+        }
+
     }
 }

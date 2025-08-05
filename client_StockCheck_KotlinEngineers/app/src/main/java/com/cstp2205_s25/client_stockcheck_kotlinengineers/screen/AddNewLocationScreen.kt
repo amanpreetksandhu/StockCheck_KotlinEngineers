@@ -35,7 +35,9 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.Locatio
 fun AddNewLocationScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
-    locationViewModel: LocationViewModel
+    locationViewModel: LocationViewModel,
+    onNavigateToUserProfile:()-> Unit
+
 ) {
 
     LaunchedEffect(Unit) {

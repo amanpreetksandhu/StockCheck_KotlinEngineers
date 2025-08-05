@@ -1,7 +1,13 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities
 
+import android.content.Context
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedOutputStream
@@ -15,6 +21,7 @@ import java.net.URL
 object ApiService {
     private const val BASE_URL = "http://10.0.2.2:5000"  //Android emulator localhost; AKA backend URL
 
+    private val client = OkHttpClient()
 // Signup user
     suspend fun signup(email: String, employeeId: String, password: String): Boolean {
         return withContext(Dispatchers.IO) { // this makes sure the network call runs in the background and doesn't slow down or freeze the main screen.
@@ -65,6 +72,35 @@ object ApiService {
             responseCode == 200 // true if login success
         }
     }
+    // Logout
+    suspend fun logout(context: Context): Boolean = withContext(Dispatchers.IO) {
+        try {
+            // Get token from DataStore
+            val token = TokenManager.getToken(context) ?: return@withContext false
+
+            // Create dummy request body (optional, since logout may not need a body)
+            val body = "".toRequestBody("application/json".toMediaType())
+
+            val request = Request.Builder()
+                .url("$BASE_URL/logout")
+                .post(body)
+                .addHeader("Authorization", "Bearer $token")
+                .build()
+
+            val response: Response = client.newCall(request).execute()
+
+            if (response.isSuccessful) {
+                // Clear token from DataStore
+                TokenManager.clearToken(context)
+                return@withContext true
+            }
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return@withContext false
+    }
+
 
     // Get all locations
     suspend fun getAllLocations(): List<Location> {

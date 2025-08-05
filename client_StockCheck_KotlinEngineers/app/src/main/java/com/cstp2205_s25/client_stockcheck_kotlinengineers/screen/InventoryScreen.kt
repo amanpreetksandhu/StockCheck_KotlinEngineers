@@ -30,7 +30,9 @@ fun InventoryScreen(
     onNavigateToAddNewInventoryItem: () -> Unit,
     onNavigateToEditInventoryItem: () -> Unit,
     onNavigateToItemDetail: () -> Unit,
-    inventoryViewModel: InventoryViewModel
+    inventoryViewModel: InventoryViewModel,
+    onNavigateToUserProfile:()-> Unit
+
 
 ) {
 
@@ -58,7 +60,7 @@ fun InventoryScreen(
     // --------------Scaffold-------------------/
     Scaffold (
         floatingActionButton  = {
-            FloatingButton()
+            FloatingButton(onNavigateToUserProfile={onNavigateToUserProfile()})
         }
     ) { paddingValues ->
         LazyColumn(

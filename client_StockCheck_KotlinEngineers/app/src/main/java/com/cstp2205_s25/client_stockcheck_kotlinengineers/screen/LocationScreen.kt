@@ -33,7 +33,8 @@ fun LocationScreen(
     onNavigateToAddLocation: () -> Unit,
     onNavigateToEditLocation: () -> Unit,
     locationViewModel: LocationViewModel,
-    navController: NavController
+    navController: NavController,
+    onNavigateToUserProfile:()-> Unit
 ) {
 
     val systemUiController = rememberSystemUiController()// this is to make the top status bar on the phone to make
@@ -61,7 +62,7 @@ fun LocationScreen(
 
     Scaffold(
         floatingActionButton  = {
-            FloatingButton()
+            FloatingButton(onNavigateToUserProfile = {onNavigateToUserProfile()})
         }
     ) { paddingValues ->
         LazyColumn(

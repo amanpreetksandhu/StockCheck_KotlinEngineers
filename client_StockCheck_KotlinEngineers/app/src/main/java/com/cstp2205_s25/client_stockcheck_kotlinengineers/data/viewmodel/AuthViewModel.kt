@@ -1,4 +1,5 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.TokenManager
 
 
 class AuthViewModel: ViewModel() {
@@ -63,4 +65,17 @@ class AuthViewModel: ViewModel() {
             isLoading = false
         }
     }
+
+    fun logout(context: Context, onLoggedOut: () -> Unit) {
+        viewModelScope.launch {
+            TokenManager.clearToken(context)
+            email = ""
+            employeeId = ""
+            password = ""
+            errorMessage = null
+            isLoading = false
+            onLoggedOut()
+        }
+    }
+
 }

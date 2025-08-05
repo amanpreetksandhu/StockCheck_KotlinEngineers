@@ -63,8 +63,8 @@ fun EditInventoryItem(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
     InventoryViewModel: InventoryViewModel,
-    LocationViewModel: LocationViewModel
-
+    LocationViewModel: LocationViewModel,
+    onNavigateToUserProfile:()-> Unit
 ){
     var selectedTab by remember { mutableStateOf("Inventory") }
     val form by InventoryViewModel.inventoryState

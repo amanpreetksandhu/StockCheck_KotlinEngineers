@@ -40,6 +40,9 @@ android {
 }
 
 dependencies {
+    // datastore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
     // Coil for Jetpack Compose
     implementation("io.coil-kt:coil-compose:2.4.0")
     //----------------- Navigation dependencies ----------------------\

@@ -69,8 +69,8 @@ fun AddNewInventoryItemScreen(
     onNavigateToInventory: () -> Unit,
     onNavigateToLocation: () -> Unit,
     InventoryViewModel: InventoryViewModel,
-    LocationViewModel: LocationViewModel
-
+    LocationViewModel: LocationViewModel,
+    onNavigateToUserProfile:()-> Unit
 ){
 
     LaunchedEffect(Unit) { // Always start screen with empty fields; Ready to go

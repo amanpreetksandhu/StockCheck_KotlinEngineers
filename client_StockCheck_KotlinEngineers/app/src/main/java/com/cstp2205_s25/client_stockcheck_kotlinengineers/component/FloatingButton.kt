@@ -10,11 +10,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun FloatingButton(){
+fun FloatingButton(
+    onNavigateToUserProfile:()-> Unit
+){
     FloatingActionButton(
         containerColor = Color(0xFF1D5C88),
         contentColor = Color.White,
-        onClick = { /* navigate to home */ },
+        onClick = { onNavigateToUserProfile() },
         ) {
     Icon(
         imageVector = Icons.Filled.Person,

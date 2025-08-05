@@ -68,6 +68,8 @@ fun ItemDetailScreen(
     onNavigateToLocation: () -> Unit,
     LocationViewModel: LocationViewModel,
     onNavigateToEditInventoryItem: () -> Unit,
+    onNavigateToUserProfile:()-> Unit
+
 
 ) {
     var selectedTab by remember { mutableStateOf("Inventory") }
