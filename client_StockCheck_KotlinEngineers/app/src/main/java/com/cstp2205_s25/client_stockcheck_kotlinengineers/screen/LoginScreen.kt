@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeButton
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch

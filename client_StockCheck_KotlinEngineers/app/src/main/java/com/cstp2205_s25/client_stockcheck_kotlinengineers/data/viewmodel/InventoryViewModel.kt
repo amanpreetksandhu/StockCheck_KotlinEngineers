@@ -10,13 +10,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
 
 class InventoryViewModel : ViewModel() {
 
-    // privite
+
     private val _inventoryItems = MutableStateFlow<List<InventoryItem>>(emptyList())
+    private val _locations = MutableStateFlow<List<Location>>(emptyList())
+    val locations: StateFlow<List<Location>> = _locations
+
     // exposed to use
     val inventoryItems: StateFlow<List<InventoryItem>> = _inventoryItems
 
@@ -43,6 +47,18 @@ class InventoryViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
                 Log.e("LOAD_INVENTORY", "Error loading inventory: ${e.message}")
+            }
+        }
+    }
+
+    fun loadLocations(){
+        viewModelScope.launch {
+            try {
+                val locations = ApiService.getAllLocations()
+                _locations.value = locations
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Log.e("LOAD_LOCATIONS", "Error loading locations: ${e.message}")
             }
         }
     }
@@ -117,9 +133,6 @@ class InventoryViewModel : ViewModel() {
             }
         }
     }
-
-
-
 
 
 }

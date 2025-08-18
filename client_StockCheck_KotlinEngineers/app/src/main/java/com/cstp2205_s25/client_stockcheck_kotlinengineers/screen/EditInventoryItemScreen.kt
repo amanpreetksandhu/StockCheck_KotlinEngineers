@@ -2,7 +2,6 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -47,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BWExposedDropdown
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActionButton
@@ -193,64 +193,23 @@ fun EditInventoryItem(
 
 
             // Reuse your categories list from Add screen ===========================================\
-            val categories = listOf("Electronics", "Clothing", "Furniture", "Supplies")
-            var catExpanded by remember { mutableStateOf(false) }
+            val categories = listOf("Electronics", "Clothing", "Furniture","Supplies") //
 
-            ExposedDropdownMenuBox(
-                expanded = catExpanded,
-                onExpandedChange = { catExpanded = !catExpanded }
-            ) {
-                TextField(
-                    readOnly = true,
-                    value = form.category,
-                    onValueChange = {},
-                    label = { Text("Category") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = catExpanded) },
-                    modifier = Modifier
-                        .menuAnchor()
-                        .fillMaxWidth()
-                )
-                ExposedDropdownMenu(
-                    expanded = catExpanded,
-                    onDismissRequest = { catExpanded = false }
-                ) {
-                    categories.forEach { category ->
-                        DropdownMenuItem(
-                            text = { Text(category) },
-                            onClick = {
-                                InventoryViewModel.updateFormField(form.copy(category = category))
-                                catExpanded = false
-                            }
-                        )
-                    }
+            BWExposedDropdown(
+                label = "Select Category",
+                value = form.category,
+                options = categories,
+                { category ->
+                    InventoryViewModel.updateFormField(form.copy(category = category))
                 }
-            }
+            )
 
 
             // ===================================================================/
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
 
-            Subheader(text = "Item Avaliability")
 
-            // Status radio buttons
-            val stockStatus = listOf("In Stock", "Out of Stock")
-            Row(modifier = Modifier.padding(vertical = 10.dp)) {
-                stockStatus.forEach { option ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(end = 16.dp)
-                    ) {
-                        RadioButton(
-                            selected = form.status == option,
-                            onClick = {
-                                InventoryViewModel.updateFormField(form.copy(status = option))
-                            }
-                        )
-                        Text(text = option)
-                    }
-                }
-            }
 
             // Quantity input
             RoundedInputField(
@@ -274,8 +233,21 @@ fun EditInventoryItem(
 
             //Warehouse/Locations ==== Same as Add new Item =======================================\
 
+            val selectedLocationName = locations.find { it.id == form.locationId }?.name ?: ""
 
-            var locExpanded by remember { mutableStateOf(false) }
+            BWExposedDropdown(
+                label = "Select Location",
+                value = selectedLocationName,
+                options = locations.map { it.name },
+                onSelected = { selectedName ->
+                    val selectedLocation = locations.find { it.name == selectedName }
+                    if (selectedLocation != null) {
+                        InventoryViewModel.updateFormField(form.copy(locationId = selectedLocation.id))
+                    }
+                }
+            )
+
+            /*var locExpanded by remember { mutableStateOf(false) }
             val selectedLocationName = locations.find { it.id == form.locationId }?.name ?: "Select Location"
 
             ExposedDropdownMenuBox(
@@ -306,7 +278,8 @@ fun EditInventoryItem(
                         )
                     }
                 }
-            }
+            }*/
+
             //===============================================================================/
 
             Spacer(modifier = Modifier.height(32.dp))

@@ -121,9 +121,11 @@ fun LocationDetailsScreen(
 //                Text(item.name)  //Debug
                 InventoryItemCard(
                     item = item,
+                    locationName = selectedLocation?.name ?: "location name",
                     onNavigateToItemDetail = { onNavigateToItemDetail() },
                     onDelete = {
                         item.id?.let { id -> inventoryViewModel.deleteInventoryItem(id) }
+
                     },
                     onEdit = {
                         onNavigateToEditInventory()

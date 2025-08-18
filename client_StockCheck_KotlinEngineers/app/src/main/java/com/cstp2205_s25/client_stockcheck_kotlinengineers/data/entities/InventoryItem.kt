@@ -1,7 +1,5 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities
 
-import java.util.UUID
-
 data class InventoryItem (
     val id: String? = null, // DB is going to generate
     val name: String = "",
@@ -13,4 +11,3 @@ data class InventoryItem (
     val locationId: String? = null,
     val status: String? = null,
 )
-{}

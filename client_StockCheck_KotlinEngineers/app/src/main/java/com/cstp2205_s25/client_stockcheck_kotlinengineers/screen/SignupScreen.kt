@@ -12,8 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -21,8 +19,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeButton
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
@@ -95,19 +94,6 @@ fun SignupScreen(
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        ComposeButton(
-            text = "Sign Up",
-            onClick = {
-
-                authViewModel.signup {
-                    onSignupSuccess()
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-
-        Spacer(modifier = Modifier.height(16.dp))
 
         ComposeButton(
             text = "Sign Up",

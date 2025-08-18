@@ -30,17 +30,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 
 
 @Composable
 fun InventoryItemCard(
     onNavigateToItemDetail: () -> Unit,
     item: InventoryItem,
+    locationName: String,
     onDelete: () -> Unit,
     onEdit: () -> Unit
+
 ) {
 
     var showDeleteDialog by remember { mutableStateOf(false) }
+
 
     if (showDeleteDialog) {
         DeleteDialogBox(
@@ -93,7 +97,13 @@ fun InventoryItemCard(
                 }
 
                 Spacer(modifier = Modifier.width(30.dp))
-                StatusPill(status = item.status ?: "Unknown")
+                val stockStatus = when {
+                    item.qty <= 0 -> "Out of Stock"
+                    item.qty in 10..100 -> "Low Stock"
+                    else -> "In Stock"
+
+                }
+                StatusPill(status = stockStatus)
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -113,7 +123,8 @@ fun InventoryItemCard(
                 }
                 Column {
                     GrayText(text ="LOCATION")
-                    BlackText(text = item.locationId ?: "Unknown")
+                    //BlackText(text = item.locationId ?: "Unknown")
+                    BlackText(text = locationName)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))

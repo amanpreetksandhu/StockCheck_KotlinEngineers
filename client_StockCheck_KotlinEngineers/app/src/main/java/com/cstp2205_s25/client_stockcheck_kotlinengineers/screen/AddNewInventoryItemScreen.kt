@@ -3,7 +3,6 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import coil.compose.rememberAsyncImagePainter
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,17 +21,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ExposedDropdownMenuBox
-import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -44,15 +37,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ArrowBackIcon
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BWExposedDropdown
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.OutlinedCancelButton
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeader
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PrimaryActionButton
@@ -207,66 +197,22 @@ fun AddNewInventoryItemScreen(
             feature to add, remove or edit category
             */
             val categories = listOf("Electronics", "Clothing", "Furniture","Supplies") //
-            var catExpanded by remember { mutableStateOf(false) }
 
-            ExposedDropdownMenuBox( // @OptIn(ExperimentalMaterial3Api::class) ---> needed to work
-                expanded = catExpanded,
-                onExpandedChange = { catExpanded = !catExpanded }
-            ){
-                TextField(
-                    readOnly = true,
-                    value = form.category,
-                    onValueChange = {},
-                    label = { Text("Category") },
-                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = catExpanded) },
-                    modifier = Modifier
-                        .menuAnchor()
-                        .fillMaxWidth()
-                )
-                ExposedDropdownMenu(
-                    expanded = catExpanded,
-                    onDismissRequest = { catExpanded = false }
-                ) {
-                    categories.forEach { category ->
-                        DropdownMenuItem(
-                            text = { Text(category) },
-                            onClick = {
-                                InventoryViewModel.updateFormField(form.copy(category = category))
-                                catExpanded = false
-                            }
-                        )
-                    }
+            BWExposedDropdown(
+                label = "Select Category",
+                value = form.category,
+                options = categories,
+                { category ->
+                    InventoryViewModel.updateFormField(form.copy(category = category))
                 }
-            }
+            )
 
-            // ===========================/
+
+
+            // ====================================================================================/
 
             Divider(modifier = Modifier.padding(vertical = 20.dp))
 
-            Subheader(text = "Item Avaliability")
-
-            //Status
-            // radio buttons
-            Row (modifier = Modifier.padding(vertical = 10.dp)){
-                // In Stock (side by side) Out of Stock
-                val stockStatus = listOf("In Stock", "Out of Stock")
-
-                stockStatus.forEach { option ->
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.padding(end = 16.dp)
-                    ) {
-                        RadioButton(
-                            selected = form.status == option,
-                            onClick = {
-                                InventoryViewModel.updateFormField(form.copy(status = option))
-                            }
-                        )
-                        Text(text = option)
-                    }
-                }
-
-            }
 
             // Quantity
             RoundedInputField(
@@ -295,28 +241,43 @@ fun AddNewInventoryItemScreen(
 
             //Warehouse / Locations ==================================\
             // Drop down field -> List of the warehouses/locations available in DB
-            var locExpanded by remember { mutableStateOf(false) }
+            //var locExpanded by remember { mutableStateOf(false) }
 
-            val selectedLocationName = locationsList.find { it.id == form.locationId }?.name ?: "Select Location"
+            val selectedLocationName = locationsList.find { it.id == form.locationId }?.name ?: ""
 
-            ExposedDropdownMenuBox(
+            BWExposedDropdown(
+                label = "Select Location",
+                value = selectedLocationName,
+                options = locationsList.map { it.name },
+                onSelected = { selectedName ->
+                    val selectedLocation = locationsList.find { it.name == selectedName }
+                    if (selectedLocation != null) {
+                        InventoryViewModel.updateFormField(form.copy(locationId = selectedLocation.id))
+                    }
+                }
+            )
+
+            /*ExposedDropdownMenuBox(
                 expanded = locExpanded,
-                onExpandedChange = { locExpanded = !locExpanded }
+                onExpandedChange = { locExpanded = !locExpanded },
+
             ) {
                 TextField(
                     readOnly = true,
                     value = selectedLocationName,
+                    label = { Text(" Select Location") },
                     onValueChange = {},
-                    label = { Text("Warehouse Location") },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = locExpanded) },
                     modifier = Modifier
                         .menuAnchor()
                         .fillMaxWidth()
+
                 )
 
                 ExposedDropdownMenu(
                     expanded = locExpanded,
-                    onDismissRequest = { locExpanded = false }
+                    onDismissRequest = { locExpanded = false },
+
                 ) {
                     locationsList.forEach { location ->
                         DropdownMenuItem(
@@ -328,9 +289,7 @@ fun AddNewInventoryItemScreen(
                         )
                     }
                 }
-            }
-
-
+            }*/
 
             //=========================================================/
 

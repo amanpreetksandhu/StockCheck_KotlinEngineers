@@ -112,6 +112,7 @@ fun InventoryContent(
                     item = item,
                     onDelete = { onDelete(item.id ?: "") },
                     onEdit = { onEdit(item) },
+                    locationName = "Location Name", // Replace with actual location name
                     onNavigateToItemDetail = { /* Handle navigation to item detail */ },
 
 

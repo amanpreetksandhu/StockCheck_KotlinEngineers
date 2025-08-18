@@ -22,6 +22,7 @@ object SocketManager {
 
             val notificationHelper = NotificationHelper(context)
 
+            // ========================================== Items notifications Block  ================================================\\
             // Notify when an item is added
             socket.on("itemAdded") { args ->
                 if (args.isNotEmpty()) {
@@ -36,7 +37,7 @@ object SocketManager {
                 if (args.isNotEmpty()) {
                     val data = args[0] as JSONObject
                     val itemName = data.optString("name", "An item")
-                    notificationHelper.showNotification("Item Updated", "$itemName was updated in inventory.")
+                    notificationHelper.showNotification("Item Info Updated", "$itemName was updated in inventory.")
                 }
             }
 
@@ -54,7 +55,40 @@ object SocketManager {
 
             // Low stock
 
+            //======================================= Items notifications Block ====================================================/
 
+            //======================================= Locations notifications Block ====================================================/
+
+            // Notify when a location is added
+            socket.on("locationAdded") { args ->
+                if (args.isNotEmpty()) {
+                    val data = args[0] as JSONObject
+                    val locationName = data.optString("name", "A location")
+                    notificationHelper.showNotification("Location Added", "$locationName was added.")
+                }
+            }
+
+            // Notify when a location is updated
+            socket.on("locationUpdated") { args ->
+                if (args.isNotEmpty()) {
+                    val data = args[0] as JSONObject
+                    val locationName = data.optString("name", "A location")
+                    notificationHelper.showNotification("Location Info Updated", "$locationName was updated.")
+                }
+            }
+
+            // Notify when a location is deleted
+            socket.on("locationDeleted") { args ->
+                if (args.isNotEmpty()) {
+                    val data = args[0] as JSONObject
+                    val locationName = data.optString("name", "A location")
+                    notificationHelper.showNotification("Location Deleted", "$locationName was deleted.")
+                }
+            }
+
+
+
+            // ========================================== Locations notifications Block  ================================================/
 
             // More events can be added here (e.g., itemEdited, itemDeleted)
         } catch (e: Exception) {

@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.components
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -29,11 +29,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlackText
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.BlueText
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.DeleteDialogBox
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.GrayText
-import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.Location
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.LocationViewModel
 

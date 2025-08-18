@@ -42,6 +42,8 @@ fun InventoryScreen(
     var selectedTab by remember { mutableStateOf("Inventory") } // the default selected top bar on the screen
     var searchQuery by remember { mutableStateOf("") }
     val inventoryList = inventoryViewModel.inventoryList.collectAsState().value
+    val locationsList by inventoryViewModel.locations.collectAsState()
+
     //this is filtered list based on user search
     val filteredInventoryList = inventoryList.filter {
         it.name.contains(searchQuery, ignoreCase = true) ||
@@ -50,6 +52,7 @@ fun InventoryScreen(
 
     LaunchedEffect(Unit) {
         inventoryViewModel.loadInventory()
+        inventoryViewModel.loadLocations()
         systemUiController.setStatusBarColor(
             color = topSectionColor,
             darkIcons = false
@@ -91,9 +94,11 @@ fun InventoryScreen(
             }
 
             itemsIndexed(filteredInventoryList) { index, item ->
+                val locationName = locationsList.find { it.id == item.locationId }?.name ?: "Unknown"
                 Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                     InventoryItemCard(
                         item = item,
+                        locationName = locationName,
                         onEdit = {
                             inventoryViewModel.updateFormField(item)
                             onNavigateToEditInventoryItem()
