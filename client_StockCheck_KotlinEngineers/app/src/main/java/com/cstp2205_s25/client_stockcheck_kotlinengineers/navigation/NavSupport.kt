@@ -36,9 +36,7 @@ fun NavSupport() {
         composable(ScreenInventory.LOGIN.route) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.navigate(ScreenInventory.INVENTORIES.route) {
-                        popUpTo(ScreenInventory.LOGIN.route) { inclusive = true }
-                    }
+                        navController.navigate(ScreenInventory.INVENTORIES.route)
                 },
                 onNavigateToSignup = {
                     navController.navigate(ScreenInventory.SIGNUP.route)
@@ -176,7 +174,13 @@ fun NavSupport() {
         }
         composable(ScreenInventory.USERPROFILESCREEN.route) {
             UserProfileScreen(authViewModel = authViewModel,
-                onNavigateToLoginPage = {navController.navigate(ScreenInventory.LOGIN.route)})
+                onNavigateToLoginPage = {navController.navigate(ScreenInventory.LOGIN.route) {
+                    popUpTo(0) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                    restoreState = false
+                }})
         }
 
     }

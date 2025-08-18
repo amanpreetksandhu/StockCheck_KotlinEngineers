@@ -7,10 +7,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.navigation.NavSupport
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.UserProfileScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.services.SocketManager
-
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity( ) {
 
@@ -24,10 +30,6 @@ class MainActivity : ComponentActivity( ) {
         setContent {
             MaterialTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-//                    val navController = rememberNavController()
-//                    val inventoryViewModel: InventoryViewModel = viewModel()
-//                    val locationViewModel: LocationViewModel = viewModel()
-//                    val authViewModel: AuthViewModel = viewModel()
                     NavSupport()
 
                 }
@@ -35,6 +37,5 @@ class MainActivity : ComponentActivity( ) {
         }
     }
 }
-
 
 

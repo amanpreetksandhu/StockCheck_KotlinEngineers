@@ -9,9 +9,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.TokenManager
+import kotlinx.coroutines.flow.MutableStateFlow
 
 
 class AuthViewModel: ViewModel() {
+
+    private val _email = MutableStateFlow("")
 
     var email by  mutableStateOf("")
     var employeeId by  mutableStateOf("")
@@ -22,8 +25,14 @@ class AuthViewModel: ViewModel() {
     var isLoading by mutableStateOf(false)
     var errorMessage by mutableStateOf<String?>(null)
 
+    fun loadCurrentUserEmail(context: Context) {
+        viewModelScope.launch {
+            email = TokenManager.getEmail(context) ?: ""
+        }
+    }
+
     // LOGIN HANDLER
-    fun login(onSuccess: () -> Unit) {
+    fun login(context: Context, onSuccess: () -> Unit) {
         isLoading = true
         errorMessage = null
 
@@ -31,6 +40,8 @@ class AuthViewModel: ViewModel() {
         viewModelScope.launch {
             val success = ApiService.login(employeeId,password)
             if (success){
+                TokenManager.saveEmail(context, employeeId)
+                email = employeeId
                 onSuccess()
             } else {
                 errorMessage = "Invalid Credentials"
@@ -40,7 +51,7 @@ class AuthViewModel: ViewModel() {
     }
 
     // SIGNUP HANDLER
-    fun signup(onSuccess: () -> Unit) {
+    fun signup(context: Context, onSuccess: () -> Unit) {
         isLoading = true
         errorMessage = null
 
@@ -57,6 +68,7 @@ class AuthViewModel: ViewModel() {
             val success = ApiService.signup(email, employeeId, password)
 
             if (success) {
+                TokenManager.saveEmail(context, email)
                 onSuccess()
             } else {
                 errorMessage = "Signup failed — try again"

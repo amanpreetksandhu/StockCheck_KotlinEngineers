@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -36,8 +37,8 @@ fun SignupScreen(
     var email = authViewModel.email
     var employeeId = authViewModel.employeeId
     var password = authViewModel.password
-    var errorMessage by remember { mutableStateOf<String?>(null) }
-    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
 
     Column(
         modifier = Modifier
@@ -99,32 +100,8 @@ fun SignupScreen(
             text = "Sign Up",
             onClick = {
 
-                authViewModel.signup {
+                authViewModel.signup (context){
                     onSignupSuccess()
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
-        )
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        ComposeButton(
-            text = "Sign Up",
-            onClick = {
-                scope.launch {
-                    try {
-                        val success = ApiService.signup(email, employeeId, password)
-                        errorMessage = if (success) {
-                            onSignupSuccess()
-                            "Signup successful!"
-                        } else {
-                            "Signup failed. Please try again."
-                        }
-                    } catch (e: Exception) {
-                        e.printStackTrace()  // You can also log this
-                        errorMessage = "An error occurred: ${e.localizedMessage}"
-                    }
                 }
             },
             modifier = Modifier.fillMaxWidth(),
@@ -134,6 +111,7 @@ fun SignupScreen(
 
             )
         )
+
 
         Spacer(modifier = Modifier.height(50.dp))
 

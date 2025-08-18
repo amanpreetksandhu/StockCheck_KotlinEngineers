@@ -11,6 +11,7 @@ val Context.dataStore by preferencesDataStore("auth_prefs")
 
 object TokenManager {
     private val TOKEN_KEY = stringPreferencesKey("jwt_token")
+    private val EMAIL_KEY = stringPreferencesKey("user_email")
 
     suspend fun saveToken(context: Context, token: String) {
         context.dataStore.edit { prefs ->
@@ -23,7 +24,19 @@ object TokenManager {
             prefs[TOKEN_KEY]
         }.first()
     }
+    // Save email
+    suspend fun saveEmail(context: Context, email: String) {
+        context.dataStore.edit { prefs ->
+            prefs[EMAIL_KEY] = email
+        }
+    }
 
+    // Load email
+    suspend fun getEmail(context: Context): String? {
+        return context.dataStore.data.map { prefs ->
+            prefs[EMAIL_KEY]
+        }.first()
+    }
     suspend fun clearToken(context: Context) {
         context.dataStore.edit { prefs ->
             prefs.remove(TOKEN_KEY)
