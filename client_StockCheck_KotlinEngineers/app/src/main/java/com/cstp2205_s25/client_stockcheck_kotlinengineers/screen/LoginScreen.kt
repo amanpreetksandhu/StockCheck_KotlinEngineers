@@ -1,4 +1,4 @@
-package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
+package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

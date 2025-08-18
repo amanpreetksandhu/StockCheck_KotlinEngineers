@@ -19,8 +19,8 @@ import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationDetails
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.ItemDetailScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LocationScreen
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.UserProfileScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.LoginScreen
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.screens.SignupScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.LoginScreen
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.screen.SignupScreen
 
 
 @Composable
