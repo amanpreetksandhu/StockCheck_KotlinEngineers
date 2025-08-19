@@ -1,6 +1,7 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -115,21 +116,21 @@ object ApiService {
                 val reader = BufferedReader(InputStreamReader(conn.inputStream))
                 val response = reader.readText()
                 reader.close()
-
+                Log.d("LOAD_LOCATIONS", "Raw response: $response")
                 val jsonArray = JSONArray(response)
                 for (i in 0 until jsonArray.length()) {
                     val obj = jsonArray.getJSONObject(i)
                     locations.add(
                         Location(
                             id = obj.getString("_id"),
-                            obj.getString("name"),
-                            obj.getString("address"),
-                            obj.getString("city"),
-                            obj.getString("country"),
-                            obj.getString("contactName"),
-                            obj.getString("contactPosition"),
-                            obj.getString("contactEmail"),
-                            obj.optString("contactPhone"),
+                            name = obj.optString("name", "Unknown"),
+                            address = obj.getString("address"),
+                            city = obj.getString("city"),
+                            country = obj.getString("country"),
+                            contactName = obj.getString("contactName"),
+                            contactPosition = obj.getString("contactPosition"),
+                            contactEmail = obj.getString("contactEmail"),
+                            contactPhone = obj.optString("contactPhone"),
                         )
                     )
                 }
