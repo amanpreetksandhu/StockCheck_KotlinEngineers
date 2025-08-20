@@ -4,7 +4,6 @@ const inventoryController = require('../controllers/InventoryController');
 
 // Routes
 router.get('/', inventoryController.getAllItems);
-router.get('/location/:locationId', inventoryController.getInventoryByLocationId);
 router.get('/:id', inventoryController.getItemById);
 router.post('/', (req, res) => inventoryController.createItem(req, res));
 router.put('/:id', (req, res) => inventoryController.updateItem(req, res));

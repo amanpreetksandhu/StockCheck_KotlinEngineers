@@ -27,7 +27,7 @@ exports.createItem = async (req, res) => {
     await newItem.save();
 
     const io = req.app.get('io');
-    io.emit('itemAdded', newItem);
+    io.emit('item_added', newItem);
 
     res.status(201).json(newItem);
   } catch (error) {
@@ -44,7 +44,7 @@ exports.updateItem = async (req, res) => {
     );
 
     const io = req.app.get('io');
-    io.emit('itemUpdated', updatedItem);
+    io.emit('item_updated', updatedItem);
 
     res.status(200).json(updatedItem);
   } catch (error) {
@@ -57,7 +57,7 @@ exports.deleteItem = async (req, res) => {
     const deletedItem = await InventoryItem.findByIdAndDelete(req.params.id);
 
     const io = req.app.get('io');
-    io.emit('itemDeleted', deletedItem);
+    io.emit('item_deleted', deletedItem);
 
     res.status(200).json(deletedItem);
   } catch (error) {
@@ -67,16 +67,6 @@ exports.deleteItem = async (req, res) => {
 
 
 
-// Get inventory items by locationId
-exports.getInventoryByLocationId = async (req, res) => {
-  try {
-    const locationId = req.params.locationId;
-    const items = await InventoryItem.find({ locationId: locationId });
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch items for location' });
-  }
-};
 
 /*
 Backup
