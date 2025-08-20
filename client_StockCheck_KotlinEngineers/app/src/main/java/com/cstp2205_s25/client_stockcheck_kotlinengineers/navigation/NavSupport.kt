@@ -176,7 +176,13 @@ fun NavSupport() {
         }
         composable(ScreenInventory.USERPROFILESCREEN.route) {
             UserProfileScreen(authViewModel = authViewModel,
-                onNavigateToLoginPage = {navController.navigate(ScreenInventory.LOGIN.route)})
+                onNavigateToLoginPage = {navController.navigate(ScreenInventory.LOGIN.route)
+                {
+                    popUpTo(0) { inclusive = true }
+                }
+                    /*lauchingSingleTop = true
+                    restoreState = false*/
+                })
         }
 
     }

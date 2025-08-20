@@ -386,25 +386,28 @@ object ApiService {
             conn.doOutput = true
             conn.doInput = true
 
-            val outputStream = DataOutputStream(conn.outputStream)
+            val outputStream = DataOutputStream(conn.outputStream) // This is for sending data to the server -
 
+            // Create the form data - here the image is sent as "file" - the image need to be converted to bytes
             outputStream.writeBytes(twoHyphens + boundary + lineEnd)
             outputStream.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"${imageFile.name}\"$lineEnd")
             outputStream.writeBytes("Content-Type: image/jpeg$lineEnd")
             outputStream.writeBytes(lineEnd)
 
+            // Send the file data - here the image is read and sent - The image is read as bytes and sent to the server
             val fileBytes = imageFile.readBytes()
             outputStream.write(fileBytes)
 
+            // End the form data - here the image is sent -
             outputStream.writeBytes(lineEnd)
             outputStream.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd)
-            outputStream.flush()
+            outputStream.flush() // This is to make sure the data is sent to the server - clear the buffer
             outputStream.close()
 
             val responseCode = conn.responseCode
 
             if (responseCode == 200) {
-                val reader = BufferedReader(InputStreamReader(conn.inputStream))
+                val reader = BufferedReader(InputStreamReader(conn.inputStream)) // This is for receiving data
                 val response = reader.readText()
                 reader.close()
 
