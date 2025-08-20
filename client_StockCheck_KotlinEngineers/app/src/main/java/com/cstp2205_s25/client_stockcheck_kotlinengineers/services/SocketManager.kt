@@ -24,7 +24,7 @@ object SocketManager {
 
             // ========================================== Items notifications Block  ================================================\\
             // Notify when an item is added
-            socket.on("itemAdded") { args ->
+            socket.on("item_added") { args ->
                 if (args.isNotEmpty()) {
                     val data = args[0] as JSONObject
                     val itemName = data.optString("name", "An item")
@@ -33,7 +33,7 @@ object SocketManager {
             }
 
             // Notify when an item is edited
-            socket.on("itemUpdated") { args ->
+            socket.on("item_updated") { args ->
                 if (args.isNotEmpty()) {
                     val data = args[0] as JSONObject
                     val itemName = data.optString("name", "An item")
@@ -43,7 +43,7 @@ object SocketManager {
 
 
             // Notify when an item is deleted
-            socket.on("itemDeleted") { args ->
+            socket.on("item_deleted") { args ->
                 if (args.isNotEmpty()) {
                     val data = args[0] as JSONObject
                     val itemName = data.optString("name", "An item")
