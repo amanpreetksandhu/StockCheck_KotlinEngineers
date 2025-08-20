@@ -40,19 +40,44 @@ android {
 }
 
 dependencies {
-//Depenencies from: https://developer.android.com/jetpack/androidx/releases/lifecycle
+    // datastore
+    implementation ("androidx.datastore:datastore-preferences:1.0.0")
+
+    // Coil for Jetpack Compose
+    implementation("io.coil-kt:coil-compose:2.4.0")
+    //----------------- Navigation dependencies ----------------------\
+    val nav_version = "2.9.0"
+    implementation ("androidx.navigation:navigation-compose:$nav_version")
+
+    
+    // ---------------- ViewModel dependencies ------------------\
     val lifecycle_version = "2.9.0"
     val arch_version = "2.2.0"
 
-// ViewModel
+    // Base
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
-// ViewModel utilities for Compose
+    // Utilities for compose
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
-// Saved state module for ViewModel
+    // Saved state module for viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+    //  Accompanist System UI Controller
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
 
-//Navigation
-    val nav_version = "2.9.0"
+    // ------------------------ Image dependencies --------------------------\
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
+    // ----------------------- Notification dependencies ----------------------\
+    implementation("io.socket:socket.io-client:2.0.1") {
+        exclude(group = "org.json", module = "json")
+    }
+
+
+
+
+
+
+    // ------------------ Default Compose dependencies ----------------------\
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.0")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

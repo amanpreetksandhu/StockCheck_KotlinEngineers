@@ -2,13 +2,12 @@ package com.cstp2205_s25.client_stockcheck_kotlinengineers.screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,75 +16,104 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.AddItemDialog
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryContent
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.FloatingButton
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.InventoryItemCard
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.PageHeaderSection
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopSection
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.InventoryViewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.TopBar
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 @Composable
 fun InventoryScreen(
     onNavigateToLocation: () -> Unit,
-    inventoryViewModel: InventoryViewModel = viewModel()
+    onNavigateToAddNewInventoryItem: () -> Unit,
+    onNavigateToEditInventoryItem: () -> Unit,
+    onNavigateToItemDetail: () -> Unit,
+    inventoryViewModel: InventoryViewModel,
+    onNavigateToUserProfile:()-> Unit
 
-){
-    // INVENTORY management logic-----------------------\
-    var selectedTab by remember { mutableStateOf("Inventory") }
-    val inventoryItems by inventoryViewModel.inventoryList.collectAsState()
-    var showAddDialog by remember { mutableStateOf(false) }
-    // -------------------------------------------/
-    Scaffold(
-        topBar = {
-            TopBar(
-                selectedTab = selectedTab,
-                onTabSelected = {
-                    selectedTab = it
-                    if (it == "Locations") {
-                        onNavigateToLocation()
-                    }
-                }
-            )
-        },
-        containerColor = Color(0xFF289182)
-    )
 
-      { paddingValues ->
-        // Main content area
-        Column(
+) {
+
+    val systemUiController = rememberSystemUiController() // this is to make the top status bar on the phone to make
+    // the same color as the top section of the app
+    val topSectionColor = Color(0xFF222840)
+    var selectedTab by remember { mutableStateOf("Inventory") } // the default selected top bar on the screen
+    var searchQuery by remember { mutableStateOf("") }
+    val inventoryList = inventoryViewModel.inventoryList.collectAsState().value
+    val locationsList by inventoryViewModel.locations.collectAsState()
+
+    //this is filtered list based on user search
+    val filteredInventoryList = inventoryList.filter {
+        it.name.contains(searchQuery, ignoreCase = true) ||
+                it.category.contains(searchQuery, ignoreCase = true)
+    }
+
+    LaunchedEffect(Unit) {
+        inventoryViewModel.loadInventory()
+        inventoryViewModel.loadLocations()
+        systemUiController.setStatusBarColor(
+            color = topSectionColor,
+            darkIcons = false
+        )
+    }
+
+
+    // --------------Scaffold-------------------/
+    Scaffold (
+        floatingActionButton  = {
+            FloatingButton(onNavigateToUserProfile={onNavigateToUserProfile()})
+        }
+    ) { paddingValues ->
+        LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .padding(paddingValues)
-                .padding(top = 20.dp) // No extra top padding
-//                .background(Color(0xFF289182)) // Ensure the background extends to the top
+                .padding(bottom = 16.dp)
         ) {
-            // White content card
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .offset(y = (-20).dp), // Adjust position to overlap with top bar slightly
-                shape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
-                color = Color.White,
-                shadowElevation = 8.dp
-            ) {
-                InventoryContent(
-                    inventoryItems = inventoryItems,
-                    onDelete = {inventoryViewModel.deleteItem(it)},
-                    onEdit = {inventoryViewModel.updateItem(it)},
-                    onAdd = {inventoryViewModel.addItem(it)},
-                    onAddClick = { showAddDialog = true }
-                ) // Your main inventory screen content
-            }
-            if (showAddDialog) {
-                AddItemDialog(
-                    onAdd = {
-                        inventoryViewModel.addItem(it)
-                        showAddDialog = false
-                    },
-                    onDismiss = {
-                        showAddDialog = false
+            item {
+                TopSection(
+                    selectedTab = selectedTab,
+                    onTabSelected = {
+                        selectedTab = it
+                        if (it == "Locations") {
+                            onNavigateToLocation()
+                        }
                     }
                 )
+                PageHeaderSection(
+                    headerText = "Inventory",
+                    onNavigateToAddLocation = {},
+                    onNavigateToAddNewInventoryItem = {
+                        onNavigateToAddNewInventoryItem()
+                    },
+                    searchQuery = searchQuery,
+                    onSearchQueryChange = {searchQuery = it}
+                )
+            }
+
+            itemsIndexed(filteredInventoryList) { index, item ->
+                val locationName = locationsList.find { it.id == item.locationId }?.name ?: "Unknown"
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    InventoryItemCard(
+                        item = item,
+                        locationName = locationName,
+                        onEdit = {
+                            inventoryViewModel.updateFormField(item)
+                            onNavigateToEditInventoryItem()
+                        },
+                        onDelete = {
+                            item.id?.let { id -> inventoryViewModel.deleteInventoryItem(item.id) }
+                        },
+                        onNavigateToItemDetail = {
+                            inventoryViewModel.updateFormField(item)
+                            onNavigateToItemDetail()
+                        }
+                    )
+                }
             }
         }
     }
 }
+

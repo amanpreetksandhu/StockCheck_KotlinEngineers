@@ -1,4 +1,5 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.TokenManager
 
 
 class AuthViewModel: ViewModel() {
@@ -44,14 +46,16 @@ class AuthViewModel: ViewModel() {
 
         viewModelScope.launch {
             delay(1000)
-            // Validate and call backend API
-            if (employeeId.isNotEmpty() && password.isNotEmpty() && email.isNotEmpty()) {
+
+            if (employeeId.isEmpty() || password.isEmpty() || email.isEmpty()) {
                 errorMessage = "Please fill all fields"
                 isLoading = false
-                return@launch // What does this do??
+                return@launch // to exit the launch block only not the whole signup fun.
+
             }
 
-            val success = ApiService.signup(employeeId,password,email)
+            val success = ApiService.signup(email, employeeId, password)
+
             if (success) {
                 onSuccess()
             } else {
@@ -61,4 +65,17 @@ class AuthViewModel: ViewModel() {
             isLoading = false
         }
     }
+
+    fun logout(context: Context, onLoggedOut: () -> Unit) {
+        viewModelScope.launch {
+            TokenManager.clearToken(context)
+            email = ""
+            employeeId = ""
+            password = ""
+            errorMessage = null
+            isLoading = false
+            onLoggedOut()
+        }
+    }
+
 }

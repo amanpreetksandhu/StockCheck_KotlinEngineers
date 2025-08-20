@@ -1,6 +1,7 @@
 package com.cstp2205_s25.client_stockcheck_kotlinengineers.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.ButtonDefaults
@@ -11,8 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,8 +19,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeButton
-import com.cstp2205_s25.client_stockcheck_kotlinengineers.components.ComposeTextField
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.R
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeButton
+import com.cstp2205_s25.client_stockcheck_kotlinengineers.component.ComposeTextField
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.ApiService
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.viewmodel.AuthViewModel
 import kotlinx.coroutines.launch
@@ -41,6 +41,7 @@ fun SignupScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Color.White)
             .padding(16.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -58,9 +59,9 @@ fun SignupScreen(
             label = "Email",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+                 focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+               cursorColor = Color(0xFF1D5C88)
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -71,9 +72,9 @@ fun SignupScreen(
             label = "Employee ID",
             modifier = Modifier.fillMaxWidth(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+                cursorColor = Color(0xFF1D5C88)
             )
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -85,12 +86,14 @@ fun SignupScreen(
             modifier = Modifier.fillMaxWidth(),
             visualTransformation = PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+                focusedBorderColor = Color(0xFF1D5C88),
+                focusedLabelColor = Color(0xFF1D5C88),
+                cursorColor = Color(0xFF1D5C88)
+
             )
         )
         Spacer(modifier = Modifier.height(16.dp))
+
 
         ComposeButton(
             text = "Sign Up",
@@ -112,10 +115,12 @@ fun SignupScreen(
             },
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-//                containerColor = scGreen, // Your custom green
-//                contentColor = Color.White // White text
+               containerColor = Color(0xFF1D5C88)
+
+
             )
         )
+
         Spacer(modifier = Modifier.height(50.dp))
 
         Row(
@@ -130,7 +135,7 @@ fun SignupScreen(
             Spacer(modifier = Modifier.width(4.dp))
             Text(
                 text = "Log In!",
-//                color = scBlue,
+                color = Color(0xFF1D5C88),
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
                 textDecoration = TextDecoration.Underline,
@@ -142,7 +147,8 @@ fun SignupScreen(
             )
         }
 
-        errorMessage?.let {
+
+        authViewModel.errorMessage?.let {
             Spacer(modifier = Modifier.height(12.dp))
             Text(text = it, color = MaterialTheme.colorScheme.error)
         }

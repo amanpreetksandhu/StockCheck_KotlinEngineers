@@ -32,7 +32,7 @@ async function getLocationById(req, res) {
 
 //Create location
 async function createLocation(req, res) {
-  const { name, address, contactName, contactEmail, contactPhone } = req.body;
+  const { name, address, city, country, contactName, contactPosition, contactEmail, contactPhone } = req.body;
 
   if (!isValidEmail(contactEmail)) {
     return res.status(400).json({ message: 'Invalid email format.' });
@@ -41,9 +41,18 @@ async function createLocation(req, res) {
     return res.status(400).json({ message: 'Invalid phone number format.' });
   }
 
-  const location = new Location({ name, address, contactName, contactEmail, contactPhone });
+  const location = new Location({ name, address, city, country, contactName, contactPosition, contactEmail, contactPhone });
   try {
     const newLoc = await location.save();
+    
+    // Notify new Location created -> Display location name
+    const io = req.app.get("io");
+    io.emit("locationAdded", {
+      type: "location",
+      message: `Location "${newLoc.name}" was added.`,
+      timestamp: new Date(),
+    });
+
     res.status(201).json(newLoc);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -54,6 +63,16 @@ async function createLocation(req, res) {
 async function updateLocation(req, res) {
   try {
     const updated = await Location.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    
+    // Notify on updating location name
+    const io = req.app.get("io");
+    io.emit("locationUpdated", {
+      type: "location",
+      name: updated.name,
+      message: `Location "${updated.name}" was updated.`,
+      timestamp: new Date(),
+    });
+
     res.json(updated);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -63,7 +82,16 @@ async function updateLocation(req, res) {
 //Delete location
 async function deleteLocation(req, res) {
   try {
-    await Location.findByIdAndDelete(req.params.id);
+    const deletedLoc = await Location.findByIdAndDelete(req.params.id);
+
+    const io = req.app.get("io");
+    io.emit("locationDeleted", {
+      type: "location",
+      message: `Location "${deletedLoc.name}" was deleted.`,
+      timestamp: new Date(),
+    });
+
+
     res.json({ message: "Deleted location" });
   } catch (err) {
     res.status(500).json({ message: err.message });

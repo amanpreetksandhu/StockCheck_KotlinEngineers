@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.AlertDialogDefaults.shape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -22,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,9 +28,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.cstp2205_s25.client_stockcheck_kotlinengineers.data.entities.InventoryItem
-//import com.cstp2205_s25.client_stockcheck_kotlinengineers.ui.theme.scGreen
-
-// Define custom colors based on the image -- to be changed
 val DarkPrimary = Color(0xFF2C3E50) // Dark blue/grey for top bar
 val LightBlueAccent = Color(0xFF3498DB) // Blue for active tabs, buttons
 val GreenStatus = Color(0xFF2ECC71) // Green for 'IN STOCK'
@@ -81,9 +76,7 @@ fun InventoryContent(
                 )
             },
             colors = OutlinedTextFieldDefaults.colors(
-//                focusedBorderColor = scGreen,
-//                focusedLabelColor = scGreen,
-//                cursorColor = scGreen
+
             )
             );
 
@@ -116,13 +109,12 @@ fun InventoryContent(
         ) {
             items(inventoryItems) { item ->
                 InventoryItemCard(
-                    itemName = item.name,
-                    category = item.category,
-                    qty = item.qty,
-                    warehouse = item.warehouse,
-                    status = item.status,
-                    onDelete = { onDelete(item.id) },
-                    onEdit = { onEdit(item) }
+                    item = item,
+                    onDelete = { onDelete(item.id ?: "") },
+                    onEdit = { onEdit(item) },
+                    locationName = "Location Name", // Replace with actual location name
+                    onNavigateToItemDetail = { /* Handle navigation to item detail */ },
+
 
                 )
             }
